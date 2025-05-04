@@ -110,7 +110,7 @@ export default function Home() {
         <BackgroundCars />
         <div className="max-w-2xl w-full text-center space-y-8">
           <h1 className="hero-title text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-blue-900">
-            {t.heroTitle} 🚗
+            {t.heroTitle}
           </h1>
           <p className="hero-description text-xl text-gray-600 mb-8">
             {t.heroDesc}
@@ -128,7 +128,7 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-gray-900 text-center">
               {t.howTitle}
             </h2>
-            <span className="mt-3 h-1 w-16 rounded-full bg-gradient-to-r from-blue-400 to-blue-600"></span>
+            <span className="mt-3 h-1 w-full block rounded-full bg-gradient-to-r from-blue-400 to-blue-600"></span>
           </div>
           <div className="grid md:grid-cols-3 gap-10">
             {t.steps.map((step, i) => (

@@ -48,7 +48,7 @@ export default function Header() {
     }`}>
       <div className="flex items-center">
         <div className="text-2xl font-extrabold tracking-tight text-blue-700 select-none relative">
-          IKA 
+          IKA{' '}
           <span className="text-gray-900">Car</span>
           <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform"></div>
         </div>
