@@ -69,7 +69,7 @@ export default function LicensePlateSearch() {
       });
       // Trigger animation when data is loaded
       setTimeout(() => setAnimateCard(true), 100);
-    } catch (err) {
+    } catch {
       setError(t.error);
     } finally {
       setIsLoading(false);

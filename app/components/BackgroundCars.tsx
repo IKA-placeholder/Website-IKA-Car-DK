@@ -31,7 +31,6 @@ interface Car {
 export default function BackgroundCars() {
   const carRefs = useRef<(SVGSVGElement | null)[]>([]);
   const [cars, setCars] = useState<Car[]>([]);
-  const [visibleCars, setVisibleCars] = useState<number>(0);
   const [mounted, setMounted] = useState(false);
   const animationRef = useRef<number | null>(null);
   const lastUpdateTime = useRef<number>(0);
@@ -67,7 +66,6 @@ export default function BackgroundCars() {
     });
     
     setCars(initialCars);
-    setVisibleCars(MIN_CARS);
     lastUpdateTime.current = performance.now();
     
     return () => {
@@ -170,7 +168,6 @@ export default function BackgroundCars() {
           }
         }
         
-        setVisibleCars(currentlyVisible);
         return newCars;
       });
       

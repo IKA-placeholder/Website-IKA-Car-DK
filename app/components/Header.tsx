@@ -1,7 +1,6 @@
 'use client';
 import { useContext, useState, useEffect } from 'react';
 import { LanguageContext } from './LanguageProvider';
-import Link from 'next/link';
 
 const TEXT = {
   da: {
