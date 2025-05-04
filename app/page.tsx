@@ -110,7 +110,7 @@ export default function Home() {
         <BackgroundCars />
         <div className="max-w-2xl w-full text-center space-y-8">
           <h1 className="hero-title text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-blue-900">
-            {t.heroTitle}
+            {t.heroTitle} 🚗
           </h1>
           <p className="hero-description text-xl text-gray-600 mb-8">
             {t.heroDesc}
