@@ -60,17 +60,28 @@ export default function LicensePlateSearch() {
     setIsLoading(true);
     setError(null);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Remove spaces from plate number for API call
+      const formattedPlate = plateNumber.replace(/\s+/g, '');
+      const response = await fetch(`https://ika-car-dk-api.onrender.com/predict/${formattedPlate}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch car data');
+      }
+
+      const data = await response.json();
+      
       setCarData({
-        make: 'Volkswagen',
-        model: 'Golf',
-        year: 2020,
-        estimatedValue: 185000
+        make: data.maerke || '',
+        model: data.model || '',
+        year: data.årgang || '',
+        estimatedValue: data.estimated_price || 0
       });
+      
       // Trigger animation when data is loaded
       setTimeout(() => setAnimateCard(true), 100);
-    } catch {
+    } catch (err) {
       setError(t.error);
+      console.error('Error fetching car data:', err);
     } finally {
       setIsLoading(false);
     }
