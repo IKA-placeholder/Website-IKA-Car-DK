@@ -1,3 +1,4 @@
+// Trigger Vercel redeploy: small visible change
 'use client';
 import LicensePlateSearch from './components/LicensePlateSearch';
 import FloatingCTA from './components/FloatingCTA';
