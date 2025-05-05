@@ -6,6 +6,7 @@ import { LanguageContext } from './components/LanguageProvider';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BackgroundCars from './components/BackgroundCars';
+import DenmarkSilhouette from './components/DenmarkSilhouette';
 
 // Register GSAP plugins
 if (typeof window !== 'undefined') {
@@ -95,11 +96,13 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen pb-24 bg-dot-pattern relative overflow-x-hidden">
+    <main className="min-h-screen pb-24 pt-20 relative overflow-x-hidden">
       {/* Decorative elements */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:20px_20px] opacity-25 -z-10"></div>
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-blue-50 to-transparent opacity-80 -z-10"></div>
       <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-blue-50 to-transparent opacity-80 -z-10"></div>
+      
+      {/* Denmark silhouette watermark */}
+      <DenmarkSilhouette />
       
       {/* Blue accent shapes */}
       <div className="absolute top-32 left-10 w-64 h-64 rounded-full bg-blue-400 opacity-5 blur-3xl -z-10"></div>

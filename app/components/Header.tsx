@@ -41,7 +41,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`w-full flex items-center justify-between px-6 py-4 fixed top-0 left-0 z-30 transition-all duration-300 ${
+    <header className={`w-full flex items-center justify-between px-6 py-4 absolute top-0 left-0 z-30 transition-all duration-300 ${
       hasScrolled 
         ? 'bg-white/95 backdrop-blur-md shadow-md' 
         : 'bg-gradient-to-r from-blue-50/80 via-white/80 to-blue-50/80 backdrop-blur-sm'
@@ -49,7 +49,7 @@ export default function Header() {
       <div className="flex items-center">
         <div className="text-2xl font-extrabold tracking-tight text-blue-700 select-none relative">
           IKA{' '}
-          <span className="text-gray-900">Car</span>
+          <span className="text-gray-900">Car <span className='text-gray-400 text-sm align-top'>DK</span></span>
           <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform"></div>
         </div>
       </div>
