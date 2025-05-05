@@ -11,8 +11,9 @@ export default function DenmarkSilhouette() {
         className="w-full h-full absolute left-0 top-0 opacity-[0.08]"
         style={{ position: 'absolute', left: 0, top: 0, width: '100vw', height: '100vh', opacity: 0.08 }}
       />
+
       <div className="absolute bottom-2 right-2 text-blue-500 text-xs font-mono opacity-50">
-        Denmark Silhouette Active
+      {/* removed */}
       </div>
     </div>
   );
