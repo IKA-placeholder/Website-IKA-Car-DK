@@ -74,7 +74,7 @@ export default function Home() {
     try {
       const stored = sessionStorage.getItem('app_authenticated');
       if (stored === 'true') setAuthenticated(true);
-    } catch (e) {
+    } catch {
       // ignore sessionStorage errors
     }
   }, []);
@@ -84,7 +84,7 @@ export default function Home() {
     if (pin === VALID_PIN) {
       try {
         sessionStorage.setItem('app_authenticated', 'true');
-      } catch (err) {}
+      } catch {}
       setAuthenticated(true);
       setError('');
     } else {
