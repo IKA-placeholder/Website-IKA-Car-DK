@@ -64,7 +64,7 @@ export default function Home() {
   // ---------- LOGIN / PIN STATE ----------
   // NOTE: For demo purposes the valid PIN is hard-coded per user's request.
   // Do NOT hard-code secrets in production code.
-  const VALID_PIN = 'Ika12345678!';
+  const VALID_PIN = '0725';
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
