@@ -2,7 +2,7 @@
 'use client';
 import LicensePlateSearch from './components/LicensePlateSearch';
 import FloatingCTA from './components/FloatingCTA';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { LanguageContext } from './components/LanguageProvider';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -61,50 +61,146 @@ export default function Home() {
   const heroRef = useRef(null);
   const stepsRef = useRef(null);
 
+  // ---------- LOGIN / PIN STATE ----------
+  // NOTE: For demo purposes the valid PIN is hard-coded per user's request.
+  // Do NOT hard-code secrets in production code.
+  const VALID_PIN = 'Ika12345678!';
+  const [pin, setPin] = useState('');
+  const [error, setError] = useState('');
+  const [authenticated, setAuthenticated] = useState(false);
+
   useEffect(() => {
-    // Hero animation
-    if (heroRef.current) {
-      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-      
-      tl.from('.hero-title', { 
-        y: 30, 
-        opacity: 0, 
-        duration: 0.8,
-        delay: 0.05
-      })
-      .from('.hero-description', { 
-        y: 20, 
-        opacity: 0, 
-        duration: 0.6 
-      }, '-=0.5')
-      .from('.license-search', { 
-        y: 20, 
-        opacity: 0, 
-        duration: 0.8 
-      }, '-=0.4')
-      .from('.how-heading', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-      }, '-=0.3')
-      .from('.step-item', {
-        y: 40,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.13,
-      }, '-=0.2');
+    // restore session-based auth if available
+    try {
+      const stored = sessionStorage.getItem('app_authenticated');
+      if (stored === 'true') setAuthenticated(true);
+    } catch (e) {
+      // ignore sessionStorage errors
     }
   }, []);
 
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (pin === VALID_PIN) {
+      try {
+        sessionStorage.setItem('app_authenticated', 'true');
+      } catch (err) {}
+      setAuthenticated(true);
+      setError('');
+    } else {
+      setError('Incorrect PIN — please try again.');
+      setPin('');
+    }
+  };
+
+  useEffect(() => {
+    // Hero animation
+    if (heroRef.current && authenticated) {
+      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+      tl.from('.hero-title', {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.05,
+      })
+        .from(
+          '.hero-description',
+          {
+            y: 20,
+            opacity: 0,
+            duration: 0.6,
+          },
+          '-=0.5'
+        )
+        .from(
+          '.license-search',
+          {
+            y: 20,
+            opacity: 0,
+            duration: 0.8,
+          },
+          '-=0.4'
+        )
+        .from(
+          '.how-heading',
+          {
+            y: 30,
+            opacity: 0,
+            duration: 0.8,
+          },
+          '-=0.3'
+        )
+        .from(
+          '.step-item',
+          {
+            y: 40,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.13,
+          },
+          '-=0.2'
+        );
+    }
+  }, [authenticated]);
+
+  // If not authenticated, render a full-screen login overlay
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white p-6">
+        <div className="w-full max-w-md bg-white border border-gray-100 rounded-2xl shadow-lg p-8">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-2">Sign in</h2>
+          <p className="text-sm text-gray-600 mb-6">Enter the PIN to continue.</p>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <label className="block text-sm font-medium text-gray-700">PIN</label>
+            <input
+              autoFocus
+              value={pin}
+              onChange={(e) => setPin(e.target.value)}
+              type="password"
+              name="pin"
+              inputMode="text"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter PIN"
+            />
+
+            {error && <div className="text-sm text-red-600">{error}</div>}
+
+            <div className="flex items-center justify-between">
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700 transition"
+              >
+                Unlock
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setPin('');
+                  setError('');
+                }}
+                className="text-sm text-gray-600 underline"
+              >
+                Clear
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // ---------- MAIN APP UI (rendered after successful PIN) ----------
   return (
     <main className="min-h-screen pb-24 pt-20 relative overflow-x-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-blue-50 to-transparent opacity-80 -z-10"></div>
       <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-blue-50 to-transparent opacity-80 -z-10"></div>
-      
+
       {/* Denmark silhouette watermark */}
       <DenmarkSilhouette />
-      
+
       {/* Blue accent shapes */}
       <div className="absolute top-32 left-10 w-64 h-64 rounded-full bg-blue-400 opacity-5 blur-3xl -z-10"></div>
       <div className="absolute bottom-32 right-10 w-80 h-80 rounded-full bg-blue-400 opacity-5 blur-3xl -z-10"></div>
