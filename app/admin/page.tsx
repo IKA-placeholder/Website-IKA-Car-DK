@@ -28,7 +28,7 @@ export default function AdminPage() {
         if (!user.is_admin_user) throw new Error("Forbidden");
 
         setAuthorized(true);
-      } catch (err) {
+      } catch {
         router.push("/login");
       } finally {
         setLoading(false);

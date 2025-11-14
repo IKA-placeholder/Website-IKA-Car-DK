@@ -49,7 +49,6 @@ export default function LicensePlateSearch() {
   const t = TEXT[language];
   const [plateNumber, setPlateNumber] = useState('');
   const companyPlaceholder = "https://ikacar.vercel.app/"
-  const [location, setLocation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [carData, setCarData] = useState<CarData | null>(null);
   const [error, setError] = useState<string | null>(null);

@@ -68,7 +68,7 @@ export default function Header() {
                   className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                   onClick={() => setIsLoggedIn(false)}
                 >
-                  {t.logout}l: 'Op
+                  {t.logout}
                 </button>
               </div>
             )}
@@ -83,7 +83,8 @@ export default function Header() {
               className={`px-3 py-1 rounded-md font-medium transition-colors ${
                 language === lang ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-blue-100'
               }`}
-              onClick={() => setLanguage(lang)}
+              onClick={() => setLanguage(lang as 'da' | 'en')}
+
             >
               {lang.toUpperCase()}
             </button>

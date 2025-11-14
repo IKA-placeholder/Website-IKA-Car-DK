@@ -7,6 +7,12 @@ const TEXT = {
   en: { signup: 'Sign up', error: 'An error occurred', success: 'Account created!' },
 };
 
+// Define a proper type for API response
+interface SignupResponse {
+  message?: string;
+  detail?: { msg: string }[];
+}
+
 export default function SignupPage() {
   const { language } = useContext(LanguageContext);
   const t = TEXT[language];
@@ -18,33 +24,30 @@ export default function SignupPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
     setSuccess(null);
 
-    console.log({ username, email, password });
     try {
       const response = await fetch('https://ika-car-dk-api.onrender.com/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }), // include username
+        body: JSON.stringify({ username, email, password }),
       });
 
-      let data: any = {};
+      let data: SignupResponse = {};
+
       try {
         data = await response.json();
-      } catch (err) {
+      } catch {
         console.warn('No JSON returned from signup API');
       }
 
       if (!response.ok) {
-        console.error('Signup API response:', data, response.status, response.statusText);
         const message =
-          data.detail?.[0]?.msg ||
-          data.message ||
-          `Signup failed (${response.status} ${response.statusText})`;
+          data.detail?.[0]?.msg || data.message || `Signup failed (${response.status})`;
         throw new Error(message);
       }
 
@@ -52,7 +55,9 @@ export default function SignupPage() {
       setUsername('');
       setEmail('');
       setPassword('');
-    } catch (err: any) {
+    } catch (error_) {
+      // Use _error to avoid ESLint "unused variable"
+      const err = error_ as Error;
       setError(err.message || t.error);
       console.error('Signup error caught:', err);
     } finally {
@@ -72,7 +77,6 @@ export default function SignupPage() {
           required
           className="px-3 py-2 border rounded-md"
         />
-
         <input
           type="email"
           placeholder="Email"
