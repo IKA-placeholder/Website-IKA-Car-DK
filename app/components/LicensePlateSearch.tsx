@@ -48,6 +48,8 @@ export default function LicensePlateSearch() {
   const { language } = useContext(LanguageContext);
   const t = TEXT[language];
   const [plateNumber, setPlateNumber] = useState('');
+  const companyPlaceholder = "https://ikacar.vercel.app/"
+  const [location, setLocation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [carData, setCarData] = useState<CarData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -133,6 +135,7 @@ export default function LicensePlateSearch() {
                 pattern="[A-Z0-9 ]{2,8}"
                 title={t.label}
               />
+
               <button
                 type="submit"
                 disabled={isLoading}
@@ -197,7 +200,19 @@ export default function LicensePlateSearch() {
                 <p className="text-sm font-medium mb-1">{t.value}</p>
                 <p className="font-bold text-lg">{carData.estimatedValue.toLocaleString(language === 'da' ? 'da-DK' : 'en-GB')} kr.</p>
               </div>
+              <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-lg text-white hover-lift">
+                <a 
+                  href={companyPlaceholder} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium mb-1"
+                >
+                  Få et tilbud fra en lokal forhandler
+                </a>
+              </div>
+
             </div>
+
           </div>
 
           <div className={`mt-6 p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border border-blue-200 ${animateCard ? 'animate-slide-up' : 'opacity-0'}`}>
