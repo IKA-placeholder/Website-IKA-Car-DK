@@ -65,9 +65,6 @@ export default function Home() {
   // ---------- LOGIN / PIN STATE ----------
   // NOTE: For demo purposes the valid PIN is hard-coded per user's request.
   // Do NOT hard-code secrets in production code.
-  const VALID_PIN = "0725";
-  const [pin, setPin] = useState("");
-  const [error, setError] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -79,20 +76,6 @@ export default function Home() {
       // ignore sessionStorage errors
     }
   }, []);
-
-  const handleSubmit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (pin === VALID_PIN) {
-      try {
-        sessionStorage.setItem("app_authenticated", "true");
-      } catch {}
-      setAuthenticated(true);
-      setError("");
-    } else {
-      setError("Incorrect PIN — please try again.");
-      setPin("");
-    }
-  };
 
   useEffect(() => {
     // Hero animation

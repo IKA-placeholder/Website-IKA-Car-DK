@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useContext, useState, useEffect } from "react";
 import { LanguageContext } from "./LanguageProvider";
 
