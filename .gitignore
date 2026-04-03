@@ -13,12 +13,15 @@
 # testing
 /coverage
 
-# next.js
+# TanStack Start / Vite
 /.next/
 /out/
-
-# production
-/build
+dist
+dist-ssr
+.output
+.nitro
+.tanstack
+.vinxi
 
 # misc
 .DS_Store

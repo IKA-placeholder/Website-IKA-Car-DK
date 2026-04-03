@@ -1,7 +1,5 @@
-'use client';
-
-import { useState, useContext } from 'react';
-import { LanguageContext } from './LanguageProvider';
+import { useState, useContext } from 'react'
+import { LanguageContext } from '@components/LanguageProvider'
 
 interface AdvancedFormData {
   mileage: string;
