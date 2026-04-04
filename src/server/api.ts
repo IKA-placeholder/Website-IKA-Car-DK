@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-const API_BASE = "https://api.autoværdi.dk"; // FastAPI backend
+const API_BASE = "https://api.xn--autovrdi-n0a.dk"; // FastAPI backend
 
 export type PredictApiResponse = {
   maerke?: string;
