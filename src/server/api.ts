@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-const API_BASE = "https://api.autoværdi.dk";
+const API_BASE = "https://api.autoværdi.dk"; // FastAPI backend
 
 export type PredictApiResponse = {
   maerke?: string;
@@ -9,6 +9,7 @@ export type PredictApiResponse = {
   estimated_price?: number;
 };
 
+// Frontend server function acting as proxy to FastAPI
 export const predictPlate = createServerFn({ method: "POST" })
   .inputValidator((data: { plate: string }) => data)
   .handler(async ({ data }) => {
@@ -17,7 +18,8 @@ export const predictPlate = createServerFn({ method: "POST" })
       `${API_BASE}/predict/${encodeURIComponent(formattedPlate)}`,
     );
     if (!res.ok) {
-      throw new Error("Failed to fetch car data");
+      const json = await res.json().catch(() => ({}));
+      throw new Error(json.message || "Failed to fetch car data");
     }
     return (await res.json()) as PredictApiResponse;
   });
@@ -42,9 +44,7 @@ export const loginUser = createServerFn({ method: "POST" })
     const json = (await res.json()) as LoginApiResponse;
     if (!res.ok) {
       const message =
-        json.detail?.[0]?.msg ||
-        json.message ||
-        `login failed (${res.status} ${res.statusText})`;
+        json.detail?.[0]?.msg || json.message || `Login failed (${res.status})`;
       throw new Error(message);
     }
     return json;
@@ -65,12 +65,9 @@ export const signupUser = createServerFn({ method: "POST" })
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    let json: SignupApiResponse = {};
-    try {
-      json = (await res.json()) as SignupApiResponse;
-    } catch {
-      /* empty */
-    }
+    const json: SignupApiResponse = (await res
+      .json()
+      .catch(() => ({}))) as SignupApiResponse;
     if (!res.ok) {
       const message =
         json.detail?.[0]?.msg ||
