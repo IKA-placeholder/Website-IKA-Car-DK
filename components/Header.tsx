@@ -28,10 +28,10 @@ export default function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between">
         <div className="select-none">
           <span className="text-2xl font-black tracking-tighter text-slate-900">
-            IKA
+            Autoværdi
           </span>{' '}
           <span className="text-2xl font-light text-slate-900">
-            Car{' '}
+            {' '}
             <span className="align-top text-xs font-medium text-slate-400">
               beta
             </span>

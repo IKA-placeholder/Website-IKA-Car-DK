@@ -30,7 +30,15 @@ export const predictPlate = createServerFn({ method: "POST" })
         }
         throw new Error(json.message || "Kunne ikke hente bildata");
       }
-      return (await res.json()) as PredictApiResponse;
+      
+      const json = await res.json();
+      
+      // Check if the response contains an error status from the backend
+      if (json.status === "error") {
+        throw new Error(json.message || "Der opstod en fejl");
+      }
+      
+      return json as PredictApiResponse;
     } catch (error) {
       // Re-throw network errors with user-friendly message
       if (error instanceof Error && error.message.includes("fetch")) {

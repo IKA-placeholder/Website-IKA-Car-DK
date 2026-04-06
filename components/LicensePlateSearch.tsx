@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useServerFn } from '@tanstack/react-start'
 import { LanguageContext } from '@components/LanguageProvider'
@@ -15,7 +15,7 @@ interface CarData {
 const TEXT = {
   da: {
     label: 'Indtast nummerplade',
-    placeholder: 'FX 12 345',
+    placeholder: 'FX12345',
     button: 'Søg',
     loading: 'Søger...',
     error: 'Der opstod en fejl ved søgning. Prøv igen senere.',
@@ -28,10 +28,12 @@ const TEXT = {
     quickValuation: 'Hurtig vurdering',
     advancedDescription:
       'En mere præcis vurdering baseret på flere detaljer om din bil',
+    disclaimer:
+      'Bemærk: Værktøjet er kun en vejledning baseret på lignende biler på markedet. Du bør altid udføre din egen research før et køb eller salg.',
   },
   en: {
     label: 'Enter license plate',
-    placeholder: 'e.g. FX 12 345',
+    placeholder: 'e.g. FX12345',
     button: 'Search',
     loading: 'Searching...',
     error: 'An error occurred. Please try again later.',
@@ -44,6 +46,8 @@ const TEXT = {
     quickValuation: 'Quick valuation',
     advancedDescription:
       'A more accurate valuation based on additional details about your car',
+    disclaimer:
+      'Note: This tool is only a guide based on similar cars on the market. You should always do your own research before buying or selling.',
   },
 }
 
@@ -65,7 +69,6 @@ export default function LicensePlateSearch() {
   const { language } = useContext(LanguageContext)
   const t = TEXT[language]
   const [plateNumber, setPlateNumber] = useState('')
-  const companyPlaceholder = 'https://ikacar.vercel.app/'
   const [submittedPlate, setSubmittedPlate] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [showAdvanced, setShowAdvanced] = useState(false)
@@ -93,11 +96,17 @@ export default function LicensePlateSearch() {
     refetchOnReconnect: false, // Don't refetch on network reconnect
   })
 
-  const carData: CarData | null = rawData ? mapPredictToCarData(rawData) : null
+  const carData: CarData | null = useMemo(() => {
+    return rawData ? mapPredictToCarData(rawData) : null
+  }, [rawData])
 
   useEffect(() => {
     if (queryError) {
-      setError(t.error)
+      // Show specific error message from backend if available
+      const errorMessage = queryError instanceof Error 
+        ? queryError.message 
+        : t.error
+      setError(errorMessage)
     } else {
       setError(null)
     }
@@ -108,13 +117,6 @@ export default function LicensePlateSearch() {
       setTimeout(() => setAnimateCard(true), 100)
     }
   }, [carData])
-
-  useEffect(() => {
-    if (carData) {
-      setAnimateCard(false)
-      setTimeout(() => setAnimateCard(true), 100)
-    }
-  }, [language, carData])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -305,49 +307,23 @@ export default function LicensePlateSearch() {
               </p>
             </div>
 
-            <div className="premium-card mt-4 rounded-xl border border-slate-200/50 bg-white p-4 ring-1 ring-slate-200/40">
-              <a
-                href={companyPlaceholder}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-blue-600 underline-offset-4 hover:text-blue-700"
+            <div className="mt-4 flex items-start gap-2 rounded-lg border border-amber-200/60 bg-amber-50/80 p-3 text-xs text-amber-800">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 shrink-0 text-amber-600"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden
               >
-                Få et tilbud fra en lokal forhandler
-              </a>
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <p className="leading-relaxed">{t.disclaimer}</p>
             </div>
-          </div>
 
-          <div
-            className={`mt-6 rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm ring-1 ring-slate-200/50 transition-all duration-500 ${animateCard ? 'animate-slide-up premium-card' : 'opacity-0'}`}
-          >
-            <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
-              <div>
-                <h3 className="flex items-center gap-2 text-lg font-semibold text-slate-900">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-blue-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {t.advancedValuation}
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">{t.advancedDescription}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowAdvanced(true)}
-                className="relative shrink-0 overflow-hidden rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm ring-1 ring-slate-900/10 transition-transform before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/20 hover:brightness-110 active:scale-95 active:brightness-90"
-              >
-                {t.advancedValuation}
-              </button>
-            </div>
           </div>
 
           <div className="mt-4 text-center">
@@ -356,7 +332,7 @@ export default function LicensePlateSearch() {
               onClick={toggleLogin}
               className="text-xs text-slate-400 underline transition-colors hover:text-slate-600"
             >
-              {isLoggedIn ? 'Debug: Set logged out' : 'Debug: Set logged in'}
+    
             </button>
           </div>
         </>

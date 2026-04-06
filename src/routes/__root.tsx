@@ -4,6 +4,7 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { LanguageProvider } from '@components/LanguageProvider'
 import Header from '@components/Header'
+import Footer from '@components/Footer'
 
 import appCss from '../styles.css?url'
 
@@ -42,6 +43,7 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
           <LanguageProvider>
             <Header />
             <div className="pt-20">{children}</div>
+            <Footer />
           </LanguageProvider>
         </QueryClientProvider>
         <Scripts />

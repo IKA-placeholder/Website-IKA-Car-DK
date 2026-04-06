@@ -14,41 +14,42 @@ if (typeof window !== 'undefined') {
 
 const TEXT = {
   da: {
-    heroTitle: 'Find din bils værdi med ét klik',
+    heroTitle: 'Hvad er din bil egentlig værd?',
     heroDesc:
-      'Indtast dit nummerpladenummer og få øjeblikkelig vurdering af din bils værdi',
-    howTitle: 'Sådan fungerer det',
+      'Indtast din nummerplade og få en hurtig vurdering – nemt og uden bøvl.',
+    howTitle: 'Så nemt er det',
     steps: [
       {
         title: 'Indtast nummerplade',
-        desc: 'Indtast dit nummerpladenummer i søgefeltet',
+        desc: 'Skriv din nummerplade i feltet – det tager 2 sekunder.',
       },
       {
         title: 'Vi finder din bil',
-        desc: 'Vi henter oplysninger om din bil fra det officielle register',
+        desc: 'Vi slår din bil op og henter de vigtigste oplysninger.',
       },
       {
         title: 'Få din vurdering',
-        desc: 'Vores machine learning model laver et estimat på hvad du kan forvente at bilen er værd',
+        desc: 'BilSniffer regner på det og giver dig et realistisk bud på, hvad din bil er værd lige nu.',
       },
     ],
-  },
+  }, // 👈 DEN MANGLEDE HER
+
   en: {
-    heroTitle: "Find your car's value instantly",
-    heroDesc: 'Enter your license plate and get an instant car value estimate',
+    heroTitle: "What's your car actually worth?",
+    heroDesc: 'Enter your license plate and get a quick, no-fuss estimate.',
     howTitle: 'How it works',
     steps: [
       {
-        title: 'Enter license plate',
-        desc: 'Type your license plate number in the search field',
+        title: 'Enter your plate',
+        desc: 'Just type in your license plate – takes two seconds.',
       },
       {
         title: 'We find your car',
-        desc: 'We fetch your car details from the official register',
+        desc: 'We pull up your car and gather the key details.',
       },
       {
-        title: 'Get your valuation',
-        desc: "Receive an accurate estimate of your car's value",
+        title: 'Get your estimate',
+        desc: 'BilSniffer crunches the numbers and gives you a realistic idea of what your car is worth right now.',
       },
     ],
   },
@@ -168,7 +169,7 @@ function Home() {
   }, [authenticated])
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-white to-slate-50 pb-24 pt-20 text-slate-900">
+    <main className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-white to-slate-50 pb-24 pt-16 text-slate-900">
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-slate-50/80 to-transparent"
         aria-hidden
@@ -186,7 +187,7 @@ function Home() {
 
       <section
         ref={heroRef}
-        className="relative mt-8 flex flex-col items-center justify-center overflow-hidden px-4 py-20 md:py-28"
+        className="relative mt-4 flex flex-col items-center justify-center overflow-hidden px-4 py-16 md:py-24"
       >
         <BackgroundCars />
         <div className="relative z-[1] w-full max-w-3xl space-y-10 text-center">

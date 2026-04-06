@@ -6,14 +6,14 @@ export default function DenmarkSilhouette() {
       <DenmarkSvg
         width="100vw"
         height="100vh"
-        className="absolute left-0 top-0 h-full w-full opacity-[0.05]"
+        className="absolute left-0 top-0 h-full w-full opacity-[0.12]"
         style={{
           position: 'absolute',
           left: 0,
           top: 0,
           width: '100vw',
           height: '100vh',
-          opacity: 0.05,
+          opacity: 0.12,
         }}
       />
 
