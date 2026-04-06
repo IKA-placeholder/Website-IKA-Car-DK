@@ -88,6 +88,9 @@ export default function LicensePlateSearch() {
     enabled: Boolean(submittedPlate),
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 30,
+    retry: false, // Don't retry on error - prevents hammering the API
+    refetchOnWindowFocus: false, // Don't refetch when user comes back to tab
+    refetchOnReconnect: false, // Don't refetch on network reconnect
   })
 
   const carData: CarData | null = rawData ? mapPredictToCarData(rawData) : null

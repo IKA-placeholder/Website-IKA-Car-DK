@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-const API_BASE = "https://api.xn--autovrdi-n0a.dk"; // FastAPI backend
+const API_BASE = process.env.API_BASE_URL || "https://api.xn--autovrdi-n0a.dk"; // FastAPI backend
 
 export type PredictApiResponse = {
   maerke?: string;
@@ -14,14 +14,30 @@ export const predictPlate = createServerFn({ method: "POST" })
   .inputValidator((data: { plate: string }) => data)
   .handler(async ({ data }) => {
     const formattedPlate = data.plate.replace(/\s+/g, "");
-    const res = await fetch(
-      `${API_BASE}/predict/${encodeURIComponent(formattedPlate)}`,
-    );
-    if (!res.ok) {
-      const json = await res.json().catch(() => ({}));
-      throw new Error(json.message || "Failed to fetch car data");
+    try {
+      const res = await fetch(
+        `${API_BASE}/predict/${encodeURIComponent(formattedPlate)}`,
+      );
+      if (!res.ok) {
+        const text = await res.text().catch(() => "{}");
+        const json = JSON.parse(text);
+        // Provide specific error messages based on status code
+        if (res.status === 429) {
+          throw new Error("For mange anmodninger. Vent et øjeblik og prøv igen.");
+        }
+        if (res.status === 404) {
+          throw new Error("Nummerplade ikke fundet. Tjek venligst nummerpladen.");
+        }
+        throw new Error(json.message || "Kunne ikke hente bildata");
+      }
+      return (await res.json()) as PredictApiResponse;
+    } catch (error) {
+      // Re-throw network errors with user-friendly message
+      if (error instanceof Error && error.message.includes("fetch")) {
+        throw new Error("Kunne ikke forbinde til serveren. Prøv igen senere.");
+      }
+      throw error;
     }
-    return (await res.json()) as PredictApiResponse;
   });
 
 type LoginBody = { email: string; password: string };
