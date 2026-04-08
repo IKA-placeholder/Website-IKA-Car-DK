@@ -25,7 +25,10 @@ export const Route = createRootRoute({
           'Få en øjeblikkelig vurdering af din bils værdi ved at indtaste dit nummerpladenummer.',
       },
     ],
-    links: [{ rel: 'stylesheet', href: appCss }],
+    links: [
+      { rel: 'stylesheet', href: appCss },
+      { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+    ],
   }),
   shellComponent: RootDocument,
 })
