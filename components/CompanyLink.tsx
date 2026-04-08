@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 export default function CompanyLink() {
   const [data, setData] = useState<unknown>(null);
   const [error, setError] = useState<string | null>(null);
-    //test
   useEffect(() => {
     async function sendClick() {
       try {
