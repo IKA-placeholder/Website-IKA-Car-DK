@@ -22,8 +22,18 @@ jobs:
           git pull origin main
           cd ..
           
-          # Rebuild and restart only the frontend service
-          docker-compose up -d --build frontend
+          # Stop and remove the old frontend container
+          docker-compose stop frontend || true
+          docker-compose rm -f frontend || true
+          
+          # Remove the old frontend image to force a clean rebuild
+          docker rmi -f devops_stack-frontend:latest 2>/dev/null || docker rmi -f $(docker images -q "*/website-ika-car-dk" 2>/dev/null) 2>/dev/null || true
+          
+          # Build with no cache to ensure fresh build
+          docker-compose build --no-cache frontend
+          
+          # Start the frontend service
+          docker-compose up -d frontend
           
           # Clean up old images
           docker image prune -f
