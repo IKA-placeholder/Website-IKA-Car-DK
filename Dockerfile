@@ -11,6 +11,9 @@ COPY . .
 # Build the application
 RUN bun run build
 
+# Ensure static files are copied to output directory
+RUN cp -r public/* .output/public/ 2>/dev/null || true
+
 # expose the port
 EXPOSE 4000
 
