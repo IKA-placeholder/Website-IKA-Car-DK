@@ -360,5 +360,6 @@ function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
     </main>
+    </>
   )
 }
