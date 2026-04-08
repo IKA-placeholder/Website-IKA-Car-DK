@@ -11,6 +11,7 @@ export default defineConfig({
   },
   plugins: [
     nitro({
+      scanDirs: ['server'],
       routeRules: {
         '/sitemap.xml': {
           headers: {
