@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, HeadContent } from '@tanstack/react-router'
 import LicensePlateSearch from '@components/LicensePlateSearch'
 import FloatingCTA from '@components/FloatingCTA'
 import { Fragment, useContext, useEffect, useRef, useState } from 'react'
@@ -16,7 +16,7 @@ const TEXT = {
   da: {
     heroTitle: 'Hvad er din bil egentlig værd?',
     heroDesc:
-      'Indtast din nummerplade og få en hurtig vurdering – nemt og uden bøvl.',
+      'Få en gratis og øjeblikkelig bilvurdering baseret på markedsværdi. Indtast din nummerplade og se hvad din bil er værd.',
     howTitle: 'Så nemt er det',
     steps: [
       {
@@ -29,14 +29,17 @@ const TEXT = {
       },
       {
         title: 'Få din vurdering',
-        desc: 'BilSniffer regner på det og giver dig et realistisk bud på, hvad din bil er værd lige nu.',
+        desc: 'Autoværdi regner på det og giver dig et realistisk bud på, hvad din bil er værd lige nu.',
       },
     ],
-  }, // 👈 DEN MANGLEDE HER
+    seoTitle: 'Bilvurdering - Find din bils værdi | Autoværdi',
+    seoDescription: 'Få en gratis og øjeblikkelig bilvurdering. Indtast din nummerplade og få et realistisk prisoverslag baseret på markedsværdi. Danmarks nemmeste online bilvurdering.',
+    keywords: 'bilvurdering, bilværdi, brugtbil, nummerplade, bilpris, vurder bil',
+  },
 
   en: {
     heroTitle: "What's your car actually worth?",
-    heroDesc: 'Enter your license plate and get a quick, no-fuss estimate.',
+    heroDesc: 'Get a free instant car valuation based on market value. Enter your license plate and see what your car is worth.',
     howTitle: 'How it works',
     steps: [
       {
@@ -49,9 +52,12 @@ const TEXT = {
       },
       {
         title: 'Get your estimate',
-        desc: 'BilSniffer crunches the numbers and gives you a realistic idea of what your car is worth right now.',
+        desc: 'Autoværdi crunches the numbers and gives you a realistic idea of what your car is worth right now.',
       },
     ],
+    seoTitle: 'Car Valuation - Find Your Car Value | Autoværdi',
+    seoDescription: 'Get a free instant car valuation. Enter your license plate and receive a realistic price estimate based on market value.',
+    keywords: 'car valuation, car value, used car, license plate, car price, value my car',
   },
 }
 
@@ -81,6 +87,38 @@ function StepIcon({ index }: { index: number }) {
 export const Route = createFileRoute('/')({
   component: Home,
 })
+
+// FAQ structured data for SEO
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Hvordan fungerer bilvurdering på Autoværdi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Det er simpelt: indtast din nummerplade, så finder vi din bil i databasen og beregner en realistisk markedsværdi baseret på årgang, model og aktuelle markedspriser."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Er bilvurderingen gratis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ja, vores online bilvurdering er helt gratis. Du kan få et øjeblikkeligt prisoverslag ved at indtaste din nummerplade."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hvor præcis er vurderingen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vores vurdering er baseret på avancerede algoritmer og aktuelle markedsdata fra danske bilmarkeder. Den giver et realistisk estimat af din bils værdi."
+      }
+    }
+  ]
+}
 
 function Home() {
   const { language } = useContext(LanguageContext)
@@ -169,7 +207,9 @@ function Home() {
   }, [authenticated])
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-white to-slate-50 pb-24 pt-16 text-slate-900">
+    <>
+      <HeadContent />
+      <main className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-white to-slate-50 pb-24 pt-16 text-slate-900">
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-slate-50/80 to-transparent"
         aria-hidden
@@ -261,6 +301,64 @@ function Home() {
       </section>
 
       <FloatingCTA />
+      
+      {/* SEO FAQ Section */}
+      <section className="border-t border-slate-200/60 px-4 py-16 bg-slate-50/50" aria-labelledby="faq-heading">
+        <div className="mx-auto max-w-4xl">
+          <h2 id="faq-heading" className="text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl text-center mb-8">
+            {language === 'da' ? 'Ofte stillede spørgsmål' : 'Frequently Asked Questions'}
+          </h2>
+          <div className="space-y-4">
+            <details className="group bg-white rounded-xl border border-slate-200/60 shadow-sm">
+              <summary className="flex cursor-pointer items-center justify-between p-4 text-left font-medium text-slate-900 marker:hidden [&::-webkit-details-marker]:hidden">
+                {language === 'da' ? 'Hvordan fungerer bilvurdering på Autoværdi?' : 'How does car valuation work on Autoværdi?'}
+                <svg className="h-5 w-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </summary>
+              <p className="px-4 pb-4 text-slate-600 leading-relaxed">
+                {language === 'da' 
+                  ? 'Det er simpelt: indtast din nummerplade, så finder vi din bil i databasen og beregner en realistisk markedsværdi baseret på årgang, model og aktuelle markedspriser.' 
+                  : 'It is simple: enter your license plate, we find your car in the database and calculate a realistic market value based on year, model and current market prices.'}
+              </p>
+            </details>
+            
+            <details className="group bg-white rounded-xl border border-slate-200/60 shadow-sm">
+              <summary className="flex cursor-pointer items-center justify-between p-4 text-left font-medium text-slate-900 marker:hidden [&::-webkit-details-marker]:hidden">
+                {language === 'da' ? 'Er bilvurderingen gratis?' : 'Is the car valuation free?'}
+                <svg className="h-5 w-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </summary>
+              <p className="px-4 pb-4 text-slate-600 leading-relaxed">
+                {language === 'da' 
+                  ? 'Ja, vores online bilvurdering er helt gratis. Du kan få et øjeblikkeligt prisoverslag ved at indtaste din nummerplade.' 
+                  : 'Yes, our online car valuation is completely free. You can get an instant price estimate by entering your license plate.'}
+              </p>
+            </details>
+            
+            <details className="group bg-white rounded-xl border border-slate-200/60 shadow-sm">
+              <summary className="flex cursor-pointer items-center justify-between p-4 text-left font-medium text-slate-900 marker:hidden [&::-webkit-details-marker]:hidden">
+                {language === 'da' ? 'Hvor præcis er vurderingen?' : 'How accurate is the valuation?'}
+                <svg className="h-5 w-5 text-slate-500 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </summary>
+              <p className="px-4 pb-4 text-slate-600 leading-relaxed">
+                {language === 'da' 
+                  ? 'Vores vurdering er baseret på avancerede algoritmer og aktuelle markedsdata fra danske bilmarkeder. Den giver et realistisk estimat af din bils værdi.' 
+                  : 'Our valuation is based on advanced algorithms and current market data from Danish car markets. It provides a realistic estimate of your car\'s value.'}
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+      
+      {/* Structured Data for FAQ */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+      />
     </main>
   )
 }
