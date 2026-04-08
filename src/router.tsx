@@ -8,7 +8,7 @@ export function getRouter() {
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
   })
-
+  //test
   return router
 }
 
