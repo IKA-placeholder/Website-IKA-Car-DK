@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react'
+import { Link } from '@tanstack/react-router'
 import { LanguageContext } from '@components/LanguageProvider'
 
 const TEXT = {
@@ -26,17 +27,11 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 z-30 w-full border-b border-slate-200/60 bg-white/70 px-6 py-4 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between">
-        <div className="select-none">
-          <span className="text-2xl font-black tracking-tighter text-slate-900">
+        <Link to="/" className="select-none">
+          <span className="text-2xl font-black tracking-tighter text-slate-900 transition-colors hover:text-blue-600">
             Autoværdi
-          </span>{' '}
-          <span className="text-2xl font-light text-slate-900">
-            {' '}
-            <span className="align-top text-xs font-medium text-slate-400">
-              beta
-            </span>
           </span>
-        </div>
+        </Link>
 
         <div className="flex items-center gap-4">
           {isLoggedIn && (
