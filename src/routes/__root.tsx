@@ -9,11 +9,11 @@ import Footer from '@components/Footer'
 import appCss from '../styles.css?url'
 
 // SEO-optimized metadata
-const SITE_URL = 'https://www.autoværdi.dk'
+const SITE_URL = 'https://www.autovaerdi.dk'
 const SITE_NAME = 'Autoværdi'
-const DEFAULT_TITLE = 'Bilvurdering - Find din bils værdi | Autoværdi'
-const DEFAULT_DESCRIPTION = 'Få en øjeblikkelig og gratis vurdering af din bils værdi. Indtast dit nummerpladenummer og få et realistisk prisoverslag baseret på markedsværdi, årgang og stand. Danmarks nemmeste bilvurdering.'
-const DEFAULT_KEYWORDS = 'bilvurdering, bilværdi, brugtbil, nummerplade, bilpris, vurder bil, bilvurdering danmark, hvad er min bil værd'
+const DEFAULT_TITLE = 'Hvad er min bil værd? | Gratis bilvurdering → Autoværdi'
+const DEFAULT_DESCRIPTION = 'Vil du vide "hvad er min bil værd"? Få en gratis og øjeblikkelig bilvurdering. Indtast nummerplade og få realistisk pris baseret på markedsværdi. Prøv nu!'
+const DEFAULT_KEYWORDS = 'hvad er min bil værd, bilvurdering, bil værdi, vurdering af bil, pris på bil, brugt bil værdi, nummerplade, bilpris, danmark'
 
 // Structured data for rich snippets (JSON-LD)
 const structuredData = {
@@ -142,8 +142,20 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
-      { rel: 'icon', type: 'image/png', href: '/favicon.png' },
-      { rel: 'apple-touch-icon', href: '/favicon.png' },
+      // Favicon for Google Search visibility
+      { rel: 'icon', type: 'image/png', href: '/favicon.png', sizes: '32x32' },
+      { rel: 'icon', type: 'image/png', href: '/favicon.png', sizes: '16x16' },
+      { rel: 'shortcut icon', type: 'image/png', href: '/favicon.png' },
+      // Apple touch icons
+      { rel: 'apple-touch-icon', href: '/favicon.png', sizes: '180x180' },
+      { rel: 'apple-touch-icon', href: '/favicon.png', sizes: '152x152' },
+      { rel: 'apple-touch-icon', href: '/favicon.png', sizes: '144x144' },
+      { rel: 'apple-touch-icon', href: '/favicon.png', sizes: '120x120' },
+      { rel: 'apple-touch-icon', href: '/favicon.png', sizes: '114x114' },
+      { rel: 'apple-touch-icon', href: '/favicon.png', sizes: '76x76' },
+      { rel: 'apple-touch-icon', href: '/favicon.png', sizes: '72x72' },
+      { rel: 'apple-touch-icon', href: '/favicon.png', sizes: '57x57' },
+      // Web App Manifest
       { rel: 'manifest', href: '/manifest.json' },
       // Preconnect for performance
       { rel: 'preconnect', href: 'https://fonts.googleapis.com' },

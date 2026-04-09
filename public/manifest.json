@@ -1,7 +1,7 @@
 {
-  "name": "Autoværdi - Bilvurdering",
+  "name": "Autoværdi - Gratis Bilvurdering",
   "short_name": "Autoværdi",
-  "description": "Få en øjeblikkelig vurdering af din bils værdi ved at indtaste dit nummerpladenummer.",
+  "description": "Få en gratis og øjeblikkelig vurdering af din bils værdi. Indtast din nummerplade og få en realistisk pris baseret på markedsværdi.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,16 +9,56 @@
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "da",
+  "dir": "ltr",
+  "categories": ["utilities", "finance", "automotive"],
   "icons": [
     {
       "src": "/favicon.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/favicon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
