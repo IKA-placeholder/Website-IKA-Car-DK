@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getClientIP, checkRateLimit } from "./rateLimit";
 
 const API_BASE = process.env.API_BASE_URL || "https://api.xn--autovrdi-n0a.dk"; // FastAPI backend
 
@@ -12,7 +13,16 @@ export type PredictApiResponse = {
 // Frontend server function acting as proxy to FastAPI
 export const predictPlate = createServerFn({ method: "POST" })
   .inputValidator((data: { plate: string }) => data)
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    // Rate limiting check
+    const headers = context?.headers || new Headers();
+    const ip = getClientIP(headers);
+    const rateLimitResult = checkRateLimit(ip);
+    
+    if (!rateLimitResult.allowed) {
+      throw new Error(rateLimitResult.message);
+    }
+    
     const formattedPlate = data.plate.replace(/\s+/g, "");
     try {
       const res = await fetch(
@@ -59,7 +69,15 @@ export type LoginApiResponse = {
 
 export const loginUser = createServerFn({ method: "POST" })
   .inputValidator((data: LoginBody) => data)
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    // Rate limiting for login attempts (stricter: 10 per minute)
+    const headers = context?.headers || new Headers();
+    const ip = getClientIP(headers);
+    const rateLimitResult = checkRateLimit(ip, 10); // 10 attempts per minute
+    
+    if (!rateLimitResult.allowed) {
+      throw new Error(rateLimitResult.message);
+    }
     const res = await fetch(`${API_BASE}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -83,7 +101,15 @@ export type SignupApiResponse = {
 
 export const signupUser = createServerFn({ method: "POST" })
   .inputValidator((data: SignupBody) => data)
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
+    // Rate limiting for signup attempts (stricter: 5 per minute)
+    const headers = context?.headers || new Headers();
+    const ip = getClientIP(headers);
+    const rateLimitResult = checkRateLimit(ip, 5); // 5 attempts per minute
+    
+    if (!rateLimitResult.allowed) {
+      throw new Error(rateLimitResult.message);
+    }
     const res = await fetch(`${API_BASE}/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
