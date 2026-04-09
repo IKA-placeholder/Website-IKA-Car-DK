@@ -1,6 +1,6 @@
 import { defineEventHandler, setResponseHeader } from 'h3'
 
-export default defineEventHandler(() => {
+export default defineEventHandler((event) => {
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -35,6 +35,6 @@ export default defineEventHandler(() => {
   </url>
 </urlset>`
 
-  setResponseHeader('Content-Type', 'application/xml; charset=utf-8')
+  setResponseHeader(event, 'Content-Type', 'application/xml; charset=utf-8')
   return sitemap
 })
