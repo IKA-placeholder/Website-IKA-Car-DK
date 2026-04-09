@@ -136,9 +136,6 @@ export default function Footer() {
           <div className="select-none">
             <span className="text-xl font-black tracking-tighter text-slate-900">
               Autoværdi
-            </span>{' '}
-            <span className="align-top text-xs font-medium text-slate-400">
-              beta
             </span>
           </div>
           

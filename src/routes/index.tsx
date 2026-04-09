@@ -349,6 +349,10 @@ function Home() {
   return (
     <>
       <HeadContent />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+      />
       <main className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-white to-slate-50 pb-24 pt-16 text-slate-900">
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-slate-50/80 to-transparent"
