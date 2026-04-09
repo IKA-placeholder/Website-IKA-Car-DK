@@ -31,18 +31,6 @@ export default defineEventHandler(() => {
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.xn--autovrdi-n0a.dk/login</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://www.xn--autovrdi-n0a.dk/signup</loc>
-    <lastmod>2026-04-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
 </urlset>`
 
   setResponseHeader('Content-Type', 'application/xml; charset=utf-8')
