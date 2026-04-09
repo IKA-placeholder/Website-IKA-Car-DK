@@ -193,12 +193,6 @@ export const Route = createFileRoute('/')({
         href: SITE_URL,
       },
     ],
-    scripts: [
-      {
-        type: 'application/ld+json',
-        children: JSON.stringify(faqStructuredData),
-      },
-    ],
   }),
 })
 
