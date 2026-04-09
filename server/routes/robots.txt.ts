@@ -1,3 +1,5 @@
+import { defineEventHandler, setResponseHeader } from 'h3'
+
 export default defineEventHandler(() => {
   const robots = `User-agent: *
 Allow: /
