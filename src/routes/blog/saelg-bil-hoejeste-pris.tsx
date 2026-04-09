@@ -9,11 +9,11 @@ export const Route = createFileRoute('/blog/saelg-bil-hoejeste-pris')({
   head: () => ({
     meta: [
       {
-        title: 'Sådan får du den højeste pris for din bil | Tips | Autoværdi',
+        title: 'Sådan får du den højeste pris for din bil | 10 nemme trin | Autoværdi',
       },
       {
         name: 'description',
-        content: 'Få praktiske tips til at maksimere salgsprisen på din bil. Lær om rengøring, udbedring af skader og forhandling.',
+        content: 'Få 5.000-15.000 kr. mere for din bil med vores 10 nemme trin. Lær hvordan du gør bilen klar til salg og får den bedste pris.',
       },
       {
         name: 'keywords',
@@ -21,11 +21,11 @@ export const Route = createFileRoute('/blog/saelg-bil-hoejeste-pris')({
       },
       {
         property: 'og:title',
-        content: 'Sådan får du den højeste pris for din bil',
+        content: 'Sådan får du den højeste pris for din bil - 10 nemme trin',
       },
       {
         property: 'og:description',
-        content: 'Praktiske tips til at maksimere salgsprisen på din bil.',
+        content: 'Få 5.000-15.000 kr. mere for din bil med vores simple guide.',
       },
       {
         rel: 'canonical',
@@ -38,8 +38,8 @@ export const Route = createFileRoute('/blog/saelg-bil-hoejeste-pris')({
 const articleSchema = {
   '@context': 'https://schema.org',
   '@type': 'Article',
-  headline: 'Sådan får du den højeste pris for din bil',
-  description: 'Få praktiske tips til at maksimere salgsprisen på din bil - fra rengøring til forhandling.',
+  headline: 'Sådan får du den højeste pris for din bil - 10 nemme trin',
+  description: 'Få 5.000-15.000 kr. mere for din bil med vores 10 nemme trin. Lær hvordan du gør bilen klar til salg og får den bedste pris.',
   author: {
     '@type': 'Organization',
     name: 'Autoværdi',
@@ -56,332 +56,568 @@ const articleSchema = {
   dateModified: '2026-04-09',
 }
 
+// Step component for visual appeal
+function Step({ number, title, children, icon }: { number: number; title: string; children: React.ReactNode; icon: React.ReactNode }) {
+  return (
+    <div className="relative flex gap-6 pb-12 last:pb-0">
+      {/* Timeline line */}
+      <div className="absolute left-8 top-16 bottom-0 w-0.5 bg-slate-200 last:hidden" />
+      
+      {/* Number circle */}
+      <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-lg">
+        <span className="text-2xl font-bold">{number}</span>
+      </div>
+      
+      {/* Content */}
+      <div className="flex-1 pt-2">
+        <h2 className="mb-3 text-2xl font-bold text-slate-900">{title}</h2>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+// Pro tip box
+function ProTip({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="my-4 rounded-xl bg-amber-50 border-l-4 border-amber-400 p-4">
+      <div className="flex items-center gap-2 mb-2">
+        <svg className="h-5 w-5 text-amber-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+        </svg>
+        <span className="font-semibold text-amber-900">Pro tip</span>
+      </div>
+      <p className="text-amber-800">{children}</p>
+    </div>
+  )
+}
+
 function SaelgBilHoejestePris() {
   const { language } = useContext(LanguageContext)
 
-  const content = language === 'en' ? (
-    <>
-      <p className="lead">
-        Selling your car at the best price requires preparation and strategy. Here are the most important steps to get the most money for your car.
-      </p>
-
-      <div className="my-8 rounded-xl bg-green-50 p-6">
-        <h3 className="mb-3 text-lg font-semibold text-green-900">Key Takeaways</h3>
-        <ul className="space-y-2 text-green-800">
-          <li className="flex items-start gap-2">
-            <svg className="mt-1 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-            <span>Professional cleaning can increase value by 5,000-15,000 kr.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <svg className="mt-1 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-            <span>Fix minor damage before selling</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <svg className="mt-1 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-            <span>Good photos are crucial for online listings</span>
-          </li>
-        </ul>
-      </div>
-
-      <h2>1. Thorough Cleaning</h2>
-      <p>
-        A clean car signals that it has been well maintained:
-      </p>
-      <ul>
-        <li>Wash and wax the exterior</li>
-        <li>Clean wheels and wheel arches</li>
-        <li>Shampoo the interior and trunk</li>
-        <li>Clean windows inside and out</li>
-        <li>Remove all personal items</li>
-      </ul>
-
-      <h2>2. Fix Minor Damage</h2>
-      <p>
-        Small repairs can provide great returns:
-      </p>
-      <ul>
-        <li>Remove stone chips and scratches</li>
-        <li>Fix dents (PDR is inexpensive)</li>
-        <li>Replace worn wiper blades</li>
-        <li>Fix small rust spots</li>
-      </ul>
-
-      <h2>3. Good Photos</h2>
-      <p>
-        Photos are crucial for attracting buyers:
-      </p>
-      <ul>
-        <li>Take photos in daylight</li>
-        <li>Choose a neutral background</li>
-        <li>Photograph from all angles</li>
-        <li>Remember interior and engine bay</li>
-        <li>Show any damage honestly</li>
-      </ul>
-
-      <div className="my-8 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
-        <h3 className="mb-3 text-xl font-bold">Know Your Car&apos;s Value</h3>
-        <p className="mb-6 text-blue-100">
-          Get a free valuation to know your starting point before selling.
-        </p>
-        <Link 
-          to="/" 
-          className="inline-flex items-center rounded-lg bg-white px-6 py-3 font-semibold text-blue-600 transition-colors hover:bg-blue-50"
+  if (language === 'en') {
+    return (
+      <>
+        <HeadContent />
+        <BlogArticleLayout
+          title="How to Get the Highest Price for Your Car"
+          excerpt="Follow these 10 simple steps to get 5,000-15,000 kr. more when selling your car."
+          date="2026-04-09"
+          readTime="6 min"
+          breadcrumbs={[
+            { label: 'Home', to: '/' },
+            { label: 'Blog', to: '/blog' },
+            { label: 'Get the best price' },
+          ]}
+          schema={articleSchema}
+          language={language}
         >
-          Get Valuation
-          <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-        </Link>
-      </div>
-    </>
-  ) : (
-    <>
-      <p className="lead text-xl">
-        At sælge sin bil til den bedste pris kræver forberedelse og strategi. Her er de vigtigste skridt til at få mest muligt ud af dit bilsalg.
-      </p>
+          <div className="my-8 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 p-8 text-white text-center">
+            <p className="text-3xl font-bold mb-2">5.000 - 15.000 kr.</p>
+            <p className="text-green-100">extra you can get by following these steps</p>
+          </div>
 
-      <div className="my-8 rounded-xl bg-green-50 p-6">
-        <h3 className="mb-3 text-lg font-semibold text-green-900">Hovedpointer</h3>
-        <ul className="space-y-2 text-green-800">
-          <li className="flex items-start gap-2">
-            <svg className="mt-1 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-            <span>Professionel rengøring kan øge værdien med 5.000-15.000 kr.</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <svg className="mt-1 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-            <span>Udbedr småskader inden salg</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <svg className="mt-1 h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-            <span>Gode billeder er afgørende for online annoncer</span>
-          </li>
-        </ul>
-      </div>
+          <Step number={1} title="Clean Your Car Thoroughly" icon={null}>
+            <p className="text-slate-600 mb-4">First impressions matter. A clean car signals that it has been well cared for.</p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {['Wash and wax exterior', 'Clean wheels and arches', 'Shampoo interior', 'Clean all windows', 'Empty trunk'].map((item) => (
+                <div key={item} className="flex items-center gap-2">
+                  <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-slate-700">{item}</span>
+                </div>
+              ))}
+            </div>
+            <ProTip>A professional detailing (500-1,000 kr.) can increase your selling price by several thousand kroner.</ProTip>
+          </Step>
 
-      <h2>1. Grundig rengøring</h2>
-      <p>
-        En ren bil signalerer at den er blevet passet godt på. Invester tid i:
-      </p>
-      <ul>
-        <li><strong>Udvendig vask:</strong> Brug voks for ekstra glans</li>
-        <li><strong>Fælge:</strong> Rengør grundigt i hjulbuer og på fælge</li>
-        <li><strong>Interiør:</strong> Støvsug, shampooney sæder og gulvtæpper</li>
-        <li><strong>Ruder:</strong> Puds alle ruder indvendigt og udvendigt</li>
-        <li><strong>Motorrum:</strong> En let aftørring gør underværker</li>
-        <li><strong>Bagagerum:</strong> Tøm helt og rengør</li>
-      </ul>
-      <p>
-        Overvej en professionel bilvask (kr. 500-1.000) - det kan øge salgsprisen med flere tusinde kroner.
-      </p>
+          <Step number={2} title="Fix Minor Damage" icon={null}>
+            <p className="text-slate-600 mb-4">Small repairs provide great returns. Fix these issues:</p>
+            <div className="space-y-3">
+              {[
+                { label: 'Stone chips & scratches', price: '200-2,000 kr.', impact: '+3,000-5,000 kr. value' },
+                { label: 'Small dents (PDR)', price: '300-800 kr.', impact: '+2,000-4,000 kr. value' },
+                { label: 'New wiper blades', price: '100-300 kr.', impact: 'Better first impression' },
+              ].map((item) => (
+                <div key={item.label} className="flex items-center justify-between rounded-lg bg-slate-50 p-4">
+                  <span className="font-medium text-slate-900">{item.label}</span>
+                  <div className="text-right">
+                    <span className="text-sm text-slate-500">{item.price}</span>
+                    <span className="ml-3 text-sm font-medium text-green-600">{item.impact}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Step>
 
-      <h2>2. Udbedring af mindre skader</h2>
-      <p>
-        Små reparationer kan give stor afkast:
-      </p>
-      <ul>
-        <li><strong>Stenslag og ridser:</strong> Lakstift eller professionel lakering (kr. 200-2.000)</li>
-        <li><strong>Små buler:</strong> PDR (Paintless Dent Removal) koster kr. 300-800 pr. bue</li>
-        <li><strong>Viskerblade:</strong> Nye koster kr. 100-300 og giver et godt indtryk</li>
-        <li><strong>Pærer:</strong> Skift udbrændte pærer</li>
-        <li><strong>Små rustpletter:</strong> Behandles inden de vokser</li>
-      </ul>
+          <Step number={3} title="Gather Documentation" icon={null}>
+            <p className="text-slate-600 mb-4">Complete documentation builds trust and justifies a higher price.</p>
+            <div className="rounded-xl bg-slate-50 p-6">
+              <div className="grid gap-3 sm:grid-cols-2">
+                {['Service records', 'Inspection reports', 'Receipts for new parts', 'All keys', 'Owner\'s manual'].map((doc) => (
+                  <div key={doc} className="flex items-center gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                      </svg>
+                    </div>
+                    <span className="text-slate-700">{doc}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Step>
 
-      <h2>3. Forberedelse af dokumentation</h2>
-      <p>
-        Gennemsigtighed skaber tillid:
-      </p>
-      <ul>
-        <li><strong>Servicebog:</strong> Saml alle servicebilag kronologisk</li>
-        <li><strong>Synrapporter:</strong> Vis at bilen er godkendt</li>
-        <li><strong>Regninger:</strong> Dokumenter nye dæk, bremser eller reparationer</li>
-        <li><strong>Brugermanual:</strong> Find alle nøgler og manualer frem</li>
-        <li><strong>Udstyrsliste:</strong> Lav en oversigt over ekstraudstyr</li>
-      </ul>
+          <Step number={4} title="Take Great Photos" icon={null}>
+            <p className="text-slate-600 mb-4">Photos are your most important sales tool. Take at least 10-15 photos:</p>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                { title: 'Exterior', items: ['Front angle', 'Rear angle', 'Both sides', 'Wheels'] },
+                { title: 'Interior', items: ['Dashboard', 'Front seats', 'Rear seats', 'Trunk'] },
+                { title: 'Details', items: ['Engine bay', 'Mileage', 'Any damage', 'Extra equipment'] },
+              ].map((section) => (
+                <div key={section.title} className="rounded-xl border border-slate-200 p-4">
+                  <h4 className="mb-3 font-semibold text-slate-900">{section.title}</h4>
+                  <ul className="space-y-2 text-sm text-slate-600">
+                    {section.items.map((item) => (
+                      <li key={item} className="flex items-center gap-2">
+                        <svg className="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                        </svg>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <ProTip>Take photos on a cloudy day or in the "golden hour" (just after sunrise or before sunset) for the best lighting.</ProTip>
+          </Step>
 
-      <h2>4. Professionelle billeder</h2>
-      <p>
-        Gode billeder er afgørende for at tiltrække købere:
-      </p>
-      <ul>
-        <li><strong>Lys:</strong> Tag billeder i dagslys, helst på en skyet dag</li>
-        <li><strong>Baggrund:</strong> Vælg en neutral baggrund uforstyrret</li>
-        <li><strong>Vinkler:</strong> Forfra, bagfra, sider, skråt forfra og bagfra</li>
-        <li><strong>Interiør:</strong> Føresæde, bagsæde, instrumentbræt, bagagerum</li>
-        <li><strong>Detaljer:</strong> Fælge, lygter, eventuelle skader (ærlighed betaler sig)</li>
-      </ul>
+          <Step number={5} title="Set the Right Price" icon={null}>
+            <p className="text-slate-600 mb-4">Research the market to price your car correctly.</p>
+            <div className="rounded-xl bg-blue-50 p-6">
+              <h4 className="mb-4 font-semibold text-blue-900">Price Strategy:</h4>
+              <ol className="space-y-3 text-blue-800">
+                <li className="flex gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm font-bold">1</span>
+                  <span>Get a free valuation from Autoværdi</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm font-bold">2</span>
+                  <span>Check similar cars on bilbasen.dk</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm font-bold">3</span>
+                  <span>Set your price 5-10% above your minimum to allow for negotiation</span>
+                </li>
+              </ol>
+            </div>
+          </Step>
 
-      <h2>5. Prissætning og annoncering</h2>
-      <p>
-        Den rigtige pris er afgørende:
-      </p>
-      <ul>
-        <li><strong>Vurder først:</strong> Brug vores gratis værktøj til at finde markedsværdi</li>
-        <li><strong>Sæt højere pris:</strong> Læg 5-10% oveni til forhandling</li>
-        <li><strong>Sammenlign:</strong> Se hvad lignende biler sælges for</li>
-        <li><strong>Vær realistisk:</strong> En for høj pris skræmmer købere væk</li>
-      </ul>
-
-      <h2>6. Skriv en god annoncetekst</h2>
-      <p>
-        En god annonce sælger:
-      </p>
-      <ul>
-        <li>Start med de vigtigste facts: mærke, model, årgang, km</li>
-        <li>Nævn nylige reparationer og nye dele</li>
-        <li>Beskriv udstyret kort og præcist</li>
-        <li>Vær ærlig om fejl og mangler</li>
-        <li>Inkluder årsagen til salget (fremstår troværdigt)</li>
-      </ul>
-
-      <h2>7. Forberedelse til fremvisning</h2>
-      <p>
-        Gør bilen klar til køberen:
-      </p>
-      <ul>
-        <li><strong>Tank op:</strong> En fuld tank viser overskud</li>
-        <li><strong>Varm motor:</strong> Start bilen 10 min. inden fremvisning</li>
-        <li><strong>Rens:</strong> En hurtig aftørring af støv</li>
-        <li><strong>Luft ud:</strong> Undgå lugte fra mad eller rygning</li>
-        <li><strong>Parker godt:</strong> Et pænt sted med plads til prøvekørsel</li>
-      </ul>
-
-      <h2>8. Forhandling</h2>
-      <p>
-        Når køberen kommer:
-      </p>
-      <ul>
-        <li><strong>Vær høflig:</strong> Lyt til køberens eventuelle bekymringer</li>
-        <li><strong>Fremhæv:</strong> Nævn servicehistorik og nyere dele</li>
-        <li><strong>Vær ærlig:</strong> Vedkend kendte fejl</li>
-        <li><strong>Kend din bundpris:</strong> Beslut på forhånd hvor lavt du vil gå</li>
-        <li><strong>Tilbud:</strong> &quot;Hvis du køber i dag, kan vi gøre det til X kr.&quot;</li>
-      </ul>
-
-      <h2>9. Salgskanaler</h2>
-      <p>
-        Vælg den rigtige platform:
-      </p>
-      <div className="my-6 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-lg border border-slate-200 p-4">
-          <h4 className="font-semibold text-slate-900">bilbasen.dk</h4>
-          <p className="text-sm text-slate-600">Størst publikum, kræver betaling</p>
-        </div>
-        <div className="rounded-lg border border-slate-200 p-4">
-          <h4 className="font-semibold text-slate-900">dba.dk</h4>
-          <p className="text-sm text-slate-600">God til privat salg, rimelig pris</p>
-        </div>
-        <div className="rounded-lg border border-slate-200 p-4">
-          <h4 className="font-semibold text-slate-900">guloggratis.dk</h4>
-          <p className="text-sm text-slate-600">Lokalt salg, ofte gratis</p>
-        </div>
-        <div className="rounded-lg border border-slate-200 p-4">
-          <h4 className="font-semibold text-slate-900">Forhandler</h4>
-          <p className="text-sm text-slate-600">Hurtigst men lavere pris</p>
-        </div>
-      </div>
-
-      <h2>10. Afslutning af handlen</h2>
-      <p>
-        Når prisen er på plads:
-      </p>
-      <ul>
-        <li>Skriv en købskontrakt (find skabelon online)</li>
-        <li>Sørg for sikker betaling (bankoverførsel er bedst)</li>
-        <li>Udfyld registreringsattest sammen</li>
-        <li>Giv alle nøgler og dokumenter fra dig</li>
-        <li>Skift forsikring og nummerplader</li>
-      </ul>
-
-      <div className="my-8 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
-        <h3 className="mb-3 text-xl font-bold">Start med at kende din bils værdi</h3>
-        <p className="mb-6 text-blue-100">
-          Få en gratis og øjeblikkelig vurdering af din bil. Det er første skridt mod at få den bedste pris.
-        </p>
-        <Link 
-          to="/" 
-          className="inline-flex items-center rounded-lg bg-white px-6 py-3 font-semibold text-blue-600 transition-colors hover:bg-blue-50"
-        >
-          Få vurdering nu
-          <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-        </Link>
-      </div>
-
-      <h2>Checkliste før salg</h2>
-      <div className="my-6 rounded-lg bg-slate-50 p-6">
-        <ul className="space-y-3">
-          {[
-            'Bilen er vasket og rengjort indvendigt og udvendigt',
-            'Småskader er udbedret',
-            'Alle dokumenter er samlet',
-            'Gode billeder er taget',
-            'Markedsværdi er undersøgt',
-            'Pris er sat med plads til forhandling',
-            'Annonce er skrevet',
-            'Købskontrakt er klar',
-          ].map((item, i) => (
-            <li key={i} className="flex items-center gap-3">
-              <svg className="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div className="my-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-center text-white">
+            <h3 className="mb-3 text-2xl font-bold">Ready to sell?</h3>
+            <p className="mb-6 text-blue-100">Get a free valuation first to know exactly what your car is worth.</p>
+            <Link 
+              to="/" 
+              className="inline-flex items-center rounded-xl bg-white px-8 py-4 text-lg font-bold text-blue-600 transition-transform hover:scale-105"
+            >
+              Get Free Valuation
+              <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <h2>Konklusion</h2>
-      <p>
-        At få den højeste pris for sin bil kræver indsats, men det kan betale sig godt. En velforberedt bil kan sagtens sælges for 5.000-15.000 kr. mere end en der &quot;bare sættes til salg&quot;. Brug tid på forberedelsen og vær tålmodig med at finde den rigtige køber.
-      </p>
-
-      <h2>Relaterede artikler</h2>
-      <div className="grid gap-4 not-prose">
-        <Link to="/blog/hvad-er-min-bil-værd" className="group flex items-center gap-4 rounded-lg border border-slate-200 p-4 transition-colors hover:border-blue-300 hover:bg-blue-50/50">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-            </svg>
+            </Link>
           </div>
-          <div>
-            <h4 className="font-semibold text-slate-900 group-hover:text-blue-600">Hvad er min bil værd? Komplet guide</h4>
-            <p className="text-sm text-slate-600">Lær om faktorer der påvirker prisen</p>
-          </div>
-        </Link>
-      </div>
-    </>
-  )
 
+          <Step number={6} title="Write a Compelling Ad" icon={null}>
+            <p className="text-slate-600 mb-4">Your ad text should be honest but highlight the best features.</p>
+            <div className="rounded-xl border-2 border-dashed border-slate-300 p-6">
+              <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Template Structure:</h4>
+              <div className="space-y-2 text-slate-700">
+                <p><strong>1. Headline:</strong> Year + Brand + Model + Key feature</p>
+                <p><strong>2. Key facts:</strong> Mileage, service history, recent repairs</p>
+                <p><strong>3. Equipment:</strong> List important features</p>
+                <p><strong>4. Condition:</strong> Be honest about any issues</p>
+                <p><strong>5. Why selling:</strong> Brief explanation (creates trust)</p>
+              </div>
+            </div>
+          </Step>
+
+          <Step number={7} title="Choose Where to Sell" icon={null}>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                { name: 'bilbasen.dk', desc: 'Largest audience, paid listing', best: 'Most cars' },
+                { name: 'dba.dk', desc: 'Good for private sales', best: 'Popular models' },
+                { name: 'guloggratis.dk', desc: 'Often free, local buyers', best: 'Budget cars' },
+                { name: 'Dealer', desc: 'Fastest sale, lower price', best: 'Quick sale needed' },
+              ].map((platform) => (
+                <div key={platform.name} className="rounded-xl border border-slate-200 p-4">
+                  <h4 className="font-bold text-slate-900">{platform.name}</h4>
+                  <p className="text-sm text-slate-600">{platform.desc}</p>
+                  <span className="mt-2 inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+                    Best for: {platform.best}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Step>
+
+          <Step number={8} title="Prepare for Viewings" icon={null}>
+            <p className="text-slate-600 mb-4">Make your car shine during viewings:</p>
+            <div className="rounded-xl bg-slate-50 p-6">
+              <ul className="space-y-3">
+                {[
+                  'Fill up the tank (shows you care)',
+                  'Warm up the engine 10 min before arrival',
+                  'Have all documents ready',
+                  'Choose a nice location with space for test drive',
+                  'Be honest about any issues',
+                ].map((tip, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <svg className="mt-0.5 h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-slate-700">{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Step>
+
+          <Step number={9} title="Negotiate Smart" icon={null}>
+            <p className="text-slate-600 mb-4">Be prepared for negotiation:</p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl bg-red-50 p-4">
+                <h4 className="mb-2 font-semibold text-red-900">Don't:</h4>
+                <ul className="space-y-1 text-sm text-red-800">
+                  <li>• Reveal your minimum price</li>
+                  <li>• Accept the first offer</li>
+                  <li>• Seem desperate to sell</li>
+                </ul>
+              </div>
+              <div className="rounded-xl bg-green-50 p-4">
+                <h4 className="mb-2 font-semibold text-green-900">Do:</h4>
+                <ul className="space-y-1 text-sm text-green-800">
+                  <li>• Know your bottom price</li>
+                  <li>• Highlight recent repairs</li>
+                  <li>• Offer "today only" deals</li>
+                </ul>
+              </div>
+            </div>
+          </Step>
+
+          <Step number={10} title="Close the Deal Safely" icon={null}>
+            <p className="text-slate-600 mb-4">Protect yourself when completing the sale:</p>
+            <div className="rounded-xl bg-slate-900 p-6 text-white">
+              <ul className="space-y-3">
+                {[
+                  'Use a written contract (find templates online)',
+                  'Accept bank transfer only (no cash)',
+                  'Complete registration papers together',
+                  'Keep copies of all documents',
+                  'Cancel your insurance after sale is complete',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500 text-sm font-bold">{i + 1}</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Step>
+
+          {/* Final Summary */}
+          <div className="mt-12 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 p-8 text-white">
+            <h3 className="mb-6 text-center text-2xl font-bold">Quick Checklist</h3>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                'Car cleaned inside & out',
+                'Minor damage fixed',
+                'Documents organized',
+                'Photos taken (10-15)',
+                'Price researched',
+                'Ad written',
+                'Platform chosen',
+                'Viewing prepared',
+                'Bottom price set',
+                'Contract ready',
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded border-2 border-white/50">
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
+                  </div>
+                  <span>{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </BlogArticleLayout>
+      </>
+    )
+  }
+
+  // Danish version
   return (
     <>
       <HeadContent />
       <BlogArticleLayout
-        title={language === 'da' ? 'Sådan får du den højeste pris for din bil' : 'How to Get the Highest Price for Your Car'}
-        excerpt={language === 'da' ? 'Få praktiske tips til at maksimere salgsprisen på din bil - fra rengøring til forhandling.' : 'Practical tips to maximize the sale price of your car - from cleaning to negotiation.'}
+        title="Sådan får du den højeste pris for din bil"
+        excerpt="Følg disse 10 simple trin og få 5.000-15.000 kr. mere når du sælger din bil."
         date="2026-04-09"
         readTime="6 min"
         breadcrumbs={[
-          { label: language === 'da' ? 'Forside' : 'Home', to: '/' },
+          { label: 'Forside', to: '/' },
           { label: 'Blog', to: '/blog' },
-          { label: language === 'da' ? 'Få højeste pris' : 'Get best price' },
+          { label: 'Få højeste pris' },
         ]}
         schema={articleSchema}
         language={language}
       >
-        {content}
+        <div className="my-8 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 p-8 text-white text-center">
+          <p className="text-3xl font-bold mb-2">5.000 - 15.000 kr.</p>
+          <p className="text-green-100">ekstra du kan få ved at følge disse trin</p>
+        </div>
+
+        <Step number={1} title="Rengør bilen grundigt" icon={null}>
+          <p className="text-slate-600 mb-4">Førstehåndsindtrykket betyder alt. En ren bil signalerer at den er blevet passet godt på.</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {['Vask og voks udvendigt', 'Rengør fælge og hjulbuer', 'Shampooney interiør', 'Puds alle ruder', 'Tøm bagagerum'].map((item) => (
+              <div key={item} className="flex items-center gap-2">
+                <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-slate-700">{item}</span>
+              </div>
+            ))}
+          </div>
+          <ProTip>En professionel bilvask (500-1.000 kr.) kan øge salgsprisen med flere tusinde kroner.</ProTip>
+        </Step>
+
+        <Step number={2} title="Udbedr mindre skader" icon={null}>
+          <p className="text-slate-600 mb-4">Små reparationer giver stor afkast. Fix disse problemer:</p>
+          <div className="space-y-3">
+            {[
+              { label: 'Stenslag & ridser', price: '200-2.000 kr.', impact: '+3.000-5.000 kr. værdi' },
+              { label: 'Små buler (PDR)', price: '300-800 kr.', impact: '+2.000-4.000 kr. værdi' },
+              { label: 'Nye viskerblade', price: '100-300 kr.', impact: 'Bedre første indtryk' },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center justify-between rounded-lg bg-slate-50 p-4">
+                <span className="font-medium text-slate-900">{item.label}</span>
+                <div className="text-right">
+                  <span className="text-sm text-slate-500">{item.price}</span>
+                  <span className="ml-3 text-sm font-medium text-green-600">{item.impact}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Step>
+
+        <Step number={3} title="Saml dokumentation" icon={null}>
+          <p className="text-slate-600 mb-4">Komplet dokumentation skaber tillid og retfærdiggør en højere pris.</p>
+          <div className="rounded-xl bg-slate-50 p-6">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {['Servicehistorik', 'Synrapporter', 'Regninger for nye dele', 'Alle nøgler', 'Brugermanual'].map((doc) => (
+                <div key={doc} className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                  </div>
+                  <span className="text-slate-700">{doc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Step>
+
+        <Step number={4} title="Tag gode billeder" icon={null}>
+          <p className="text-slate-600 mb-4">Billeder er dit vigtigste salgsværktøj. Tag mindst 10-15 billeder:</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {[
+              { title: 'Udvendigt', items: ['Front vinkel', 'Bag vinkel', 'Begge sider', 'Fælge'] },
+              { title: 'Interiør', items: ['Instrumentbræt', 'Førersæde', 'Bagsæde', 'Bagagerum'] },
+              { title: 'Detaljer', items: ['Motorrum', 'Kilometerstand', 'Eventuelle skader', 'Ekstraudstyr'] },
+            ].map((section) => (
+              <div key={section.title} className="rounded-xl border border-slate-200 p-4">
+                <h4 className="mb-3 font-semibold text-slate-900">{section.title}</h4>
+                <ul className="space-y-2 text-sm text-slate-600">
+                  {section.items.map((item) => (
+                    <li key={item} className="flex items-center gap-2">
+                      <svg className="h-4 w-4 text-blue-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <ProTip>Tag billeder på en skyet dag eller i "gyldne time" (lige efter solopgang eller før solnedgang) for det bedste lys.</ProTip>
+        </Step>
+
+        <Step number={5} title="Sæt den rigtige pris" icon={null}>
+          <p className="text-slate-600 mb-4">Undersøg markedet for at prissætte din bil korrekt.</p>
+          <div className="rounded-xl bg-blue-50 p-6">
+            <h4 className="mb-4 font-semibold text-blue-900">Prisstrategi:</h4>
+            <ol className="space-y-3 text-blue-800">
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm font-bold">1</span>
+                <span>Få en gratis vurdering fra Autoværdi</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm font-bold">2</span>
+                <span>Tjek lignende biler på bilbasen.dk</span>
+              </li>
+              <li className="flex gap-3">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-200 text-sm font-bold">3</span>
+                <span>Sæt din pris 5-10% over minimum for at have plads til forhandling</span>
+              </li>
+            </ol>
+          </div>
+        </Step>
+
+        <div className="my-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-center text-white">
+          <h3 className="mb-3 text-2xl font-bold">Klar til at sælge?</h3>
+          <p className="mb-6 text-blue-100">Få en gratis vurdering først, så du ved præcis hvad din bil er værd.</p>
+          <Link 
+            to="/" 
+            className="inline-flex items-center rounded-xl bg-white px-8 py-4 text-lg font-bold text-blue-600 transition-transform hover:scale-105"
+          >
+            Få gratis vurdering
+            <svg className="ml-2 h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </Link>
+        </div>
+
+        <Step number={6} title="Skriv en god annonce" icon={null}>
+          <p className="text-slate-600 mb-4">Din annoncetekst skal være ærlig men fremhæve de bedste egenskaber.</p>
+          <div className="rounded-xl border-2 border-dashed border-slate-300 p-6">
+            <h4 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-500">Skabelon:</h4>
+            <div className="space-y-2 text-slate-700">
+              <p><strong>1. Overskrift:</strong> Årgang + Mærke + Model + vigtigste feature</p>
+              <p><strong>2. Nøgletal:</strong> Kilometer, servicehistorik, nylige reparationer</p>
+              <p><strong>3. Udstyr:</strong> List vigtige features</p>
+              <p><strong>4. Stand:</strong> Vær ærlig om eventuelle problemer</p>
+              <p><strong>5. Årsag til salg:</strong> Kort forklaring (skaber tillid)</p>
+            </div>
+          </div>
+        </Step>
+
+        <Step number={7} title="Vælg salgskanal" icon={null}>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              { name: 'bilbasen.dk', desc: 'Størst publikum, betalt annonce', best: 'De fleste biler' },
+              { name: 'dba.dk', desc: 'God til privat salg', best: 'Populære modeller' },
+              { name: 'guloggratis.dk', desc: 'Ofte gratis, lokale købere', best: 'Billige biler' },
+              { name: 'Forhandler', desc: 'Hurtigst, lavere pris', best: 'Hvis du skal sælge hurtigt' },
+            ].map((platform) => (
+              <div key={platform.name} className="rounded-xl border border-slate-200 p-4">
+                <h4 className="font-bold text-slate-900">{platform.name}</h4>
+                <p className="text-sm text-slate-600">{platform.desc}</p>
+                <span className="mt-2 inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+                  Bedst til: {platform.best}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Step>
+
+        <Step number={8} title="Forbered fremvisning" icon={null}>
+          <p className="text-slate-600 mb-4">Gør din bil klar til fremvisning:</p>
+          <div className="rounded-xl bg-slate-50 p-6">
+            <ul className="space-y-3">
+              {[
+                'Tank fuld (viser du passer på bilen)',
+                'Varm motor op 10 min før ankomst',
+                'Have alle dokumenter klar',
+                'Vælg et pænt sted med plads til prøvekørsel',
+                'Vær ærlig om eventuelle problemer',
+              ].map((tip, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <svg className="mt-0.5 h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-slate-700">{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Step>
+
+        <Step number={9} title="Forhandl klogt" icon={null}>
+          <p className="text-slate-600 mb-4">Vær forberedt på forhandling:</p>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-xl bg-red-50 p-4">
+              <h4 className="mb-2 font-semibold text-red-900">Undgå:</h4>
+              <ul className="space-y-1 text-sm text-red-800">
+                <li>• Afslør din minimumspris</li>
+                <li>• Accepter første bud</li>
+                <li>• Virk desperat</li>
+              </ul>
+            </div>
+            <div className="rounded-xl bg-green-50 p-4">
+              <h4 className="mb-2 font-semibold text-green-900">Gør i stedet:</h4>
+              <ul className="space-y-1 text-sm text-green-800">
+                <li>• Kend din bundpris</li>
+                <li>• Fremhæv nye dele/reparationer</li>
+                <li>• Tilbyd "kun i dag"-pris</li>
+              </ul>
+            </div>
+          </div>
+        </Step>
+
+        <Step number={10} title="Afslut handlen sikkert" icon={null}>
+          <p className="text-slate-600 mb-4">Beskyt dig selv når handlen skal gennemføres:</p>
+          <div className="rounded-xl bg-slate-900 p-6 text-white">
+            <ul className="space-y-3">
+              {[
+                'Brug skriftlig kontrakt (find skabeloner online)',
+                'Accepter kun bankoverførsel (ikke kontanter)',
+                'Udfyld registreringsattest sammen',
+                'Behold kopier af alle dokumenter',
+                'Opsig forsikring når salget er gennemført',
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500 text-sm font-bold">{i + 1}</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Step>
+
+        {/* Final Summary */}
+        <div className="mt-12 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 p-8 text-white">
+          <h3 className="mb-6 text-center text-2xl font-bold">Huskeliste</h3>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              'Bilen er vasket indvendigt & udvendigt',
+              'Mindre skader udbedret',
+              'Dokumenter organiseret',
+              'Billeder taget (10-15 stk)',
+              'Pris undersøgt',
+              'Annonce skrevet',
+              'Salgskanal valgt',
+              'Fremvisning forberedt',
+              'Bundpris besluttet',
+              'Kontrakt klar',
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded border-2 border-white/50">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                </div>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </BlogArticleLayout>
     </>
   )
