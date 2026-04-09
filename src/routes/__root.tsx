@@ -9,7 +9,7 @@ import Footer from '@components/Footer'
 import appCss from '../styles.css?url'
 
 // SEO-optimized metadata
-const SITE_URL = 'https://www.autovaerdi.dk'
+const SITE_URL = 'https://www.xn--autovrdi-n0a.dk'
 const SITE_NAME = 'Autoværdi'
 const DEFAULT_TITLE = 'Hvad er min bil værd? | Gratis bilvurdering → Autoværdi'
 const DEFAULT_DESCRIPTION = 'Vil du vide "hvad er min bil værd"? Få en gratis og øjeblikkelig bilvurdering. Indtast nummerplade og få realistisk pris baseret på markedsværdi. Prøv nu!'

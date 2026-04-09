@@ -85,7 +85,7 @@ function StepIcon({ index }: { index: number }) {
 }
 
 // SEO metadata for this route
-const SITE_URL = 'https://www.autovaerdi.dk'
+const SITE_URL = 'https://www.xn--autovrdi-n0a.dk'
 
 // Enhanced FAQ structured data for SEO - targets primary keyword
 const faqStructuredData = {

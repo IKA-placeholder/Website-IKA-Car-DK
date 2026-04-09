@@ -23,7 +23,7 @@ export const Route = createFileRoute('/blog/')({
       },
       {
         rel: 'canonical',
-        href: 'https://www.autovaerdi.dk/blog',
+        href: 'https://www.xn--autovrdi-n0a.dk/blog',
       },
     ],
   }),

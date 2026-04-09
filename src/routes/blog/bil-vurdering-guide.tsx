@@ -27,7 +27,7 @@ export const Route = createFileRoute('/blog/bil-vurdering-guide')({
       },
       {
         rel: 'canonical',
-        href: 'https://www.autovaerdi.dk/blog/bil-vurdering-guide',
+        href: 'https://www.xn--autovrdi-n0a.dk/blog/bil-vurdering-guide',
       },
     ],
   }),
@@ -47,7 +47,7 @@ const articleSchema = {
     name: 'Autoværdi',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.autovaerdi.dk/favicon.png',
+      url: 'https://www.xn--autovrdi-n0a.dk/favicon.png',
     },
   },
   datePublished: '2026-04-09',

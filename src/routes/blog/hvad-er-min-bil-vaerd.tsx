@@ -39,7 +39,7 @@ export const Route = createFileRoute('/blog/hvad-er-min-bil-vaerd')({
       },
       {
         rel: 'canonical',
-        href: 'https://www.autovaerdi.dk/blog/hvad-er-min-bil-vaerd',
+        href: 'https://www.xn--autovrdi-n0a.dk/blog/hvad-er-min-bil-vaerd',
       },
     ],
   }),
@@ -50,7 +50,7 @@ const articleSchema = {
   '@type': 'Article',
   headline: 'Hvad er min bil værd? Den komplette guide 2026',
   description: 'Vil du vide hvad din bil er værd? Læs vores komplette guide om bilvurdering og find ud af hvordan du får den bedste pris for din bil.',
-  image: 'https://www.autovaerdi.dk/favicon.png',
+  image: 'https://www.xn--autovrdi-n0a.dk/favicon.png',
   author: {
     '@type': 'Organization',
     name: 'Autoværdi',
@@ -60,7 +60,7 @@ const articleSchema = {
     name: 'Autoværdi',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.autovaerdi.dk/favicon.png',
+      url: 'https://www.xn--autovrdi-n0a.dk/favicon.png',
     },
   },
   datePublished: '2026-04-09',

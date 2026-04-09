@@ -27,7 +27,7 @@ export const Route = createFileRoute('/blog/saelg-bil-hoejeste-pris')({
       },
       {
         rel: 'canonical',
-        href: 'https://www.autovaerdi.dk/blog/saelg-bil-hoejeste-pris',
+        href: 'https://www.xn--autovrdi-n0a.dk/blog/saelg-bil-hoejeste-pris',
       },
     ],
   }),
@@ -47,7 +47,7 @@ const articleSchema = {
     name: 'Autoværdi',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.autovaerdi.dk/favicon.png',
+      url: 'https://www.xn--autovrdi-n0a.dk/favicon.png',
     },
   },
   datePublished: '2026-04-09',
