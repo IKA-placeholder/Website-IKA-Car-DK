@@ -14,7 +14,7 @@ export default defineEventHandler(() => {
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.xn--autovrdi-n0a.dk/blog/hvad-er-min-bil-vaerd</loc>
+    <loc>https://www.xn--autovrdi-n0a.dk/blog/hvad-er-min-bil-værd</loc>
     <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

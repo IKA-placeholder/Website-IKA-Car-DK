@@ -269,7 +269,7 @@ function BilVurderingGuide() {
 
         <h2>Relaterede artikler</h2>
         <ul>
-          <li><Link to="/blog/hvad-er-min-bil-vaerd" className="text-blue-600 hover:underline">Hvad er min bil værd? Den komplette guide</Link></li>
+          <li><Link to="/blog/hvad-er-min-bil-værd" className="text-blue-600 hover:underline">Hvad er min bil værd? Den komplette guide</Link></li>
           <li><Link to="/blog/saelg-bil-hoejeste-pris" className="text-blue-600 hover:underline">Sådan får du den højeste pris for din bil</Link></li>
         </ul>
       </div>

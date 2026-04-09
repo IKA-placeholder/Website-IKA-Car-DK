@@ -31,7 +31,7 @@ export const Route = createFileRoute('/blog/')({
 
 const blogPostsDa = [
   {
-    slug: 'hvad-er-min-bil-vaerd',
+    slug: 'hvad-er-min-bil-værd',
     title: 'Hvad er min bil værd? Den komplette guide 2026',
     excerpt: 'Vil du vide hvad din bil er værd? Læs vores komplette guide om bilvurdering og find ud af hvordan du får den bedste pris.',
     date: '9. april 2026',

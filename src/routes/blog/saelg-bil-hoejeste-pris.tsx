@@ -324,7 +324,7 @@ function SaelgBilHoejestePris() {
 
         <h2>Relaterede artikler</h2>
         <ul>
-          <li><Link to="/blog/hvad-er-min-bil-vaerd" className="text-blue-600 hover:underline">Hvad er min bil værd? Den komplette guide</Link></li>
+          <li><Link to="/blog/hvad-er-min-bil-værd" className="text-blue-600 hover:underline">Hvad er min bil værd? Den komplette guide</Link></li>
           <li><Link to="/blog/bil-vurdering-guide" className="text-blue-600 hover:underline">Sådan vurderer du din bil selv</Link></li>
         </ul>
       </div>

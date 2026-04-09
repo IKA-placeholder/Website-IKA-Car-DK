@@ -545,7 +545,7 @@ function Home() {
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             <Link 
-              to="/blog/hvad-er-min-bil-vaerd" 
+              to="/blog/hvad-er-min-bil-værd" 
               className="group p-6 rounded-2xl border border-slate-200 bg-slate-50/50 hover:bg-blue-50/50 hover:border-blue-200 transition-all"
             >
               <div className="mb-4 w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
