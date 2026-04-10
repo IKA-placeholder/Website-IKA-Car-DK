@@ -30,7 +30,18 @@ export const predictPlate = createServerFn({ method: "POST" })
       );
       if (!res.ok) {
         const text = await res.text().catch(() => "{}");
-        const json = JSON.parse(text);
+        let errorMessage = "Kunne ikke hente bildata";
+        
+        // Try to parse JSON, but handle non-JSON responses gracefully
+        try {
+          const json = JSON.parse(text);
+          errorMessage = json.message || errorMessage;
+        } catch {
+          // Response is not JSON (e.g., HTML error page)
+          // Use HTTP status code to determine error message
+          errorMessage = text.slice(0, 100).trim(); // Get first 100 chars for debugging
+        }
+        
         // Provide specific error messages based on status code
         if (res.status === 429) {
           throw new Error("For mange anmodninger. Vent et øjeblik og prøv igen.");
@@ -38,7 +49,10 @@ export const predictPlate = createServerFn({ method: "POST" })
         if (res.status === 404) {
           throw new Error("Nummerplade ikke fundet. Tjek venligst nummerpladen.");
         }
-        throw new Error(json.message || "Kunne ikke hente bildata");
+        if (res.status >= 500) {
+          throw new Error("Serverfejl. Prøv igen senere.");
+        }
+        throw new Error(errorMessage || "Kunne ikke hente bildata");
       }
       
       const json = await res.json();

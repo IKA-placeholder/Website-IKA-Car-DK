@@ -13,6 +13,10 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
+import { Route as BlogSaelgBilHoejestePrisRouteImport } from './routes/blog/saelg-bil-hoejeste-pris'
+import { Route as BlogHvadErMinBilVChar230rdRouteImport } from './routes/blog/hvad-er-min-bil-værd'
+import { Route as BlogBilVurderingGuideRouteImport } from './routes/blog/bil-vurdering-guide'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -34,18 +38,48 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSaelgBilHoejestePrisRoute =
+  BlogSaelgBilHoejestePrisRouteImport.update({
+    id: '/blog/saelg-bil-hoejeste-pris',
+    path: '/blog/saelg-bil-hoejeste-pris',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BlogHvadErMinBilVChar230rdRoute =
+  BlogHvadErMinBilVChar230rdRouteImport.update({
+    id: '/blog/hvad-er-min-bil-værd',
+    path: '/blog/hvad-er-min-bil-værd',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BlogBilVurderingGuideRoute = BlogBilVurderingGuideRouteImport.update({
+  id: '/blog/bil-vurdering-guide',
+  path: '/blog/bil-vurdering-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/blog/bil-vurdering-guide': typeof BlogBilVurderingGuideRoute
+  '/blog/hvad-er-min-bil-værd': typeof BlogHvadErMinBilVChar230rdRoute
+  '/blog/saelg-bil-hoejeste-pris': typeof BlogSaelgBilHoejestePrisRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/blog/bil-vurdering-guide': typeof BlogBilVurderingGuideRoute
+  '/blog/hvad-er-min-bil-værd': typeof BlogHvadErMinBilVChar230rdRoute
+  '/blog/saelg-bil-hoejeste-pris': typeof BlogSaelgBilHoejestePrisRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +87,42 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/blog/bil-vurdering-guide': typeof BlogBilVurderingGuideRoute
+  '/blog/hvad-er-min-bil-værd': typeof BlogHvadErMinBilVChar230rdRoute
+  '/blog/saelg-bil-hoejeste-pris': typeof BlogSaelgBilHoejestePrisRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/login' | '/signup'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/signup'
+    | '/blog/bil-vurdering-guide'
+    | '/blog/hvad-er-min-bil-værd'
+    | '/blog/saelg-bil-hoejeste-pris'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/login' | '/signup'
-  id: '__root__' | '/' | '/admin' | '/login' | '/signup'
+  to:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/signup'
+    | '/blog/bil-vurdering-guide'
+    | '/blog/hvad-er-min-bil-værd'
+    | '/blog/saelg-bil-hoejeste-pris'
+    | '/blog'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/signup'
+    | '/blog/bil-vurdering-guide'
+    | '/blog/hvad-er-min-bil-værd'
+    | '/blog/saelg-bil-hoejeste-pris'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +130,10 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
+  BlogBilVurderingGuideRoute: typeof BlogBilVurderingGuideRoute
+  BlogHvadErMinBilVChar230rdRoute: typeof BlogHvadErMinBilVChar230rdRoute
+  BlogSaelgBilHoejestePrisRoute: typeof BlogSaelgBilHoejestePrisRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +166,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/saelg-bil-hoejeste-pris': {
+      id: '/blog/saelg-bil-hoejeste-pris'
+      path: '/blog/saelg-bil-hoejeste-pris'
+      fullPath: '/blog/saelg-bil-hoejeste-pris'
+      preLoaderRoute: typeof BlogSaelgBilHoejestePrisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/hvad-er-min-bil-værd': {
+      id: '/blog/hvad-er-min-bil-værd'
+      path: '/blog/hvad-er-min-bil-værd'
+      fullPath: '/blog/hvad-er-min-bil-værd'
+      preLoaderRoute: typeof BlogHvadErMinBilVChar230rdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/bil-vurdering-guide': {
+      id: '/blog/bil-vurdering-guide'
+      path: '/blog/bil-vurdering-guide'
+      fullPath: '/blog/bil-vurdering-guide'
+      preLoaderRoute: typeof BlogBilVurderingGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +202,10 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
+  BlogBilVurderingGuideRoute: BlogBilVurderingGuideRoute,
+  BlogHvadErMinBilVChar230rdRoute: BlogHvadErMinBilVChar230rdRoute,
+  BlogSaelgBilHoejestePrisRoute: BlogSaelgBilHoejestePrisRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
