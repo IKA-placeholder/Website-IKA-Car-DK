@@ -137,7 +137,7 @@ const faqStructuredData = {
       "name": "Hvor præcis er vurderingen?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Vores vurdering er baseret på avancerede algoritmer og aktuelle markedsdata fra danske bilmarkeder. Den giver et realistisk estimat af din bils værdi."
+        "text": "Vores vurdering er baseret på machine learning modeller, som er trænet på aktuelle markedsdata fra danske bilmarkeder. Den giver et realistisk estimat af din bils værdi."
       }
     }
   ]
@@ -457,7 +457,7 @@ function Home() {
           <div className="seo-content-item prose prose-slate max-w-none">
             <p className="text-slate-600 leading-relaxed mb-4">
               {language === 'da' 
-                ? 'Når du spørger "hvad er min bil værd?", er svaret ikke altid lige til. Bilens værdi afhænger af flere faktorer: mærke, model, årgang, kilometerstand, udstyrsniveau og ikke mindst bilens generelle stand. Hos Autoværdi gør vi det nemt at få svar på netop det spørgsmål. Vores avancerede algoritme analyserer aktuelle markedsværdier fra danske bilforhandlere og privat salg, så du får et realistisk bud på din bils værdi.'
+                ? 'Når du spørger "hvad er min bil værd?", er svaret ikke altid lige til. Bilens værdi afhænger af flere faktorer: mærke, model, årgang, kilometerstand, udstyrsniveau og ikke mindst bilens generelle stand. Hos Autoværdi gør vi det nemt at få svar på netop det spørgsmål. Vores avancerede modeller analyserer aktuelle markedsværdier fra danske bilforhandlere og privat salg, så du får et realistisk bud på din bils værdi.'
                 : 'When you ask "what is my car worth?", the answer is not always straightforward. The value of your car depends on several factors: make, model, year, mileage, equipment level, and not least the car\'s overall condition. At Autoværdi, we make it easy to get an answer to exactly that question. Our advanced algorithm analyzes current market values from Danish car dealers and private sales, so you get a realistic estimate of your car\'s value.'
               }
             </p>
@@ -496,7 +496,7 @@ function Home() {
                 <svg className="h-5 w-5 text-blue-600 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>{language === 'da' ? 'Avancerede algoritmer der tager højde for årgang, model og stand' : 'Advanced algorithms that account for year, model, and condition'}</span>
+                <span>{language === 'da' ? 'Modeller der tager højde for årgang, model og stand' : 'Advanced algorithms that account for year, model, and condition'}</span>
               </li>
             </ul>
           </div>

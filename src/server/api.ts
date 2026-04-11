@@ -8,11 +8,15 @@ export type PredictApiResponse = {
   model?: string;
   årgang?: number | string;
   estimated_price?: number;
+  min_price?: number;
+  max_price?: number;
+  price_range?: string;
+  kilometers?: number;
 };
 
 // Frontend server function acting as proxy to FastAPI
 export const predictPlate = createServerFn({ method: "POST" })
-  .inputValidator((data: { plate: string }) => data)
+  .inputValidator((data: { plate: string; kilometers?: number }) => data)
   .handler(async ({ data, context }) => {
     // Rate limiting check
     const headers = context?.headers || new Headers();
@@ -24,10 +28,15 @@ export const predictPlate = createServerFn({ method: "POST" })
     }
     
     const formattedPlate = data.plate.replace(/\s+/g, "");
+    
+    // Build URL with optional kilometers parameter
+    let url = `${API_BASE}/predict/${encodeURIComponent(formattedPlate)}`;
+    if (data.kilometers && data.kilometers > 0) {
+      url += `?kilometers=${data.kilometers}`;
+    }
+    
     try {
-      const res = await fetch(
-        `${API_BASE}/predict/${encodeURIComponent(formattedPlate)}`,
-      );
+      const res = await fetch(url);
       if (!res.ok) {
         const text = await res.text().catch(() => "{}");
         let errorMessage = "Kunne ikke hente bildata";

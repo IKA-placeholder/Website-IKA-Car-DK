@@ -65,23 +65,6 @@ export default function Header() {
               )}
             </div>
           )}
-
-          <div className="flex items-center rounded-lg bg-slate-100/90 p-1 ring-1 ring-slate-200/50">
-            {['da', 'en'].map((lang) => (
-              <button
-                key={lang}
-                type="button"
-                className={`rounded-md px-3 py-1.5 text-sm font-medium transition-all duration-200 ${
-                  language === lang
-                    ? 'bg-blue-600 text-white shadow-sm hover:brightness-110 active:brightness-90'
-                    : 'text-slate-600 hover:bg-white/80'
-                }`}
-                onClick={() => setLanguage(lang as 'da' | 'en')}
-              >
-                {lang.toUpperCase()}
-              </button>
-            ))}
-          </div>
         </div>
       </div>
     </header>
