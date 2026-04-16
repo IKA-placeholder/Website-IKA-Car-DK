@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+
 import { getClientIP, checkRateLimit } from "./rateLimit";
 
 const API_BASE = process.env.API_BASE_URL || "https://api.xn--autovrdi-n0a.dk"; // FastAPI backend
@@ -22,25 +23,25 @@ export const predictPlate = createServerFn({ method: "POST" })
     const headers = context?.headers || new Headers();
     const ip = getClientIP(headers);
     const rateLimitResult = checkRateLimit(ip);
-    
+
     if (!rateLimitResult.allowed) {
       throw new Error(rateLimitResult.message);
     }
-    
+
     const formattedPlate = data.plate.replace(/\s+/g, "");
-    
+
     // Build URL with optional kilometers parameter
     let url = `${API_BASE}/predict/${encodeURIComponent(formattedPlate)}`;
     if (data.kilometers && data.kilometers > 0) {
       url += `?kilometers=${data.kilometers}`;
     }
-    
+
     try {
       const res = await fetch(url);
       if (!res.ok) {
         const text = await res.text().catch(() => "{}");
         let errorMessage = "Kunne ikke hente bildata";
-        
+
         // Try to parse JSON, but handle non-JSON responses gracefully
         try {
           const json = JSON.parse(text);
@@ -50,7 +51,7 @@ export const predictPlate = createServerFn({ method: "POST" })
           // Use HTTP status code to determine error message
           errorMessage = text.slice(0, 100).trim(); // Get first 100 chars for debugging
         }
-        
+
         // Provide specific error messages based on status code
         if (res.status === 429) {
           throw new Error("For mange anmodninger. Vent et øjeblik og prøv igen.");
@@ -63,14 +64,14 @@ export const predictPlate = createServerFn({ method: "POST" })
         }
         throw new Error(errorMessage || "Kunne ikke hente bildata");
       }
-      
+
       const json = await res.json();
-      
+
       // Check if the response contains an error status from the backend
       if (json.status === "error") {
         throw new Error(json.message || "Der opstod en fejl");
       }
-      
+
       return json as PredictApiResponse;
     } catch (error) {
       // Re-throw network errors with user-friendly message
@@ -97,7 +98,7 @@ export const loginUser = createServerFn({ method: "POST" })
     const headers = context?.headers || new Headers();
     const ip = getClientIP(headers);
     const rateLimitResult = checkRateLimit(ip, 10); // 10 attempts per minute
-    
+
     if (!rateLimitResult.allowed) {
       throw new Error(rateLimitResult.message);
     }
@@ -108,8 +109,7 @@ export const loginUser = createServerFn({ method: "POST" })
     });
     const json = (await res.json()) as LoginApiResponse;
     if (!res.ok) {
-      const message =
-        json.detail?.[0]?.msg || json.message || `Login failed (${res.status})`;
+      const message = json.detail?.[0]?.msg || json.message || `Login failed (${res.status})`;
       throw new Error(message);
     }
     return json;
@@ -129,7 +129,7 @@ export const signupUser = createServerFn({ method: "POST" })
     const headers = context?.headers || new Headers();
     const ip = getClientIP(headers);
     const rateLimitResult = checkRateLimit(ip, 5); // 5 attempts per minute
-    
+
     if (!rateLimitResult.allowed) {
       throw new Error(rateLimitResult.message);
     }
@@ -138,14 +138,9 @@ export const signupUser = createServerFn({ method: "POST" })
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    const json: SignupApiResponse = (await res
-      .json()
-      .catch(() => ({}))) as SignupApiResponse;
+    const json: SignupApiResponse = (await res.json().catch(() => ({}))) as SignupApiResponse;
     if (!res.ok) {
-      const message =
-        json.detail?.[0]?.msg ||
-        json.message ||
-        `Signup failed (${res.status})`;
+      const message = json.detail?.[0]?.msg || json.message || `Signup failed (${res.status})`;
       throw new Error(message);
     }
     return json;

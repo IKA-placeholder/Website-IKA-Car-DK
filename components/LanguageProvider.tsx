@@ -1,24 +1,24 @@
-import { createContext, useState, useContext, type ReactNode } from 'react'
+import { createContext, useState, useContext, type ReactNode } from "react";
 
 interface LanguageContextType {
-  language: 'da' | 'en'
-  setLanguage: (lang: 'da' | 'en') => void
+  language: "da" | "en";
+  setLanguage: (lang: "da" | "en") => void;
 }
 
 export const LanguageContext = createContext<LanguageContextType>({
-  language: 'da',
+  language: "da",
   setLanguage: () => {},
-})
+});
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<'da' | 'en'>('da')
+  const [language, setLanguage] = useState<"da" | "en">("da");
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
       {children}
     </LanguageContext.Provider>
-  )
+  );
 }
 
 export function useLanguage() {
-  return useContext(LanguageContext)
+  return useContext(LanguageContext);
 }

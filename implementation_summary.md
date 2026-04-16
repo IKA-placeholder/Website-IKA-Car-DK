@@ -52,12 +52,12 @@ This document records what was implemented per `implementation_instructions.md`:
 
 ## 7. Configuration files (reference)
 
-| File | Role |
-|------|------|
-| `vite.config.ts` | `nitro()`, `vite-tsconfig-paths`, `@tailwindcss/vite`, `tanstackStart()`, `@vitejs/plugin-react` |
-| `tsconfig.json` | `paths`: `@/*` → `src/*`, `@components/*` → `components/*` |
-| `package.json` | Scripts: `dev` / `build` / `preview` / `lint` |
-| `src/vite-env.d.ts` | Vite client types |
+| File                | Role                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------ |
+| `vite.config.ts`    | `nitro()`, `vite-tsconfig-paths`, `@tailwindcss/vite`, `tanstackStart()`, `@vitejs/plugin-react` |
+| `tsconfig.json`     | `paths`: `@/*` → `src/*`, `@components/*` → `components/*`                                       |
+| `package.json`      | Scripts: `dev` / `build` / `preview` / `lint`                                                    |
+| `src/vite-env.d.ts` | Vite client types                                                                                |
 
 ## 8. Verification
 

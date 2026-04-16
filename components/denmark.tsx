@@ -1,6 +1,6 @@
-import * as React from 'react'
+import * as React from "react";
 
-type Props = React.SVGProps<SVGSVGElement>
+type Props = React.SVGProps<SVGSVGElement>;
 
 export default function DenmarkSvg(props: Props) {
   return (
@@ -19,5 +19,5 @@ export default function DenmarkSvg(props: Props) {
         fill="#1e293b"
       />
     </svg>
-  )
+  );
 }

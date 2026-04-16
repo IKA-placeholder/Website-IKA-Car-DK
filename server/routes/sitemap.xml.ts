@@ -1,4 +1,4 @@
-import { defineEventHandler, setResponseHeader } from 'h3'
+import { defineEventHandler, setResponseHeader } from "h3";
 
 export default defineEventHandler((event) => {
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -33,8 +33,8 @@ export default defineEventHandler((event) => {
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-</urlset>`
+</urlset>`;
 
-  setResponseHeader(event, 'Content-Type', 'application/xml; charset=utf-8')
-  return sitemap
-})
+  setResponseHeader(event, "Content-Type", "application/xml; charset=utf-8");
+  return sitemap;
+});

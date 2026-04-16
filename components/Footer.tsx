@@ -1,38 +1,38 @@
-import { useContext } from 'react'
-import { LanguageContext } from '@components/LanguageProvider'
+import { LanguageContext } from "@components/LanguageProvider";
+import { useContext } from "react";
 
 const TEXT = {
   da: {
-    forDealers: 'Til bilforhandlere',
+    forDealers: "Til bilforhandlere",
     dealersDesc:
-      'Vi tilbyder at implementere vores prisvurderingswidget på din hjemmeside, så dine kunder hurtigt kan få et prisoverblik. Derudover har vi et sniping-værktøj, der giver notifikationer om underprisede biler fra danske marketplaces.',
-    dealersCta: 'Kontakt os',
-    api: 'API',
+      "Vi tilbyder at implementere vores prisvurderingswidget på din hjemmeside, så dine kunder hurtigt kan få et prisoverblik. Derudover har vi et sniping-værktøj, der giver notifikationer om underprisede biler fra danske marketplaces.",
+    dealersCta: "Kontakt os",
+    api: "API",
     apiDesc:
-      'Er du udvikler? Du kan få adgang til vores API, som indeholder endpoints til både statistik og ML indenfor brugte biler.',
-    apiCta: 'Kontakt os',
-    copyright: '© 2025 Autoværdi. Alle rettigheder forbeholdes.',
+      "Er du udvikler? Du kan få adgang til vores API, som indeholder endpoints til både statistik og ML indenfor brugte biler.",
+    apiCta: "Kontakt os",
+    copyright: "© 2025 Autoværdi. Alle rettigheder forbeholdes.",
   },
   en: {
-    forDealers: 'For Car Dealers',
+    forDealers: "For Car Dealers",
     dealersDesc:
-      'We offer implementation of our price valuation widget on your website, so your customers can quickly get a price overview. Additionally, we have a sniping tool that provides notifications for underpriced cars from Danish marketplaces.',
-    dealersCta: 'Contact us',
-    api: 'API',
+      "We offer implementation of our price valuation widget on your website, so your customers can quickly get a price overview. Additionally, we have a sniping tool that provides notifications for underpriced cars from Danish marketplaces.",
+    dealersCta: "Contact us",
+    api: "API",
     apiDesc:
-      'Are you a developer? You can get access to our API, which includes endpoints for statistics and ML within used cars.',
-    apiCta: 'Contact us',
-    copyright: '© 2025 Autoværdi. All rights reserved.',
+      "Are you a developer? You can get access to our API, which includes endpoints for statistics and ML within used cars.",
+    apiCta: "Contact us",
+    copyright: "© 2025 Autoværdi. All rights reserved.",
   },
-}
+};
 
 export default function Footer() {
-  const { language } = useContext(LanguageContext)
-  const t = TEXT[language]
+  const { language } = useContext(LanguageContext);
+  const t = TEXT[language];
 
   const handleContactClick = () => {
-    window.location.href = 'mailto:jens.bech.lauritsen@gmail.com'
-  }
+    window.location.href = "mailto:jens.bech.lauritsen@gmail.com";
+  };
 
   return (
     <footer className="border-t border-slate-200/60 bg-slate-50/80 px-6 py-16 backdrop-blur-md">
@@ -57,9 +57,7 @@ export default function Footer() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-slate-900">
-                {t.forDealers}
-              </h3>
+              <h3 className="text-lg font-semibold text-slate-900">{t.forDealers}</h3>
             </div>
             <p className="leading-relaxed text-slate-600">{t.dealersDesc}</p>
             <button
@@ -134,11 +132,9 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="select-none">
-            <span className="text-xl font-black tracking-tighter text-slate-900">
-              Autoværdi
-            </span>
+            <span className="text-xl font-black tracking-tighter text-slate-900">Autoværdi</span>
           </div>
-          
+
           {/* Social Links */}
           <div className="flex items-center gap-4">
             <a
@@ -153,10 +149,10 @@ export default function Footer() {
               </svg>
             </a>
           </div>
-          
+
           <p className="text-sm text-slate-500">{t.copyright}</p>
         </div>
       </div>
     </footer>
-  )
+  );
 }

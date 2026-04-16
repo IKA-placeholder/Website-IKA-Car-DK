@@ -6,15 +6,12 @@ export default function CompanyLink() {
   useEffect(() => {
     async function sendClick() {
       try {
-        const response = await fetch(
-          "https://ika-car-dk-api.onrender.com/click/1",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch("https://ika-car-dk-api.onrender.com/click/1", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch company link");

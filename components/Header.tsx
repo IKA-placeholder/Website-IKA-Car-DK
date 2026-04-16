@@ -1,28 +1,28 @@
-import { useContext, useState } from 'react'
-import { Link } from '@tanstack/react-router'
-import { LanguageContext } from '@components/LanguageProvider'
+import { LanguageContext } from "@components/LanguageProvider";
+import { Link } from "@tanstack/react-router";
+import { useContext, useState } from "react";
 
 const TEXT = {
   da: {
-    login: 'Log ind',
-    signup: 'Opret konto',
-    profile: 'Profil',
-    logout: 'Log ud',
+    login: "Log ind",
+    signup: "Opret konto",
+    profile: "Profil",
+    logout: "Log ud",
   },
   en: {
-    login: 'Log in',
-    signup: 'Sign up',
-    profile: 'Profile',
-    logout: 'Log out',
+    login: "Log in",
+    signup: "Sign up",
+    profile: "Profile",
+    logout: "Log out",
   },
-}
+};
 
 export default function Header() {
-  const { language, setLanguage } = useContext(LanguageContext)
-  const t = TEXT[language]
+  const { language } = useContext(LanguageContext);
+  const t = TEXT[language];
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [showDropdown, setShowDropdown] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <header className="fixed top-0 left-0 z-30 w-full border-b border-slate-200/60 bg-white/70 px-6 py-4 backdrop-blur-md">
@@ -68,5 +68,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -17,19 +17,22 @@ const WINDOW_MS = 60 * 1000; // 1 minute in milliseconds
 /**
  * Clean up old entries periodically to prevent memory leaks
  */
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, entry] of rateLimitStore.entries()) {
-    // Remove entries that are no longer blocked and window has passed
-    if (!entry.blockedUntil && now - entry.firstRequest > WINDOW_MS) {
-      rateLimitStore.delete(ip);
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [ip, entry] of rateLimitStore.entries()) {
+      // Remove entries that are no longer blocked and window has passed
+      if (!entry.blockedUntil && now - entry.firstRequest > WINDOW_MS) {
+        rateLimitStore.delete(ip);
+      }
+      // Remove expired blocks
+      if (entry.blockedUntil && now > entry.blockedUntil) {
+        rateLimitStore.delete(ip);
+      }
     }
-    // Remove expired blocks
-    if (entry.blockedUntil && now > entry.blockedUntil) {
-      rateLimitStore.delete(ip);
-    }
-  }
-}, 5 * 60 * 1000); // Clean up every 5 minutes
+  },
+  5 * 60 * 1000,
+); // Clean up every 5 minutes
 
 /**
  * Check if an IP is rate limited
@@ -37,7 +40,10 @@ setInterval(() => {
  * @param customLimit - Optional custom limit (default: 50)
  * @returns Object with allowed status and optional message
  */
-export function checkRateLimit(ip: string, customLimit?: number): { allowed: boolean; message?: string; remaining?: number } {
+export function checkRateLimit(
+  ip: string,
+  customLimit?: number,
+): { allowed: boolean; message?: string; remaining?: number } {
   const now = Date.now();
   const entry = rateLimitStore.get(ip);
   const limit = customLimit || MAX_REQUESTS_PER_MINUTE;
@@ -91,20 +97,20 @@ export function checkRateLimit(ip: string, customLimit?: number): { allowed: boo
  */
 export function getClientIP(headers: Headers): string {
   // Try X-Forwarded-For first (common for proxies)
-  const forwarded = headers.get('x-forwarded-for');
+  const forwarded = headers.get("x-forwarded-for");
   if (forwarded) {
     // X-Forwarded-For can contain multiple IPs, take the first one
-    return forwarded.split(',')[0].trim();
+    return forwarded.split(",")[0].trim();
   }
-  
+
   // Try X-Real-IP
-  const realIP = headers.get('x-real-ip');
+  const realIP = headers.get("x-real-ip");
   if (realIP) {
     return realIP;
   }
-  
+
   // Fallback to a default (in production, you'd want better handling)
-  return 'unknown';
+  return "unknown";
 }
 
 /**
@@ -112,7 +118,7 @@ export function getClientIP(headers: Headers): string {
  * Usage: wrap your handler with this
  */
 export function withRateLimit<T extends (...args: any[]) => any>(
-  handler: T
+  handler: T,
 ): (...args: Parameters<T>) => Promise<ReturnType<T>> {
   return async (...args: Parameters<T>) => {
     // Try to extract headers from context or args
@@ -120,13 +126,13 @@ export function withRateLimit<T extends (...args: any[]) => any>(
     const context = args[0] as any;
     const headers = context?.headers || new Headers();
     const ip = getClientIP(headers);
-    
+
     const result = checkRateLimit(ip);
-    
+
     if (!result.allowed) {
       throw new Error(result.message);
     }
-    
+
     return handler(...args);
   };
 }

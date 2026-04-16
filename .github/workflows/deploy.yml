@@ -2,44 +2,44 @@ name: Deploy Frontend to Server
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy to server via SSH
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SERVER_HOST }}
-        username: ${{ secrets.SERVER_USER }}
-        key: ${{ secrets.SERVER_SSH_KEY }}
-        script: |
-          cd /root/devops_stack
-          
-          # Fix the redirect regex in docker-compose.yml to prevent redirect loops
-          sed -i 's/regex=\^https?:\/\/(?:www\\.)?(.+)/regex=^https?:\\/\\/xn--autovrdi-n0a.dk(.*)/g' docker-compose.yml
-          sed -i 's/replacement=https:\/\/www.\$\${1}/replacement=https:\/\/www.xn--autovrdi-n0a.dk$${1}/g' docker-compose.yml
-          
-          # Pull latest frontend code
-          cd Website-IKA-Car-DK
-          git pull origin main
-          cd ..
-          
-          # Stop and remove the old frontend container
-          docker-compose stop frontend || true
-          docker-compose rm -f frontend || true
-          
-          # Remove the old frontend image to force a clean rebuild
-          docker rmi -f devops_stack-frontend:latest 2>/dev/null || docker rmi -f $(docker images -q "*/website-ika-car-dk" 2>/dev/null) 2>/dev/null || true
-          
-          # Build with no cache to ensure fresh build
-          docker-compose build --no-cache frontend
-          
-          # Start the frontend service
-          docker-compose up -d frontend
-          
-          # Clean up old images
-          docker image prune -f
-          
-          echo "Frontend deployed successfully!"
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /root/devops_stack
+
+            # Fix the redirect regex in docker-compose.yml to prevent redirect loops
+            sed -i 's/regex=\^https?:\/\/(?:www\\.)?(.+)/regex=^https?:\\/\\/xn--autovrdi-n0a.dk(.*)/g' docker-compose.yml
+            sed -i 's/replacement=https:\/\/www.\$\${1}/replacement=https:\/\/www.xn--autovrdi-n0a.dk$${1}/g' docker-compose.yml
+
+            # Pull latest frontend code
+            cd Website-IKA-Car-DK
+            git pull origin main
+            cd ..
+
+            # Stop and remove the old frontend container
+            docker-compose stop frontend || true
+            docker-compose rm -f frontend || true
+
+            # Remove the old frontend image to force a clean rebuild
+            docker rmi -f devops_stack-frontend:latest 2>/dev/null || docker rmi -f $(docker images -q "*/website-ika-car-dk" 2>/dev/null) 2>/dev/null || true
+
+            # Build with no cache to ensure fresh build
+            docker-compose build --no-cache frontend
+
+            # Start the frontend service
+            docker-compose up -d frontend
+
+            # Clean up old images
+            docker image prune -f
+
+            echo "Frontend deployed successfully!"
