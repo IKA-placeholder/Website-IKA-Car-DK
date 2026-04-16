@@ -1,9 +1,8 @@
-import { defineConfig } from 'vite'
-import tsconfigPaths from 'vite-tsconfig-paths'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import viteReact from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
-import { nitro } from 'nitro/vite'
+import tailwindcss from "@tailwindcss/vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact from "@vitejs/plugin-react";
+import { nitro } from "nitro/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   server: {
@@ -11,23 +10,25 @@ export default defineConfig({
   },
   plugins: [
     nitro({
-      scanDirs: ['server'],
+      scanDirs: ["server"],
       routeRules: {
-        '/sitemap.xml': {
+        "/sitemap.xml": {
           headers: {
-            'Content-Type': 'application/xml; charset=utf-8'
-          }
+            "Content-Type": "application/xml; charset=utf-8",
+          },
         },
-        '/robots.txt': {
+        "/robots.txt": {
           headers: {
-            'Content-Type': 'text/plain; charset=utf-8'
-          }
-        }
-      }
+            "Content-Type": "text/plain; charset=utf-8",
+          },
+        },
+      },
     }),
-    tsconfigPaths({ projects: ['./tsconfig.json'] }),
     tailwindcss(),
     tanstackStart(),
     viteReact(),
   ],
-})
+  resolve: {
+    tsconfigPaths: true,
+  },
+});
