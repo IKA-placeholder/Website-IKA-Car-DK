@@ -2,7 +2,7 @@ FROM oven/bun:latest
 WORKDIR /app
 
 # Copy package files first for better caching
-COPY package.json bun.lockb* ./
+COPY package.json bun.lock* ./
 RUN bun install
 
 # Copy source code
@@ -12,7 +12,7 @@ COPY . .
 RUN bun run build
 
 # Ensure static files are copied to output directory
-RUN cp -r public/* .output/public/ 2>/dev/null || true
+RUN cp -r public/* dist/public/ 2>/dev/null || true
 
 # expose the port
 EXPOSE 4000
@@ -24,4 +24,4 @@ ENV HOST=0.0.0.0
 ENV PORT=4000
 
 # start the server
-CMD ["bun", ".output/server/index.mjs"]
+CMD ["bun", "server.ts"]
