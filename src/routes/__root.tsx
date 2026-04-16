@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { getLocale } from "@/paraglide/runtime";
 
 import appCss from "../styles.css?url";
 
@@ -178,10 +179,11 @@ export const Route = createRootRoute({
 });
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
+  const lang = getLocale();
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <html lang="da">
+    <html lang={lang}>
       <head>
         <HeadContent />
       </head>
