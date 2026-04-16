@@ -29,7 +29,7 @@ jobs:
 
             # Rebuild and restart
             # Using 'up -d --build' is faster and handles stop/rm automatically
-            docker compose up -d --build frontend
+            docker-compose up -d --build frontend
 
             # Clean up old images
             docker image prune -f
