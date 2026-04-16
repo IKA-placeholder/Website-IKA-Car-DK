@@ -1,8 +1,8 @@
-import { LanguageContext } from "@components/LanguageProvider";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState, useContext } from "react";
 
+import { LanguageContext } from "@/components/LanguageProvider";
 import { setStoredToken } from "@/lib/auth";
 import { loginUser } from "@/server/api";
 

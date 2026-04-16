@@ -1,12 +1,13 @@
-import BackgroundCars from "@components/BackgroundCars";
-import DenmarkSilhouette from "@components/DenmarkSilhouette";
-import FloatingCTA from "@components/FloatingCTA";
-import { LanguageContext } from "@components/LanguageProvider";
-import LicensePlateSearch from "@components/LicensePlateSearch";
 import { createFileRoute, HeadContent, Link } from "@tanstack/react-router";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Fragment, useContext, useEffect, useRef, useState } from "react";
+
+import BackgroundCars from "@/components/BackgroundCars";
+import DenmarkSilhouette from "@/components/DenmarkSilhouette";
+import FloatingCTA from "@/components/FloatingCTA";
+import { LanguageContext } from "@/components/LanguageProvider";
+import LicensePlateSearch from "@/components/LicensePlateSearch";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);

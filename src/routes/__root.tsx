@@ -1,10 +1,11 @@
-import Footer from "@components/Footer";
-import Header from "@components/Header";
-import { LanguageProvider } from "@components/LanguageProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useState } from "react";
+
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { LanguageProvider } from "@/components/LanguageProvider";
 
 import appCss from "../styles.css?url";
 

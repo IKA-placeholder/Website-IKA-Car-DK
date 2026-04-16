@@ -1,6 +1,7 @@
-import { LanguageContext } from "@components/LanguageProvider";
 import { createFileRoute, HeadContent, Link } from "@tanstack/react-router";
 import { useContext } from "react";
+
+import { LanguageContext } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/blog/")({
   component: BlogIndex,

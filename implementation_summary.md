@@ -42,7 +42,7 @@ This document records what was implemented per `implementation_instructions.md`:
 
 - All former **`app/components/`** files live under **`components/`** at the repo root (as requested).
 - **GSAP** on the home route and **`BackgroundCars`** remain driven by **`useEffect`** (and `typeof window` guard for plugin registration), suitable for SSR/hydration.
-- **`denmark.js`** replaced by typed **`components/denmark.tsx`**; **`DenmarkSilhouette`** imports it with the **`@components/*`** alias (Vite-compatible).
+- **`denmark.js`** replaced by typed **`components/denmark.tsx`**; **`DenmarkSilhouette`** imports it with the **`@/components/*`** alias (Vite-compatible).
 - **`app/components/denmark.svg`** is no longer required for the silhouette (SVG is inlined in `denmark.tsx`).
 
 ## 6. Cleanup

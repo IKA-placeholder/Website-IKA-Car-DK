@@ -1,8 +1,9 @@
-import { BlogArticleLayout } from "@components/BlogArticleLayout";
-import { LanguageContext } from "@components/LanguageProvider";
 import { createFileRoute, HeadContent } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { useContext } from "react";
+
+import { BlogArticleLayout } from "@/components/BlogArticleLayout";
+import { LanguageContext } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/blog/hvad-er-min-bil-værd")({
   component: HvadErMinBilVaerd,

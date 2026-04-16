@@ -1,8 +1,8 @@
-import { LanguageContext } from "@components/LanguageProvider";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState, useContext } from "react";
 
+import { LanguageContext } from "@/components/LanguageProvider";
 import { signupUser } from "@/server/api";
 
 const TEXT = {
