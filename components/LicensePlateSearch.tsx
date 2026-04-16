@@ -368,7 +368,7 @@ export default function LicensePlateSearch() {
             </div>
 
             <div
-              className={`mt-6 rounded-2xl border-2 border-blue-100 bg-gradient-to-br from-white to-blue-50/50 p-8 shadow-lg ring-1 shadow-blue-900/5 ring-blue-50 ${animateCard ? "animate-value-hero-pulse" : ""}`}
+              className={`mt-6 rounded-2xl border-2 border-blue-100 bg-linear-to-br from-white to-blue-50/50 p-8 shadow-lg ring-1 shadow-blue-900/5 ring-blue-50 ${animateCard ? "animate-value-hero-pulse" : ""}`}
             >
               <div className="mb-3 flex items-center gap-2">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
