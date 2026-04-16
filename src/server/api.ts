@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequestHeaders } from "@tanstack/react-start/server";
 
 import { getClientIP, checkRateLimit } from "./rateLimit";
 
@@ -18,9 +19,9 @@ export type PredictApiResponse = {
 // Frontend server function acting as proxy to FastAPI
 export const predictPlate = createServerFn({ method: "POST" })
   .inputValidator((data: { plate: string; kilometers?: number }) => data)
-  .handler(async ({ data, context }) => {
+  .handler(async ({ data }) => {
     // Rate limiting check
-    const headers = context?.headers || new Headers();
+    const headers = getRequestHeaders();
     const ip = getClientIP(headers);
     const rateLimitResult = checkRateLimit(ip);
 
@@ -93,9 +94,9 @@ export type LoginApiResponse = {
 
 export const loginUser = createServerFn({ method: "POST" })
   .inputValidator((data: LoginBody) => data)
-  .handler(async ({ data, context }) => {
+  .handler(async ({ data }) => {
     // Rate limiting for login attempts (stricter: 10 per minute)
-    const headers = context?.headers || new Headers();
+    const headers = getRequestHeaders();
     const ip = getClientIP(headers);
     const rateLimitResult = checkRateLimit(ip, 10); // 10 attempts per minute
 
@@ -124,9 +125,9 @@ export type SignupApiResponse = {
 
 export const signupUser = createServerFn({ method: "POST" })
   .inputValidator((data: SignupBody) => data)
-  .handler(async ({ data, context }) => {
+  .handler(async ({ data }) => {
     // Rate limiting for signup attempts (stricter: 5 per minute)
-    const headers = context?.headers || new Headers();
+    const headers = getRequestHeaders();
     const ip = getClientIP(headers);
     const rateLimitResult = checkRateLimit(ip, 5); // 5 attempts per minute
 
