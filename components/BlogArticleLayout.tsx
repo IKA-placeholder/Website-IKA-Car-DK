@@ -24,7 +24,7 @@ export function BlogArticleLayout({
 }: BlogArticleLayoutProps) {
   return (
     <article className="min-h-screen bg-white">
-      <header className="border-b border-slate-200/60 bg-gradient-to-b from-slate-50 to-white">
+      <header className="border-b border-slate-200/60 bg-linear-to-b from-slate-50 to-white">
         <div className="mx-auto max-w-4xl px-4 py-16 md:py-20">
           <nav className="mb-8" aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center gap-2 text-sm text-slate-500">

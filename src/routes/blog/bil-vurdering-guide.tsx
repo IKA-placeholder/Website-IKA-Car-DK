@@ -71,7 +71,7 @@ function Step({
   return (
     <div className="relative flex gap-6 pb-12 last:pb-0">
       <div className="absolute top-16 bottom-0 left-8 w-0.5 bg-slate-200 last:hidden" />
-      <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-lg">
+      <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg">
         <span className="text-2xl font-bold">{number}</span>
       </div>
       <div className="flex-1 pt-2">
@@ -270,7 +270,7 @@ function BilVurderingGuide() {
             </div>
           </Step>
 
-          <div className="my-8 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
+          <div className="my-8 rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 p-8 text-white">
             <h3 className="mb-4 text-xl font-bold">Final Formula</h3>
             <CalculationBox>
               <p>Your Price = Base Price</p>
@@ -477,7 +477,7 @@ function BilVurderingGuide() {
           </div>
         </Step>
 
-        <div className="my-8 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
+        <div className="my-8 rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 p-8 text-white">
           <h3 className="mb-4 text-xl font-bold">Endelig formel</h3>
           <CalculationBox>
             <p>Din pris = Basispris</p>
