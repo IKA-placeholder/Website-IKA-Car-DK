@@ -77,7 +77,7 @@ function Step({
   return (
     <div className="relative flex gap-6 pb-12 last:pb-0">
       <div className="absolute top-16 bottom-0 left-8 w-0.5 bg-slate-200 last:hidden" />
-      <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-lg">
+      <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg">
         <span className="text-2xl font-bold">{number}</span>
       </div>
       <div className="flex-1 pt-2">
@@ -132,7 +132,7 @@ function HvadErMinBilVaerd() {
           schema={articleSchema}
           language={language}
         >
-          <div className="my-8 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 p-8 text-center text-white">
+          <div className="my-8 rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 p-8 text-center text-white">
             <p className="mb-2 text-lg text-blue-100">Most cars lose</p>
             <p className="mb-2 text-4xl font-bold">15-20%</p>
             <p className="text-blue-100">of their value in the first year</p>
@@ -258,7 +258,7 @@ function HvadErMinBilVaerd() {
               </ol>
             </div>
 
-            <div className="my-6 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-center text-white">
+            <div className="my-6 rounded-xl bg-linear-to-br from-blue-600 to-blue-700 p-6 text-center text-white">
               <p className="mb-4">Get your free valuation in 10 seconds</p>
               <Link
                 to="/"
@@ -316,7 +316,7 @@ function HvadErMinBilVaerd() {
         schema={articleSchema}
         language={language}
       >
-        <div className="my-8 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 p-8 text-center text-white">
+        <div className="my-8 rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 p-8 text-center text-white">
           <p className="mb-2 text-lg text-blue-100">De fleste biler mister</p>
           <p className="mb-2 text-4xl font-bold">15-20%</p>
           <p className="text-blue-100">af værdien det første år</p>
@@ -444,7 +444,7 @@ function HvadErMinBilVaerd() {
             </ol>
           </div>
 
-          <div className="my-6 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-center text-white">
+          <div className="my-6 rounded-xl bg-linear-to-br from-blue-600 to-blue-700 p-6 text-center text-white">
             <p className="mb-4">Få din gratis vurdering på 10 sekunder</p>
             <Link
               to="/"

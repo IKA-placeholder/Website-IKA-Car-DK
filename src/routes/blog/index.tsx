@@ -137,7 +137,7 @@ function BlogIndex() {
       </div>
 
       {/* CTA Section */}
-      <div className="mt-12 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
+      <div className="mt-12 rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 p-8 text-white">
         <h2 className="mb-4 text-2xl font-bold">
           {language === "da" ? "Få en gratis bilvurdering" : "Get a free car valuation"}
         </h2>
