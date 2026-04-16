@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 
-import { getLocale } from "@/paraglide/runtime";
+import { getLocale, setLocale } from "@/paraglide/runtime";
 
 const TEXT = {
   da: {
@@ -39,6 +39,13 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center gap-4">
+          <button
+            type="button"
+            className="rounded-lg px-4 py-2 text-slate-600 transition-colors hover:bg-slate-100"
+            onClick={() => setLocale(language === "da" ? "en" : "da")}
+          >
+            {language === "da" ? "English" : "Dansk"}
+          </button>
           {isLoggedIn && (
             <div className="relative">
               <button

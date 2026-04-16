@@ -1,7 +1,5 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { useState } from "react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -180,7 +178,6 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   const lang = getLocale();
-  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <html lang={lang}>
@@ -188,11 +185,9 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-        <QueryClientProvider client={queryClient}>
-          <Header />
-          <main className="pt-20">{children}</main>
-          <Footer />
-        </QueryClientProvider>
+        <Header />
+        <main className="pt-20">{children}</main>
+        <Footer />
         <Scripts />
       </body>
     </html>
