@@ -13,6 +13,9 @@ export default defineConfig({
       "@/": "/src/",
     },
   },
+  preview: {
+    host: true,
+  },
   plugins: [
     tailwindcss(),
     tanstackStart({
