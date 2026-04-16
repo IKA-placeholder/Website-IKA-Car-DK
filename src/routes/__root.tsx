@@ -5,7 +5,6 @@ import { useState } from "react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { LanguageProvider } from "@/components/LanguageProvider";
 
 import appCss from "../styles.css?url";
 
@@ -137,11 +136,6 @@ export const Route = createRootRoute({
         name: "twitter:description",
         content: DEFAULT_DESCRIPTION,
       },
-      // Canonical URL
-      {
-        rel: "canonical",
-        href: SITE_URL,
-      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -163,6 +157,11 @@ export const Route = createRootRoute({
       // Preconnect for performance
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "dns-prefetch", href: "https://fonts.googleapis.com" },
+      // Canonical URL
+      {
+        rel: "canonical",
+        href: SITE_URL,
+      },
     ],
     scripts: [
       {
@@ -188,11 +187,9 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <Header />
-            <main className="pt-20">{children}</main>
-            <Footer />
-          </LanguageProvider>
+          <Header />
+          <main className="pt-20">{children}</main>
+          <Footer />
         </QueryClientProvider>
         <Scripts />
       </body>

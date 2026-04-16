@@ -5,7 +5,7 @@ This document records what was implemented per `implementation_instructions.md`:
 ## 1. Project initialization
 
 - Replaced the Next.js toolchain with **Vite 7**, **@tanstack/react-start**, **@tanstack/react-router**, **@tanstack/router-plugin**, and **nitro** (via `npm:nitro-nightly`, matching current TanStack Start defaults).
-- Added dependencies: **@tanstack/react-query**, **gsap**, **jwt-decode** (removed unused **jsonwebtoken** from the old stack).
+- Added dependencies: **@tanstack/react-query**, **motion**, **jwt-decode** (removed unused **jsonwebtoken** from the old stack).
 - Configured **Tailwind CSS 4** using **`@tailwindcss/vite`** in `vite.config.ts` (no separate PostCSS pipeline).
 - Migrated global styles into **`src/styles.css`**: Tailwind import, Inter font (replacing `next/font`), and the previous `app/globals.css` rules (animations, utilities, variables, scrollbar, body gradient).
 
@@ -41,7 +41,6 @@ This document records what was implemented per `implementation_instructions.md`:
 ## 5. UI and components
 
 - All former **`app/components/`** files live under **`components/`** at the repo root (as requested).
-- **GSAP** on the home route and **`BackgroundCars`** remain driven by **`useEffect`** (and `typeof window` guard for plugin registration), suitable for SSR/hydration.
 - **`denmark.js`** replaced by typed **`components/denmark.tsx`**; **`DenmarkSilhouette`** imports it with the **`@/components/*`** alias (Vite-compatible).
 - **`app/components/denmark.svg`** is no longer required for the silhouette (SVG is inlined in `denmark.tsx`).
 

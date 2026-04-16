@@ -1,11 +1,10 @@
 import { createFileRoute, HeadContent } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { useContext } from "react";
 
 import { BlogArticleLayout } from "@/components/BlogArticleLayout";
-import { LanguageContext } from "@/components/LanguageProvider";
+import { getLocale } from "@/paraglide/runtime";
 
-export const Route = createFileRoute("/blog/bil-vurdering-guide")({
+export const Route = createFileRoute("/{-$locale}/blog/bil-vurdering-guide")({
   component: BilVurderingGuide,
   head: () => ({
     meta: [
@@ -29,6 +28,8 @@ export const Route = createFileRoute("/blog/bil-vurdering-guide")({
         property: "og:description",
         content: "Lær hvordan du selv kan vurdere din bils værdi.",
       },
+    ],
+    links: [
       {
         rel: "canonical",
         href: "https://www.xn--autovrdi-n0a.dk/blog/bil-vurdering-guide",
@@ -91,7 +92,7 @@ function CalculationBox({ children }: { children: React.ReactNode }) {
 }
 
 function BilVurderingGuide() {
-  const { language } = useContext(LanguageContext);
+  const language = getLocale();
 
   if (language === "en") {
     return (
@@ -289,7 +290,11 @@ function BilVurderingGuide() {
             <p className="mb-2 text-lg">Want an instant valuation?</p>
             <p className="mb-4 text-green-100">Get market-based price in 10 seconds</p>
             <Link
-              to="/"
+              to="/{-$locale}"
+              params={(prev) => ({
+                ...prev,
+                locale: prev.locale === "da" ? undefined : "en",
+              })}
               className="inline-flex items-center rounded-lg bg-white px-6 py-3 font-bold text-green-600 transition-transform hover:scale-105"
             >
               Get Free Valuation
@@ -496,7 +501,11 @@ function BilVurderingGuide() {
           <p className="mb-2 text-lg">Vil du have en hurtig vurdering?</p>
           <p className="mb-4 text-green-100">Få markedspris på 10 sekunder</p>
           <Link
-            to="/"
+            to="/{-$locale}"
+            params={(prev) => ({
+              ...prev,
+              locale: prev.locale === "da" ? undefined : "en",
+            })}
             className="inline-flex items-center rounded-lg bg-white px-6 py-3 font-bold text-green-600 transition-transform hover:scale-105"
           >
             Få gratis vurdering
@@ -508,7 +517,11 @@ function BilVurderingGuide() {
           <h3 className="mb-6 text-xl font-bold text-slate-900">Læs også</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <Link
-              to="/blog/hvad-er-min-bil-værd"
+              to="/{-$locale}/blog/hvad-er-min-bil-vaerd"
+              params={(prev) => ({
+                ...prev,
+                locale: prev.locale === "da" ? undefined : "en",
+              })}
               className="group flex items-center gap-4 rounded-xl border border-slate-200 p-4 transition-colors hover:border-blue-300 hover:bg-blue-50/50"
             >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
@@ -534,7 +547,11 @@ function BilVurderingGuide() {
               </div>
             </Link>
             <Link
-              to="/blog/saelg-bil-hoejeste-pris"
+              to="/{-$locale}/blog/saelg-bil-hoejeste-pris"
+              params={(prev) => ({
+                ...prev,
+                locale: prev.locale === "da" ? undefined : "en",
+              })}
               className="group flex items-center gap-4 rounded-xl border border-slate-200 p-4 transition-colors hover:border-blue-300 hover:bg-blue-50/50"
             >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-600">

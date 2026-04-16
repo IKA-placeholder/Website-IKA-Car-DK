@@ -3,14 +3,17 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getStoredToken } from "@/lib/auth";
 import { fetchMeWithToken } from "@/server/api";
 
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute("/{-$locale}/auth/admin")({
   ssr: false,
   pendingComponent: () => <div className="p-8 text-slate-500">Loading...</div>,
   beforeLoad: async () => {
     if (typeof window === "undefined") return;
     const token = getStoredToken();
     if (!token) {
-      throw redirect({ to: "/login" });
+      throw redirect({
+        to: "/{-$locale}/auth/login",
+        params: (prev) => ({ locale: prev.locale === "da" ? undefined : "en" }),
+      });
     }
   },
   loader: async () => {
@@ -19,11 +22,17 @@ export const Route = createFileRoute("/admin")({
     }
     const token = getStoredToken();
     if (!token) {
-      throw redirect({ to: "/login" });
+      throw redirect({
+        to: "/{-$locale}/auth/login",
+        params: (prev) => ({ locale: prev.locale === "da" ? undefined : "en" }),
+      });
     }
     const user = await fetchMeWithToken({ data: { token } });
     if (!user.is_admin_user) {
-      throw redirect({ to: "/login" });
+      throw redirect({
+        to: "/{-$locale}/auth/login",
+        params: (prev) => ({ locale: prev.locale === "da" ? undefined : "en" }),
+      });
     }
     return { user };
   },

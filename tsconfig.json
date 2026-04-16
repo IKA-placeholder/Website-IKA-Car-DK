@@ -1,15 +1,14 @@
 {
-  "include": ["**/*.ts", "**/*.tsx", "vite.config.ts"],
+  "include": ["src", "vite.config.ts"],
   "exclude": ["node_modules", "dist", ".output"],
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "esnext",
     "jsx": "react-jsx",
-    "module": "ESNext",
+    "module": "esnext",
     "paths": {
-      "#/*": ["./src/*"],
       "@/*": ["./src/*"]
     },
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -19,6 +18,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "allowJs": true
   }
 }

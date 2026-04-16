@@ -1,7 +1,7 @@
+import { paraglideVitePlugin } from "@inlang/paraglide-js";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
-import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -12,23 +12,21 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   plugins: [
-    nitro({
-      scanDirs: ["server"],
-      routeRules: {
-        "/sitemap.xml": {
-          headers: {
-            "Content-Type": "application/xml; charset=utf-8",
-          },
-        },
-        "/robots.txt": {
-          headers: {
-            "Content-Type": "text/plain; charset=utf-8",
-          },
-        },
+    tailwindcss(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+      },
+      sitemap: {
+        enabled: true,
+        host: "https://xn--autovrdi-n0a.dk",
       },
     }),
-    tailwindcss(),
-    tanstackStart(),
     viteReact(),
+    paraglideVitePlugin({
+      project: "./project.inlang",
+      outdir: "./src/paraglide",
+    }),
   ],
 });

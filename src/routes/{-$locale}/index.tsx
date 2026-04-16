@@ -1,71 +1,12 @@
-import { createFileRoute, HeadContent, Link } from "@tanstack/react-router";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Fragment } from "react";
 
 import BackgroundCars from "@/components/BackgroundCars";
 import DenmarkSilhouette from "@/components/DenmarkSilhouette";
 import FloatingCTA from "@/components/FloatingCTA";
-import { LanguageContext } from "@/components/LanguageProvider";
 import LicensePlateSearch from "@/components/LicensePlateSearch";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const TEXT = {
-  da: {
-    heroTitle: "Hvad er min bil værd? Få en gratis bilvurdering",
-    heroDesc:
-      "Få en gratis og øjeblikkelig bilvurdering baseret på markedsværdi. Indtast din nummerplade og se hvad din bil er værd.",
-    howTitle: "Så nemt er det",
-    steps: [
-      {
-        title: "Indtast nummerplade",
-        desc: "Skriv din nummerplade i feltet – det tager 2 sekunder.",
-      },
-      {
-        title: "Vi finder din bil",
-        desc: "Vi slår din bil op og henter de vigtigste oplysninger.",
-      },
-      {
-        title: "Få din vurdering",
-        desc: "Autoværdi regner på det og giver dig et realistisk bud på, hvad din bil er værd lige nu.",
-      },
-    ],
-    seoTitle: "Hvad er min bil værd? | Gratis bilvurdering → Autoværdi",
-    seoDescription:
-      'Vil du vide "hvad er min bil værd"? Få en gratis og øjeblikkelig bilvurdering. Indtast nummerplade og få realistisk pris baseret på markedsværdi. Prøv nu!',
-    keywords:
-      "hvad er min bil værd, bilvurdering, bil værdi, vurdering af bil, pris på bil, brugt bil værdi, nummerplade",
-  },
-
-  en: {
-    heroTitle: "What is my car worth? Get a free valuation",
-    heroDesc:
-      "Get a free instant car valuation based on market value. Enter your license plate and see what your car is worth.",
-    howTitle: "How it works",
-    steps: [
-      {
-        title: "Enter your plate",
-        desc: "Just type in your license plate – takes two seconds.",
-      },
-      {
-        title: "We find your car",
-        desc: "We pull up your car and gather the key details.",
-      },
-      {
-        title: "Get your estimate",
-        desc: "Autoværdi crunches the numbers and gives you a realistic idea of what your car is worth right now.",
-      },
-    ],
-    seoTitle: "What is my car worth? | Free Car Valuation → Autoværdi",
-    seoDescription:
-      "Want to know what your car is worth? Get a free instant car valuation. Enter your license plate and get a realistic price based on market value. Try now!",
-    keywords:
-      "what is my car worth, car valuation, car value, value my car, car price, used car value, license plate",
-  },
-};
+import { m } from "@/paraglide/messages";
+import { getLocale } from "@/paraglide/runtime";
 
 function StepIcon({ index }: { index: number }) {
   const common = "h-7 w-7 text-slate-600";
@@ -182,7 +123,7 @@ const faqStructuredData = {
   ],
 };
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/{-$locale}/")({
   component: Home,
   head: () => ({
     meta: [
@@ -224,10 +165,6 @@ export const Route = createFileRoute("/")({
         name: "twitter:description",
         content: "Få en øjeblikkelig og gratis vurdering af din bils værdi.",
       },
-      {
-        rel: "canonical",
-        href: SITE_URL,
-      },
     ],
     links: [
       {
@@ -235,121 +172,20 @@ export const Route = createFileRoute("/")({
         href: SITE_URL,
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(faqStructuredData),
+      },
+    ],
   }),
 });
 
 function Home() {
-  const { language } = useContext(LanguageContext);
-  const t = TEXT[language];
-  const heroRef = useRef(null);
-  const howRef = useRef<HTMLElement>(null);
-  const seoRef = useRef<HTMLElement>(null);
-
-  const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    try {
-      const stored = sessionStorage.getItem("app_authenticated");
-      if (stored === "true") setAuthenticated(true);
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!heroRef.current || !authenticated) return;
-
-    const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-
-    tl.from(".hero-title", {
-      y: 36,
-      opacity: 0,
-      duration: 0.95,
-      delay: 0.06,
-    })
-      .from(
-        ".hero-description",
-        {
-          y: 22,
-          opacity: 0,
-          duration: 0.72,
-        },
-        "-=0.5",
-      )
-      .from(
-        ".license-search",
-        {
-          y: 28,
-          opacity: 0,
-          duration: 0.82,
-        },
-        "-=0.42",
-      );
-
-    return () => {
-      tl.kill();
-    };
-  }, [authenticated]);
-
-  useEffect(() => {
-    if (!howRef.current || !authenticated) return;
-
-    const section = howRef.current;
-    const ctx = gsap.context(() => {
-      gsap.from(".how-heading-st", {
-        y: 32,
-        opacity: 0,
-        duration: 0.85,
-        ease: "expo.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 82%",
-          toggleActions: "play none none none",
-        },
-      });
-
-      gsap.from(".how-step", {
-        y: 56,
-        opacity: 0,
-        duration: 0.95,
-        stagger: 0.2,
-        ease: "expo.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 78%",
-          toggleActions: "play none none none",
-        },
-      });
-    }, howRef);
-
-    return () => ctx.revert();
-  }, [authenticated]);
-
-  // SEO content animation
-  useEffect(() => {
-    if (!seoRef.current || !authenticated) return;
-
-    const section = seoRef.current;
-    const ctx = gsap.context(() => {
-      gsap.from(".seo-content-item", {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "expo.out",
-        scrollTrigger: {
-          trigger: section,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      });
-    }, seoRef);
-
-    return () => ctx.revert();
-  }, [authenticated]);
+  const locale = getLocale();
 
   // FAQ texts
-  const faqTexts = {
+  const faqTexts: Record<string, { faqTitle: string; questions: { q: string; a: string }[] }> = {
     da: {
       faqTitle: "Ofte stillede spørgsmål",
       questions: [
@@ -386,15 +222,25 @@ function Home() {
     },
   };
 
-  const currentFaq = faqTexts[language];
+  const steps = [
+    {
+      title: m.step_1_title,
+      description: m.step_1_desc,
+    },
+    {
+      title: m.step_2_title,
+      description: m.step_2_desc,
+    },
+    {
+      title: m.step_3_title,
+      description: m.step_3_desc,
+    },
+  ];
+
+  const currentFaq = faqTexts[locale];
 
   return (
     <>
-      <HeadContent />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
-      />
       <main className="relative min-h-screen overflow-x-hidden bg-linear-to-b from-white to-slate-50 pt-16 pb-24 text-slate-900">
         <div
           className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-linear-to-b from-slate-50/80 to-transparent"
@@ -411,17 +257,14 @@ function Home() {
           aria-hidden
         />
 
-        <section
-          ref={heroRef}
-          className="relative mt-4 flex flex-col items-center justify-center overflow-hidden px-4 py-16 md:py-24"
-        >
+        <section className="relative mt-4 flex flex-col items-center justify-center overflow-hidden px-4 py-16 md:py-24">
           <BackgroundCars />
           <div className="relative z-1 w-full max-w-3xl space-y-10 text-center">
             <h1 className="hero-title text-5xl font-semibold tracking-tight text-slate-900 md:text-6xl md:leading-[1.08]">
-              {t.heroTitle}
+              {m.heroTitle()}
             </h1>
             <p className="hero-description mx-auto max-w-xl text-lg leading-relaxed text-slate-500 md:text-xl">
-              {t.heroDesc}
+              {m.heroDesc()}
             </p>
 
             <div
@@ -433,28 +276,28 @@ function Home() {
                 aria-hidden
               />
               <div className="relative rounded-2xl border border-white/50 bg-white/80 p-6 shadow-sm ring-1 ring-slate-200/50 backdrop-blur-xl md:p-8">
-                <LicensePlateSearch />
+                {typeof window !== "undefined" && <LicensePlateSearch />}
               </div>
             </div>
           </div>
         </section>
 
-        <section ref={howRef} className="how-section border-t border-slate-200/60 px-4 py-24">
+        <section className="how-section border-t border-slate-200/60 px-4 py-24">
           <div className="mx-auto max-w-5xl">
             <div className="how-heading-st mb-16 text-center">
               <h2 className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl">
-                {t.howTitle}
+                {m.howTitle()}
               </h2>
               <p className="mx-auto mt-3 max-w-lg text-slate-500">
-                {language === "da"
+                {locale === "da"
                   ? "Tre enkle trin fra nummerplade til vurdering."
                   : "Three simple steps from plate to valuation."}
               </p>
             </div>
 
             <div className="flex flex-col gap-14 md:flex-row md:items-start md:justify-center md:gap-0">
-              {t.steps.map((step, i) => (
-                <Fragment key={step.title}>
+              {steps.map((step, i) => (
+                <Fragment key={step.title()}>
                   <div className="how-step relative flex flex-1 flex-col items-center text-center md:px-4">
                     <span
                       className="pointer-events-none absolute -top-10 -left-4 -z-10 text-8xl leading-none font-bold text-slate-100 select-none"
@@ -466,9 +309,11 @@ function Home() {
                       <StepIcon index={i} />
                     </div>
                     <h3 className="mb-2 text-lg font-semibold tracking-tight text-slate-900">
-                      {step.title}
+                      {step.title()}
                     </h3>
-                    <p className="max-w-xs text-sm leading-relaxed text-slate-500">{step.desc}</p>
+                    <p className="max-w-xs text-sm leading-relaxed text-slate-500">
+                      {step.description()}
+                    </p>
                   </div>
                   {i < 2 && (
                     <div
@@ -486,7 +331,6 @@ function Home() {
 
         {/* SEO Content Section - targets primary keyword */}
         <section
-          ref={seoRef}
           className="border-t border-slate-200/60 bg-white px-4 py-16"
           aria-labelledby="seo-heading"
         >
@@ -495,26 +339,26 @@ function Home() {
               id="seo-heading"
               className="seo-content-item mb-6 text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl"
             >
-              {language === "da" ? "Hvad er min bil værd?" : "What is my car worth?"}
+              {locale === "da" ? "Hvad er min bil værd?" : "What is my car worth?"}
             </h2>
             <div className="seo-content-item prose prose-slate max-w-none">
               <p className="mb-4 leading-relaxed text-slate-600">
-                {language === "da"
+                {locale === "da"
                   ? 'Når du spørger "hvad er min bil værd?", er svaret ikke altid lige til. Bilens værdi afhænger af flere faktorer: mærke, model, årgang, kilometerstand, udstyrsniveau og ikke mindst bilens generelle stand. Hos Autoværdi gør vi det nemt at få svar på netop det spørgsmål. Vores avancerede modeller analyserer aktuelle markedsværdier fra danske bilforhandlere og privat salg, så du får et realistisk bud på din bils værdi.'
                   : "When you ask \"what is my car worth?\", the answer is not always straightforward. The value of your car depends on several factors: make, model, year, mileage, equipment level, and not least the car's overall condition. At Autoværdi, we make it easy to get an answer to exactly that question. Our advanced algorithm analyzes current market values from Danish car dealers and private sales, so you get a realistic estimate of your car's value."}
               </p>
               <h3 className="seo-content-item mt-8 mb-4 text-xl font-semibold text-slate-900">
-                {language === "da"
+                {locale === "da"
                   ? "Sådan finder du ud af hvad din bil er værd"
                   : "How to find out what your car is worth"}
               </h3>
               <p className="seo-content-item mb-4 leading-relaxed text-slate-600">
-                {language === "da"
+                {locale === "da"
                   ? "Det tager kun 10 sekunder at få en gratis vurdering. Indtast din nummerplade i feltet ovenfor, og vores system finder automatisk alle oplysninger om din bil. Herefter beregner vi en præcis vurdering baseret på tusindvis af sammenlignelige bilsalg i Danmark."
                   : "It only takes 10 seconds to get a free valuation. Enter your license plate in the field above, and our system automatically finds all information about your car. Then we calculate an accurate valuation based on thousands of comparable car sales in Denmark."}
               </p>
               <h3 className="seo-content-item mt-8 mb-4 text-xl font-semibold text-slate-900">
-                {language === "da"
+                {locale === "da"
                   ? "Hvorfor vælge Autoværdi til din bilvurdering?"
                   : "Why choose Autoværdi for your car valuation?"}
               </h3>
@@ -534,7 +378,7 @@ function Home() {
                     />
                   </svg>
                   <span>
-                    {language === "da"
+                    {locale === "da"
                       ? "Helt gratis bilvurdering uden skjulte gebyrer"
                       : "Completely free car valuation with no hidden fees"}
                   </span>
@@ -554,7 +398,7 @@ function Home() {
                     />
                   </svg>
                   <span>
-                    {language === "da"
+                    {locale === "da"
                       ? "Resultat på få sekunder baseret på markedsværdi"
                       : "Results in seconds based on market value"}
                   </span>
@@ -574,7 +418,7 @@ function Home() {
                     />
                   </svg>
                   <span>
-                    {language === "da"
+                    {locale === "da"
                       ? "Databaseret på reelle salgspriser fra danske bilmarkeder"
                       : "Data based on real sales prices from Danish car markets"}
                   </span>
@@ -594,7 +438,7 @@ function Home() {
                     />
                   </svg>
                   <span>
-                    {language === "da"
+                    {locale === "da"
                       ? "Modeller der tager højde for årgang, model og stand"
                       : "Advanced algorithms that account for year, model, and condition"}
                   </span>
@@ -657,16 +501,20 @@ function Home() {
               id="guides-heading"
               className="mb-4 text-center text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl"
             >
-              {language === "da" ? "Lær mere om bilvurdering" : "Learn more about car valuation"}
+              {locale === "da" ? "Lær mere om bilvurdering" : "Learn more about car valuation"}
             </h2>
             <p className="mx-auto mb-8 max-w-2xl text-center text-slate-500">
-              {language === "da"
+              {locale === "da"
                 ? "Læs vores guides og artikler for at blive klogere på bilvurdering og salg af brugte biler."
                 : "Read our guides and articles to learn more about car valuation and selling used cars."}
             </p>
             <div className="grid gap-6 md:grid-cols-3">
               <Link
-                to="/blog/hvad-er-min-bil-værd"
+                to="/{-$locale}/blog/hvad-er-min-bil-vaerd"
+                params={(prev) => ({
+                  ...prev,
+                  locale: prev.locale === "da" ? undefined : "en",
+                })}
                 className="group rounded-2xl border border-slate-200 bg-slate-50/50 p-6 transition-all hover:border-blue-200 hover:bg-blue-50/50"
               >
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
@@ -685,17 +533,21 @@ function Home() {
                   </svg>
                 </div>
                 <h3 className="mb-2 font-semibold text-slate-900 transition-colors group-hover:text-blue-600">
-                  {language === "da" ? "Hvad er min bil værd?" : "What is my car worth?"}
+                  {locale === "da" ? "Hvad er min bil værd?" : "What is my car worth?"}
                 </h3>
                 <p className="text-sm text-slate-500">
-                  {language === "da"
+                  {locale === "da"
                     ? "Komplet guide til bilvurdering og faktorer der påvirker prisen."
                     : "Complete guide to car valuation and factors affecting price."}
                 </p>
               </Link>
 
               <Link
-                to="/blog/bil-vurdering-guide"
+                to="/{-$locale}/blog/bil-vurdering-guide"
+                params={(prev) => ({
+                  ...prev,
+                  locale: prev.locale === "da" ? undefined : "en",
+                })}
                 className="group rounded-2xl border border-slate-200 bg-slate-50/50 p-6 transition-all hover:border-blue-200 hover:bg-blue-50/50"
               >
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
@@ -714,17 +566,21 @@ function Home() {
                   </svg>
                 </div>
                 <h3 className="mb-2 font-semibold text-slate-900 transition-colors group-hover:text-blue-600">
-                  {language === "da" ? "Sådan vurderer du selv" : "How to value your car"}
+                  {locale === "da" ? "Sådan vurderer du selv" : "How to value your car"}
                 </h3>
                 <p className="text-sm text-slate-500">
-                  {language === "da"
+                  {locale === "da"
                     ? "Lær hvordan du selv kan vurdere din bil ved at analysere markedet."
                     : "Learn how to value your car by analyzing the market."}
                 </p>
               </Link>
 
               <Link
-                to="/blog/saelg-bil-hoejeste-pris"
+                to="/{-$locale}/blog/saelg-bil-hoejeste-pris"
+                params={(prev) => ({
+                  ...prev,
+                  locale: prev.locale === "da" ? undefined : "en",
+                })}
                 className="group rounded-2xl border border-slate-200 bg-slate-50/50 p-6 transition-all hover:border-blue-200 hover:bg-blue-50/50"
               >
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
@@ -743,10 +599,10 @@ function Home() {
                   </svg>
                 </div>
                 <h3 className="mb-2 font-semibold text-slate-900 transition-colors group-hover:text-blue-600">
-                  {language === "da" ? "Få højeste pris" : "Get the best price"}
+                  {locale === "da" ? "Få højeste pris" : "Get the best price"}
                 </h3>
                 <p className="text-sm text-slate-500">
-                  {language === "da"
+                  {locale === "da"
                     ? "Tips til at maksimere salgsprisen på din bil."
                     : "Tips for maximizing your car sale price."}
                 </p>
@@ -754,10 +610,14 @@ function Home() {
             </div>
             <div className="mt-8 text-center">
               <Link
-                to="/blog"
+                to="/{-$locale}/blog"
+                params={(prev) => ({
+                  ...prev,
+                  locale: prev.locale === "da" ? undefined : "en",
+                })}
                 className="inline-flex items-center font-medium text-blue-600 transition-colors hover:text-blue-700"
               >
-                {language === "da" ? "Se alle artikler" : "See all articles"}
+                {locale === "da" ? "Se alle artikler" : "See all articles"}
                 <svg
                   className="ml-2 h-4 w-4"
                   fill="none"

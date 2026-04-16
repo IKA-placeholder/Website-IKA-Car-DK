@@ -1,0 +1,13 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Goddag {username}",
+  "heroTitle": "Hvad er min bil værd? Få en gratis bilvurdering",
+  "heroDesc": "Få en gratis og øjeblikkelig bilvurdering baseret på markedsværdi. Indtast din nummerplade og se hvad din bil er værd.",
+  "howTitle": "Så nemt er det",
+  "step_1_title": "Indtast nummerplade",
+  "step_1_desc": "Skriv din nummerplade i feltet – det tager 2 sekunder.",
+  "step_2_title": "Vi finder din bil",
+  "step_2_desc": "Vi slår din bil op og henter de vigtigste oplysninger.",
+  "step_3_title": "Få din vurdering",
+  "step_3_desc": "Autoværdi regner på det og giver dig et realistisk bud på, hvad din bil er værd lige nu."
+}

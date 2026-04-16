@@ -1,0 +1,13 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "example_message": "Hello world {username}",
+  "heroTitle": "What is my car worth? Get a free valuation",
+  "heroDesc": "Get a free instant car valuation based on market value. Enter your license plate and see what your car is worth.",
+  "howTitle": "How it works",
+  "step_1_title": "Enter your plate",
+  "step_1_desc": "Just type in your license plate – takes two seconds.",
+  "step_2_title": "We find your car",
+  "step_2_desc": "We pull up your car and gather the key details.",
+  "step_3_title": "Get your estimate",
+  "step_3_desc": "Autoværdi crunches the numbers and gives you a realistic idea of what your car is worth right now."
+}

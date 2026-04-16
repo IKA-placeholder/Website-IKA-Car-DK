@@ -1,11 +1,10 @@
 import { createFileRoute, HeadContent } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { useContext } from "react";
 
 import { BlogArticleLayout } from "@/components/BlogArticleLayout";
-import { LanguageContext } from "@/components/LanguageProvider";
+import { getLocale } from "@/paraglide/runtime";
 
-export const Route = createFileRoute("/blog/saelg-bil-hoejeste-pris")({
+export const Route = createFileRoute("/{-$locale}/blog/saelg-bil-hoejeste-pris")({
   component: SaelgBilHoejestePris,
   head: () => ({
     meta: [
@@ -29,6 +28,8 @@ export const Route = createFileRoute("/blog/saelg-bil-hoejeste-pris")({
         property: "og:description",
         content: "Få 5.000-15.000 kr. mere for din bil med vores simple guide.",
       },
+    ],
+    links: [
       {
         rel: "canonical",
         href: "https://www.xn--autovrdi-n0a.dk/blog/saelg-bil-hoejeste-pris",
@@ -114,7 +115,7 @@ function ProTip({ children }: { children: React.ReactNode }) {
 }
 
 function SaelgBilHoejestePris() {
-  const { language } = useContext(LanguageContext);
+  const language = getLocale();
 
   if (language === "en") {
     return (
@@ -323,7 +324,11 @@ function SaelgBilHoejestePris() {
               Get a free valuation first to know exactly what your car is worth.
             </p>
             <Link
-              to="/"
+              to="/{-$locale}"
+              params={(prev) => ({
+                ...prev,
+                locale: prev.locale === "da" ? undefined : "en",
+              })}
               className="inline-flex items-center rounded-xl bg-white px-8 py-4 text-lg font-bold text-blue-600 transition-transform hover:scale-105"
             >
               Get Free Valuation
@@ -707,7 +712,11 @@ function SaelgBilHoejestePris() {
             Få en gratis vurdering først, så du ved præcis hvad din bil er værd.
           </p>
           <Link
-            to="/"
+            to="/{-$locale}"
+            params={(prev) => ({
+              ...prev,
+              locale: prev.locale === "da" ? undefined : "en",
+            })}
             className="inline-flex items-center rounded-xl bg-white px-8 py-4 text-lg font-bold text-blue-600 transition-transform hover:scale-105"
           >
             Få gratis vurdering

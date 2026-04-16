@@ -1,9 +1,8 @@
 import { createFileRoute, HeadContent, Link } from "@tanstack/react-router";
-import { useContext } from "react";
 
-import { LanguageContext } from "@/components/LanguageProvider";
+import { getLocale } from "@/paraglide/runtime";
 
-export const Route = createFileRoute("/blog/")({
+export const Route = createFileRoute("/{-$locale}/blog/")({
   component: BlogIndex,
   head: () => ({
     meta: [
@@ -23,6 +22,8 @@ export const Route = createFileRoute("/blog/")({
         property: "og:description",
         content: "Guides og artikler om bilvurdering. Lær hvad din bil er værd.",
       },
+    ],
+    links: [
       {
         rel: "canonical",
         href: "https://www.xn--autovrdi-n0a.dk/blog",
@@ -33,7 +34,7 @@ export const Route = createFileRoute("/blog/")({
 
 const blogPostsDa = [
   {
-    slug: "hvad-er-min-bil-værd",
+    slug: "hvad-er-min-bil-vaerd",
     title: "Hvad er min bil værd? Den komplette guide 2026",
     excerpt:
       "Vil du vide hvad din bil er værd? Læs vores komplette guide om bilvurdering og find ud af hvordan du får den bedste pris.",
@@ -70,7 +71,7 @@ const blogPostsEn = [
 ];
 
 function BlogIndex() {
-  const { language } = useContext(LanguageContext);
+  const language = getLocale();
   const posts = language === "da" ? blogPostsDa : blogPostsEn;
 
   return (
@@ -78,7 +79,14 @@ function BlogIndex() {
       <HeadContent />
 
       <nav className="mb-8 text-sm text-slate-500">
-        <Link to="/" className="hover:text-blue-600">
+        <Link
+          to="/{-$locale}"
+          params={(prev) => ({
+            ...prev,
+            locale: prev.locale === "da" ? undefined : "en",
+          })}
+          className="hover:text-blue-600"
+        >
           {language === "da" ? "Forside" : "Home"}
         </Link>
         <span className="mx-2">/</span>
@@ -101,7 +109,14 @@ function BlogIndex() {
             key={post.slug}
             className="group rounded-2xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-lg"
           >
-            <Link to={`/blog/${post.slug}`} className="block">
+            <Link
+              to={`/{-$locale}/blog/${post.slug}`}
+              params={(prev) => ({
+                ...prev,
+                locale: prev.locale === "da" ? undefined : "en",
+              })}
+              className="block"
+            >
               <div className="mb-3 flex items-center gap-4 text-sm text-slate-500">
                 <span>{post.date}</span>
                 <span>•</span>
@@ -148,7 +163,11 @@ function BlogIndex() {
             : "Enter your license plate and get an instant valuation of your car."}
         </p>
         <Link
-          to="/"
+          to="/{-$locale}"
+          params={(prev) => ({
+            ...prev,
+            locale: prev.locale === "da" ? undefined : "en",
+          })}
           className="inline-flex items-center rounded-xl bg-white px-6 py-3 font-semibold text-blue-600 transition-colors hover:bg-blue-50"
         >
           {language === "da" ? "Få vurdering nu" : "Get valuation now"}

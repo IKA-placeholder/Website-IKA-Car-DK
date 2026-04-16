@@ -9,203 +9,212 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SignupRouteImport } from './routes/signup'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as BlogIndexRouteImport } from './routes/blog/index'
-import { Route as BlogSaelgBilHoejestePrisRouteImport } from './routes/blog/saelg-bil-hoejeste-pris'
-import { Route as BlogHvadErMinBilVChar230rdRouteImport } from './routes/blog/hvad-er-min-bil-værd'
-import { Route as BlogBilVurderingGuideRouteImport } from './routes/blog/bil-vurdering-guide'
+import { Route as Char123LocaleChar125IndexRouteImport } from './routes/{-$locale}/index'
+import { Route as Char123LocaleChar125BlogIndexRouteImport } from './routes/{-$locale}/blog/index'
+import { Route as Char123LocaleChar125BlogSaelgBilHoejestePrisRouteImport } from './routes/{-$locale}/blog/saelg-bil-hoejeste-pris'
+import { Route as Char123LocaleChar125BlogHvadErMinBilVaerdRouteImport } from './routes/{-$locale}/blog/hvad-er-min-bil-vaerd'
+import { Route as Char123LocaleChar125BlogBilVurderingGuideRouteImport } from './routes/{-$locale}/blog/bil-vurdering-guide'
+import { Route as Char123LocaleChar125AuthSignupRouteImport } from './routes/{-$locale}/auth/signup'
+import { Route as Char123LocaleChar125AuthLoginRouteImport } from './routes/{-$locale}/auth/login'
+import { Route as Char123LocaleChar125AuthAdminRouteImport } from './routes/{-$locale}/auth/admin'
 
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogSaelgBilHoejestePrisRoute =
-  BlogSaelgBilHoejestePrisRouteImport.update({
-    id: '/blog/saelg-bil-hoejeste-pris',
-    path: '/blog/saelg-bil-hoejeste-pris',
+const Char123LocaleChar125IndexRoute =
+  Char123LocaleChar125IndexRouteImport.update({
+    id: '/{-$locale}/',
+    path: '/{-$locale}/',
     getParentRoute: () => rootRouteImport,
   } as any)
-const BlogHvadErMinBilVChar230rdRoute =
-  BlogHvadErMinBilVChar230rdRouteImport.update({
-    id: '/blog/hvad-er-min-bil-værd',
-    path: '/blog/hvad-er-min-bil-værd',
+const Char123LocaleChar125BlogIndexRoute =
+  Char123LocaleChar125BlogIndexRouteImport.update({
+    id: '/{-$locale}/blog/',
+    path: '/{-$locale}/blog/',
     getParentRoute: () => rootRouteImport,
   } as any)
-const BlogBilVurderingGuideRoute = BlogBilVurderingGuideRouteImport.update({
-  id: '/blog/bil-vurdering-guide',
-  path: '/blog/bil-vurdering-guide',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const Char123LocaleChar125BlogSaelgBilHoejestePrisRoute =
+  Char123LocaleChar125BlogSaelgBilHoejestePrisRouteImport.update({
+    id: '/{-$locale}/blog/saelg-bil-hoejeste-pris',
+    path: '/{-$locale}/blog/saelg-bil-hoejeste-pris',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125BlogHvadErMinBilVaerdRoute =
+  Char123LocaleChar125BlogHvadErMinBilVaerdRouteImport.update({
+    id: '/{-$locale}/blog/hvad-er-min-bil-vaerd',
+    path: '/{-$locale}/blog/hvad-er-min-bil-vaerd',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125BlogBilVurderingGuideRoute =
+  Char123LocaleChar125BlogBilVurderingGuideRouteImport.update({
+    id: '/{-$locale}/blog/bil-vurdering-guide',
+    path: '/{-$locale}/blog/bil-vurdering-guide',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125AuthSignupRoute =
+  Char123LocaleChar125AuthSignupRouteImport.update({
+    id: '/{-$locale}/auth/signup',
+    path: '/{-$locale}/auth/signup',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125AuthLoginRoute =
+  Char123LocaleChar125AuthLoginRouteImport.update({
+    id: '/{-$locale}/auth/login',
+    path: '/{-$locale}/auth/login',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125AuthAdminRoute =
+  Char123LocaleChar125AuthAdminRouteImport.update({
+    id: '/{-$locale}/auth/admin',
+    path: '/{-$locale}/auth/admin',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
-  '/blog/bil-vurdering-guide': typeof BlogBilVurderingGuideRoute
-  '/blog/hvad-er-min-bil-værd': typeof BlogHvadErMinBilVChar230rdRoute
-  '/blog/saelg-bil-hoejeste-pris': typeof BlogSaelgBilHoejestePrisRoute
-  '/blog/': typeof BlogIndexRoute
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/auth/admin': typeof Char123LocaleChar125AuthAdminRoute
+  '/{-$locale}/auth/login': typeof Char123LocaleChar125AuthLoginRoute
+  '/{-$locale}/auth/signup': typeof Char123LocaleChar125AuthSignupRoute
+  '/{-$locale}/blog/bil-vurdering-guide': typeof Char123LocaleChar125BlogBilVurderingGuideRoute
+  '/{-$locale}/blog/hvad-er-min-bil-vaerd': typeof Char123LocaleChar125BlogHvadErMinBilVaerdRoute
+  '/{-$locale}/blog/saelg-bil-hoejeste-pris': typeof Char123LocaleChar125BlogSaelgBilHoejestePrisRoute
+  '/{-$locale}/blog/': typeof Char123LocaleChar125BlogIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
-  '/blog/bil-vurdering-guide': typeof BlogBilVurderingGuideRoute
-  '/blog/hvad-er-min-bil-værd': typeof BlogHvadErMinBilVChar230rdRoute
-  '/blog/saelg-bil-hoejeste-pris': typeof BlogSaelgBilHoejestePrisRoute
-  '/blog': typeof BlogIndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/auth/admin': typeof Char123LocaleChar125AuthAdminRoute
+  '/{-$locale}/auth/login': typeof Char123LocaleChar125AuthLoginRoute
+  '/{-$locale}/auth/signup': typeof Char123LocaleChar125AuthSignupRoute
+  '/{-$locale}/blog/bil-vurdering-guide': typeof Char123LocaleChar125BlogBilVurderingGuideRoute
+  '/{-$locale}/blog/hvad-er-min-bil-vaerd': typeof Char123LocaleChar125BlogHvadErMinBilVaerdRoute
+  '/{-$locale}/blog/saelg-bil-hoejeste-pris': typeof Char123LocaleChar125BlogSaelgBilHoejestePrisRoute
+  '/{-$locale}/blog': typeof Char123LocaleChar125BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
-  '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
-  '/blog/bil-vurdering-guide': typeof BlogBilVurderingGuideRoute
-  '/blog/hvad-er-min-bil-værd': typeof BlogHvadErMinBilVChar230rdRoute
-  '/blog/saelg-bil-hoejeste-pris': typeof BlogSaelgBilHoejestePrisRoute
-  '/blog/': typeof BlogIndexRoute
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/auth/admin': typeof Char123LocaleChar125AuthAdminRoute
+  '/{-$locale}/auth/login': typeof Char123LocaleChar125AuthLoginRoute
+  '/{-$locale}/auth/signup': typeof Char123LocaleChar125AuthSignupRoute
+  '/{-$locale}/blog/bil-vurdering-guide': typeof Char123LocaleChar125BlogBilVurderingGuideRoute
+  '/{-$locale}/blog/hvad-er-min-bil-vaerd': typeof Char123LocaleChar125BlogHvadErMinBilVaerdRoute
+  '/{-$locale}/blog/saelg-bil-hoejeste-pris': typeof Char123LocaleChar125BlogSaelgBilHoejestePrisRoute
+  '/{-$locale}/blog/': typeof Char123LocaleChar125BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/admin'
-    | '/login'
-    | '/signup'
-    | '/blog/bil-vurdering-guide'
-    | '/blog/hvad-er-min-bil-værd'
-    | '/blog/saelg-bil-hoejeste-pris'
-    | '/blog/'
+    | '/{-$locale}/'
+    | '/{-$locale}/auth/admin'
+    | '/{-$locale}/auth/login'
+    | '/{-$locale}/auth/signup'
+    | '/{-$locale}/blog/bil-vurdering-guide'
+    | '/{-$locale}/blog/hvad-er-min-bil-vaerd'
+    | '/{-$locale}/blog/saelg-bil-hoejeste-pris'
+    | '/{-$locale}/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/admin'
-    | '/login'
-    | '/signup'
-    | '/blog/bil-vurdering-guide'
-    | '/blog/hvad-er-min-bil-værd'
-    | '/blog/saelg-bil-hoejeste-pris'
-    | '/blog'
+    | '/{-$locale}'
+    | '/{-$locale}/auth/admin'
+    | '/{-$locale}/auth/login'
+    | '/{-$locale}/auth/signup'
+    | '/{-$locale}/blog/bil-vurdering-guide'
+    | '/{-$locale}/blog/hvad-er-min-bil-vaerd'
+    | '/{-$locale}/blog/saelg-bil-hoejeste-pris'
+    | '/{-$locale}/blog'
   id:
     | '__root__'
-    | '/'
-    | '/admin'
-    | '/login'
-    | '/signup'
-    | '/blog/bil-vurdering-guide'
-    | '/blog/hvad-er-min-bil-værd'
-    | '/blog/saelg-bil-hoejeste-pris'
-    | '/blog/'
+    | '/{-$locale}/'
+    | '/{-$locale}/auth/admin'
+    | '/{-$locale}/auth/login'
+    | '/{-$locale}/auth/signup'
+    | '/{-$locale}/blog/bil-vurdering-guide'
+    | '/{-$locale}/blog/hvad-er-min-bil-vaerd'
+    | '/{-$locale}/blog/saelg-bil-hoejeste-pris'
+    | '/{-$locale}/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
-  LoginRoute: typeof LoginRoute
-  SignupRoute: typeof SignupRoute
-  BlogBilVurderingGuideRoute: typeof BlogBilVurderingGuideRoute
-  BlogHvadErMinBilVChar230rdRoute: typeof BlogHvadErMinBilVChar230rdRoute
-  BlogSaelgBilHoejestePrisRoute: typeof BlogSaelgBilHoejestePrisRoute
-  BlogIndexRoute: typeof BlogIndexRoute
+  Char123LocaleChar125IndexRoute: typeof Char123LocaleChar125IndexRoute
+  Char123LocaleChar125AuthAdminRoute: typeof Char123LocaleChar125AuthAdminRoute
+  Char123LocaleChar125AuthLoginRoute: typeof Char123LocaleChar125AuthLoginRoute
+  Char123LocaleChar125AuthSignupRoute: typeof Char123LocaleChar125AuthSignupRoute
+  Char123LocaleChar125BlogBilVurderingGuideRoute: typeof Char123LocaleChar125BlogBilVurderingGuideRoute
+  Char123LocaleChar125BlogHvadErMinBilVaerdRoute: typeof Char123LocaleChar125BlogHvadErMinBilVaerdRoute
+  Char123LocaleChar125BlogSaelgBilHoejestePrisRoute: typeof Char123LocaleChar125BlogSaelgBilHoejestePrisRoute
+  Char123LocaleChar125BlogIndexRoute: typeof Char123LocaleChar125BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
+    '/{-$locale}/': {
+      id: '/{-$locale}/'
+      path: '/{-$locale}'
+      fullPath: '/{-$locale}/'
+      preLoaderRoute: typeof Char123LocaleChar125IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/{-$locale}/blog/': {
+      id: '/{-$locale}/blog/'
+      path: '/{-$locale}/blog'
+      fullPath: '/{-$locale}/blog/'
+      preLoaderRoute: typeof Char123LocaleChar125BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
+    '/{-$locale}/blog/saelg-bil-hoejeste-pris': {
+      id: '/{-$locale}/blog/saelg-bil-hoejeste-pris'
+      path: '/{-$locale}/blog/saelg-bil-hoejeste-pris'
+      fullPath: '/{-$locale}/blog/saelg-bil-hoejeste-pris'
+      preLoaderRoute: typeof Char123LocaleChar125BlogSaelgBilHoejestePrisRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/{-$locale}/blog/hvad-er-min-bil-vaerd': {
+      id: '/{-$locale}/blog/hvad-er-min-bil-vaerd'
+      path: '/{-$locale}/blog/hvad-er-min-bil-vaerd'
+      fullPath: '/{-$locale}/blog/hvad-er-min-bil-vaerd'
+      preLoaderRoute: typeof Char123LocaleChar125BlogHvadErMinBilVaerdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
+    '/{-$locale}/blog/bil-vurdering-guide': {
+      id: '/{-$locale}/blog/bil-vurdering-guide'
+      path: '/{-$locale}/blog/bil-vurdering-guide'
+      fullPath: '/{-$locale}/blog/bil-vurdering-guide'
+      preLoaderRoute: typeof Char123LocaleChar125BlogBilVurderingGuideRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/saelg-bil-hoejeste-pris': {
-      id: '/blog/saelg-bil-hoejeste-pris'
-      path: '/blog/saelg-bil-hoejeste-pris'
-      fullPath: '/blog/saelg-bil-hoejeste-pris'
-      preLoaderRoute: typeof BlogSaelgBilHoejestePrisRouteImport
+    '/{-$locale}/auth/signup': {
+      id: '/{-$locale}/auth/signup'
+      path: '/{-$locale}/auth/signup'
+      fullPath: '/{-$locale}/auth/signup'
+      preLoaderRoute: typeof Char123LocaleChar125AuthSignupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/hvad-er-min-bil-værd': {
-      id: '/blog/hvad-er-min-bil-værd'
-      path: '/blog/hvad-er-min-bil-værd'
-      fullPath: '/blog/hvad-er-min-bil-værd'
-      preLoaderRoute: typeof BlogHvadErMinBilVChar230rdRouteImport
+    '/{-$locale}/auth/login': {
+      id: '/{-$locale}/auth/login'
+      path: '/{-$locale}/auth/login'
+      fullPath: '/{-$locale}/auth/login'
+      preLoaderRoute: typeof Char123LocaleChar125AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/bil-vurdering-guide': {
-      id: '/blog/bil-vurdering-guide'
-      path: '/blog/bil-vurdering-guide'
-      fullPath: '/blog/bil-vurdering-guide'
-      preLoaderRoute: typeof BlogBilVurderingGuideRouteImport
+    '/{-$locale}/auth/admin': {
+      id: '/{-$locale}/auth/admin'
+      path: '/{-$locale}/auth/admin'
+      fullPath: '/{-$locale}/auth/admin'
+      preLoaderRoute: typeof Char123LocaleChar125AuthAdminRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
-  LoginRoute: LoginRoute,
-  SignupRoute: SignupRoute,
-  BlogBilVurderingGuideRoute: BlogBilVurderingGuideRoute,
-  BlogHvadErMinBilVChar230rdRoute: BlogHvadErMinBilVChar230rdRoute,
-  BlogSaelgBilHoejestePrisRoute: BlogSaelgBilHoejestePrisRoute,
-  BlogIndexRoute: BlogIndexRoute,
+  Char123LocaleChar125IndexRoute: Char123LocaleChar125IndexRoute,
+  Char123LocaleChar125AuthAdminRoute: Char123LocaleChar125AuthAdminRoute,
+  Char123LocaleChar125AuthLoginRoute: Char123LocaleChar125AuthLoginRoute,
+  Char123LocaleChar125AuthSignupRoute: Char123LocaleChar125AuthSignupRoute,
+  Char123LocaleChar125BlogBilVurderingGuideRoute:
+    Char123LocaleChar125BlogBilVurderingGuideRoute,
+  Char123LocaleChar125BlogHvadErMinBilVaerdRoute:
+    Char123LocaleChar125BlogHvadErMinBilVaerdRoute,
+  Char123LocaleChar125BlogSaelgBilHoejestePrisRoute:
+    Char123LocaleChar125BlogSaelgBilHoejestePrisRoute,
+  Char123LocaleChar125BlogIndexRoute: Char123LocaleChar125BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
