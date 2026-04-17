@@ -1,5 +1,6 @@
 import { createFileRoute, HeadContent, Link } from "@tanstack/react-router";
 
+import { m } from "@/paraglide/messages";
 import { getLocale } from "@/paraglide/runtime";
 
 export const Route = createFileRoute("/{-$locale}/blog/")({
@@ -32,47 +33,34 @@ export const Route = createFileRoute("/{-$locale}/blog/")({
   }),
 });
 
-const blogPostsDa = [
+const blogPosts = [
   {
-    slug: "hvad-er-min-bil-vaerd",
-    title: "Hvad er min bil værd? Den komplette guide 2026",
-    excerpt:
-      "Vil du vide hvad din bil er værd? Læs vores komplette guide om bilvurdering og find ud af hvordan du får den bedste pris.",
-    date: "9. april 2026",
+    route: "/{-$locale}/blog/hvad-er-min-bil-vaerd" as const,
+    title: m.blog_post1_title,
+    excerpt: m.blog_post1_desc,
     readTime: "5 min",
   },
   {
-    slug: "bil-vurdering-guide",
-    title: "Sådan vurderer du din bil selv",
-    excerpt:
-      "Lær hvordan du selv kan vurdere din bils værdi ved at analysere markedet og tage højde for vigtige faktorer.",
-    date: "9. april 2026",
+    route: "/{-$locale}/blog/bil-vurdering-guide" as const,
+    title: m.blog_post2_title,
+    excerpt: m.blog_post2_desc,
     readTime: "4 min",
   },
   {
-    slug: "saelg-bil-hoejeste-pris",
-    title: "Sådan får du den højeste pris for din bil",
-    excerpt:
-      "Få praktiske tips til at maksimere salgsprisen på din bil - fra rengøring til forhandling.",
-    date: "9. april 2026",
+    route: "/{-$locale}/blog/saelg-bil-hoejeste-pris" as const,
+    title: m.blog_post3_title,
+    excerpt: m.blog_post3_desc,
     readTime: "6 min",
-  },
-];
-
-const blogPostsEn = [
-  {
-    slug: "hvad-er-min-bil-vaerd",
-    title: "What is my car worth? The Complete Guide 2026",
-    excerpt:
-      "Want to know what your car is worth? Read our complete guide to car valuation and learn how to get the best price.",
-    date: "April 9, 2026",
-    readTime: "5 min",
   },
 ];
 
 function BlogIndex() {
   const language = getLocale();
-  const posts = language === "da" ? blogPostsDa : blogPostsEn;
+
+  const getDate = () => {
+    if (language === "da") return "9. april 2026";
+    return "April 9, 2026";
+  };
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
@@ -87,30 +75,26 @@ function BlogIndex() {
           })}
           className="hover:text-blue-600"
         >
-          {language === "da" ? "Forside" : "Home"}
+          {m.breadcrumb_home()}
         </Link>
         <span className="mx-2">/</span>
         <span className="text-slate-900">Blog</span>
       </nav>
 
       <h1 className="mb-4 text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
-        {language === "da" ? "Blog om bilvurdering" : "Car Valuation Blog"}
+        {m.blog_title()}
       </h1>
 
-      <p className="mb-12 text-lg text-slate-600">
-        {language === "da"
-          ? "Guides, tips og råd om bilvurdering og salg af brugte biler."
-          : "Guides, tips and advice on car valuation and selling used cars."}
-      </p>
+      <p className="mb-12 text-lg text-slate-600">{m.blog_subtitle()}</p>
 
       <div className="grid gap-8">
-        {posts.map((post) => (
+        {blogPosts.map((post) => (
           <article
-            key={post.slug}
+            key={post.route}
             className="group rounded-2xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-lg"
           >
             <Link
-              to={`/{-$locale}/blog/${post.slug}`}
+              to={post.route}
               params={(prev) => ({
                 ...prev,
                 locale: prev.locale === "da" ? undefined : "en",
@@ -118,21 +102,21 @@ function BlogIndex() {
               className="block"
             >
               <div className="mb-3 flex items-center gap-4 text-sm text-slate-500">
-                <span>{post.date}</span>
+                <span>{getDate()}</span>
                 <span>•</span>
                 <span>
-                  {post.readTime} {language === "da" ? "læsetid" : "read"}
+                  {post.readTime} {m.blog_read_time()}
                 </span>
               </div>
 
               <h2 className="mb-3 text-2xl font-semibold text-slate-900 transition-colors group-hover:text-blue-600">
-                {post.title}
+                {post.title()}
               </h2>
 
-              <p className="mb-4 text-slate-600">{post.excerpt}</p>
+              <p className="mb-4 text-slate-600">{post.excerpt()}</p>
 
               <span className="inline-flex items-center font-medium text-blue-600">
-                {language === "da" ? "Læs mere" : "Read more"}
+                {m.blog_read_more()}
                 <svg
                   className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
                   fill="none"
@@ -154,14 +138,8 @@ function BlogIndex() {
 
       {/* CTA Section */}
       <div className="mt-12 rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 p-8 text-white">
-        <h2 className="mb-4 text-2xl font-bold">
-          {language === "da" ? "Få en gratis bilvurdering" : "Get a free car valuation"}
-        </h2>
-        <p className="mb-6 text-blue-100">
-          {language === "da"
-            ? "Indtast din nummerplade og få en øjeblikkelig vurdering af din bils værdi."
-            : "Enter your license plate and get an instant valuation of your car."}
-        </p>
+        <h2 className="mb-4 text-2xl font-bold">{m.blog_cta_title()}</h2>
+        <p className="mb-6 text-blue-100">{m.blog_cta_desc()}</p>
         <Link
           to="/{-$locale}"
           params={(prev) => ({
@@ -170,7 +148,7 @@ function BlogIndex() {
           })}
           className="inline-flex items-center rounded-xl bg-white px-6 py-3 font-semibold text-blue-600 transition-colors hover:bg-blue-50"
         >
-          {language === "da" ? "Få vurdering nu" : "Get valuation now"}
+          {m.blog_cta_button()}
           <svg
             className="ml-2 h-5 w-5"
             fill="none"
