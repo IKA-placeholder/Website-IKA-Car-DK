@@ -2,6 +2,7 @@
 
 import { Link } from "@tanstack/react-router";
 import { Globe, Moon, Sun } from "lucide-react";
+import { easeOut, motion } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { useTheme } from "@/components/ThemeProvider";
@@ -55,13 +56,13 @@ export default function Header() {
 
   return (
     <>
-      <header
+      <motion.header
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: easeOut }}
         className={`bg-background/80 fixed top-0 left-0 z-50 w-full border-b backdrop-blur-md transition-all duration-250 ease-out ${
           isScrolled ? "border-border/60 py-2 shadow-sm" : "border-transparent py-4"
         }`}
-        style={{
-          animation: `headerSlideDown 400ms ${EASE_OUT_QUART} forwards`,
-        }}
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
           {/* Logo */}
@@ -167,7 +168,7 @@ export default function Header() {
             <HamburgerIcon isOpen={isMobileMenuOpen} />
           </Button>
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile Menu Panel */}
       <div

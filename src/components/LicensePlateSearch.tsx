@@ -123,7 +123,7 @@ export default function LicensePlateSearch() {
         <div className="flex flex-col space-y-3">
           <label
             htmlFor="plateNumber"
-            className="flex items-center text-base font-medium text-slate-900"
+            className="flex items-center text-base font-medium text-slate-900 dark:text-slate-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +146,7 @@ export default function LicensePlateSearch() {
             value={plateNumber}
             onChange={(e) => setPlateNumber(e.target.value.toUpperCase())}
             placeholder={m.search_placeholder()}
-            className="min-w-0 flex-1 rounded-xl border border-slate-200/80 bg-white px-5 py-5 font-mono text-lg tracking-wide text-slate-900 shadow-sm ring-1 ring-slate-200/40 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 focus:outline-none"
+            className="min-w-0 flex-1 rounded-xl border border-slate-200/80 bg-white px-5 py-5 font-mono text-lg tracking-wide text-slate-900 shadow-sm ring-1 ring-slate-200/40 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 focus:outline-none dark:border-slate-800/80 dark:bg-black dark:text-slate-200"
             required
             pattern="[A-Z0-9 ]{2,8}"
             title={m.search_label()}
@@ -157,7 +157,7 @@ export default function LicensePlateSearch() {
         <div className="flex flex-col space-y-3">
           <label
             htmlFor="kilometers"
-            className="flex items-center text-base font-medium text-slate-900"
+            className="flex items-center text-base font-medium text-slate-900 dark:text-slate-200"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -180,7 +180,7 @@ export default function LicensePlateSearch() {
             value={kilometers}
             onChange={(e) => setKilometers(e.target.value)}
             placeholder={m.search_km_placeholder()}
-            className="min-w-0 flex-1 rounded-xl border border-slate-200/80 bg-white px-5 py-4 text-lg text-slate-900 shadow-sm ring-1 ring-slate-200/40 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 focus:outline-none"
+            className="min-w-0 flex-1 rounded-xl border border-slate-200/80 bg-white px-5 py-4 text-lg text-slate-900 shadow-sm ring-1 ring-slate-200/40 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 focus:outline-none dark:bg-black dark:text-slate-200"
             pattern="[0-9.,]*"
             inputMode="numeric"
             title={m.search_km_label()}
