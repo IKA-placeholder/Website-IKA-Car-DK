@@ -5,6 +5,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState, useEffect, useMemo } from "react";
 
 import AdvancedValuation from "@/components/AdvancedValuation";
+import { m } from "@/paraglide/messages";
 import { getLocale } from "@/paraglide/runtime";
 import { predictPlate } from "@/server/api";
 
@@ -17,55 +18,6 @@ interface CarData {
   maxPrice: number;
   priceRange: string;
 }
-
-const TEXT = {
-  da: {
-    label: "Indtast nummerplade",
-    placeholder: "FX12345",
-    kilometersLabel: "Nuværende kilometerantal",
-    kilometersPlaceholder: "f.eks. 85000",
-    button: "Se hvad min bil er værd",
-    loading: "Søger...",
-    error: "Der opstod en fejl ved søgning. Prøv igen senere.",
-    carDetails: "Biloplysninger",
-    make: "Mærke",
-    model: "Model",
-    year: "Årgang",
-    kilometers: "Kilometer",
-    value: "Estimeret værdi",
-    valueRange: "Værdinterval",
-    from: "fra",
-    to: "til",
-    advancedValuation: "Få avanceret vurdering",
-    quickValuation: "Hurtig vurdering",
-    advancedDescription: "En mere præcis vurdering baseret på flere detaljer om din bil",
-    disclaimer:
-      "Bemærk: Værktøjet er kun en vejledning baseret på lignende biler på markedet. Du bør altid udføre din egen research før et køb eller salg.",
-  },
-  en: {
-    label: "Enter license plate",
-    placeholder: "e.g. FX12345",
-    kilometersLabel: "Current mileage",
-    kilometersPlaceholder: "e.g. 85000",
-    button: "Get valuation",
-    loading: "Searching...",
-    error: "An error occurred. Please try again later.",
-    carDetails: "Car details",
-    make: "Make",
-    model: "Model",
-    year: "Year",
-    kilometers: "Mileage",
-    value: "Estimated value",
-    valueRange: "Value range",
-    from: "from",
-    to: "to",
-    advancedValuation: "Get advanced valuation",
-    quickValuation: "Quick valuation",
-    advancedDescription: "A more accurate valuation based on additional details about your car",
-    disclaimer:
-      "Note: This tool is only a guide based on similar cars on the market. You should always do your own research before buying or selling.",
-  },
-};
 
 function mapPredictToCarData(data: {
   maerke?: string;
@@ -89,7 +41,6 @@ function mapPredictToCarData(data: {
 
 export default function LicensePlateSearch() {
   const language = getLocale();
-  const t = TEXT[language];
   const [plateNumber, setPlateNumber] = useState("");
   const [kilometers, setKilometers] = useState("");
   const [submittedPlate, setSubmittedPlate] = useState<string | null>(null);
@@ -115,9 +66,9 @@ export default function LicensePlateSearch() {
     enabled: Boolean(submittedPlate),
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 30,
-    retry: false, // Don't retry on error - prevents hammering the API
-    refetchOnWindowFocus: false, // Don't refetch when user comes back to tab
-    refetchOnReconnect: false, // Don't refetch on network reconnect
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   const carData: CarData | null = useMemo(() => {
@@ -126,13 +77,12 @@ export default function LicensePlateSearch() {
 
   useEffect(() => {
     if (queryError) {
-      // Show specific error message from backend if available
-      const errorMessage = queryError instanceof Error ? queryError.message : t.error;
+      const errorMessage = queryError instanceof Error ? queryError.message : m.search_error();
       setError(errorMessage);
     } else {
       setError(null);
     }
-  }, [queryError, t.error]);
+  }, [queryError]);
 
   useEffect(() => {
     if (carData) {
@@ -145,7 +95,6 @@ export default function LicensePlateSearch() {
     setError(null);
     const formattedPlate = plateNumber.replace(/\s+/g, "");
     setSubmittedPlate(formattedPlate);
-    // Parse kilometers if provided
     const kmValue = kilometers.replace(/\./g, "").replace(/,/g, "");
     const parsedKm = kmValue ? parseInt(kmValue, 10) : undefined;
     setSubmittedKilometers(parsedKm && parsedKm > 0 ? parsedKm : undefined);
@@ -168,7 +117,7 @@ export default function LicensePlateSearch() {
   }
 
   return (
-    <div className="w-full">
+    <div className="relative w-full">
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* License plate input */}
         <div className="flex flex-col space-y-3">
@@ -189,18 +138,18 @@ export default function LicensePlateSearch() {
                 clipRule="evenodd"
               />
             </svg>
-            {t.label}
+            {m.search_label()}
           </label>
           <input
             type="text"
             id="plateNumber"
             value={plateNumber}
             onChange={(e) => setPlateNumber(e.target.value.toUpperCase())}
-            placeholder={t.placeholder}
+            placeholder={m.search_placeholder()}
             className="min-w-0 flex-1 rounded-xl border border-slate-200/80 bg-white px-5 py-5 font-mono text-lg tracking-wide text-slate-900 shadow-sm ring-1 ring-slate-200/40 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 focus:outline-none"
             required
             pattern="[A-Z0-9 ]{2,8}"
-            title={t.label}
+            title={m.search_label()}
           />
         </div>
 
@@ -223,28 +172,24 @@ export default function LicensePlateSearch() {
                 clipRule="evenodd"
               />
             </svg>
-            {t.kilometersLabel} <span className="ml-1 text-red-500">*</span>
+            {m.search_km_label()} <span className="ml-1 text-red-500">*</span>
           </label>
           <input
             type="text"
             id="kilometers"
             value={kilometers}
             onChange={(e) => setKilometers(e.target.value)}
-            placeholder={t.kilometersPlaceholder}
+            placeholder={m.search_km_placeholder()}
             className="min-w-0 flex-1 rounded-xl border border-slate-200/80 bg-white px-5 py-4 text-lg text-slate-900 shadow-sm ring-1 ring-slate-200/40 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 focus:outline-none"
             pattern="[0-9.,]*"
             inputMode="numeric"
-            title={t.kilometersLabel}
+            title={m.search_km_label()}
             required
           />
-          <p className="text-sm text-slate-500">
-            {language === "da"
-              ? "Indtast bilens nuværende kilometerantal (påkrævet)"
-              : "Enter the car's current mileage (required)"}
-          </p>
+          <p className="text-sm text-slate-500">{m.search_km_helper()}</p>
         </div>
 
-        {/* Search button - moved below both inputs */}
+        {/* Search button */}
         <button
           type="submit"
           disabled={loading || !plateNumber || !kilometers}
@@ -268,11 +213,11 @@ export default function LicensePlateSearch() {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 />
               </svg>
-              {t.loading}
+              {m.search_loading()}
             </span>
           ) : (
             <span className="flex items-center justify-center gap-2">
-              {t.button}
+              {m.search_button()}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="inline-block h-5 w-5"
@@ -333,7 +278,7 @@ export default function LicensePlateSearch() {
                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              {t.carDetails}
+              {m.search_car_details()}
             </h2>
 
             <div
@@ -341,26 +286,26 @@ export default function LicensePlateSearch() {
             >
               <div className="premium-card rounded-xl border border-slate-200/50 bg-slate-50/50 p-4 ring-1 ring-slate-200/40">
                 <span className="mb-2 inline-block rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-widest text-slate-600 uppercase">
-                  {t.make}
+                  {m.search_make()}
                 </span>
                 <p className="text-lg font-semibold text-slate-900">{carData.make}</p>
               </div>
               <div className="premium-card rounded-xl border border-slate-200/50 bg-slate-50/50 p-4 ring-1 ring-slate-200/40">
                 <span className="mb-2 inline-block rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-widest text-slate-600 uppercase">
-                  {t.model}
+                  {m.search_model()}
                 </span>
                 <p className="text-lg font-semibold text-slate-900">{carData.model}</p>
               </div>
               <div className="premium-card rounded-xl border border-slate-200/50 bg-slate-50/50 p-4 ring-1 ring-slate-200/40">
                 <span className="mb-2 inline-block rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-widest text-slate-600 uppercase">
-                  {t.year}
+                  {m.search_year()}
                 </span>
                 <p className="text-lg font-semibold text-slate-900">{carData.year}</p>
               </div>
               {rawData?.kilometers && (
                 <div className="premium-card rounded-xl border border-slate-200/50 bg-slate-50/50 p-4 ring-1 ring-slate-200/40">
                   <span className="mb-2 inline-block rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-widest text-slate-600 uppercase">
-                    {t.kilometers}
+                    {m.search_kilometers()}
                   </span>
                   <p className="text-lg font-semibold text-slate-900">
                     {rawData.kilometers.toLocaleString(language === "da" ? "da-DK" : "en-GB")} km
@@ -384,7 +329,7 @@ export default function LicensePlateSearch() {
                   </svg>
                 </div>
                 <span className="text-xs font-bold tracking-widest text-blue-600 uppercase">
-                  {t.valueRange}
+                  {m.search_value_range()}
                 </span>
               </div>
 
@@ -413,7 +358,7 @@ export default function LicensePlateSearch() {
                   />
                 </svg>
                 <span>
-                  Baseret på markedsværdi fra{" "}
+                  {m.search_market_value()}{" "}
                   {carData.minPrice.toLocaleString(language === "da" ? "da-DK" : "en-GB")} -{" "}
                   {carData.maxPrice.toLocaleString(language === "da" ? "da-DK" : "en-GB")} kr
                 </span>
@@ -434,7 +379,7 @@ export default function LicensePlateSearch() {
                   clipRule="evenodd"
                 />
               </svg>
-              <p className="leading-relaxed">{t.disclaimer}</p>
+              <p className="leading-relaxed">{m.search_disclaimer()}</p>
             </div>
           </div>
 

@@ -3,29 +3,14 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
 import { setStoredToken } from "@/lib/auth";
-import { getLocale } from "@/paraglide/runtime";
+import { m } from "@/paraglide/messages";
 import { loginUser } from "@/server/api";
-
-const TEXT = {
-  da: {
-    login: "Login",
-    error: "Der opstod en fejl",
-    success: "Logged ind",
-  },
-  en: {
-    login: "Login",
-    error: "An error occurred",
-    success: "Logged in",
-  },
-};
 
 export const Route = createFileRoute("/{-$locale}/auth/login")({
   component: LoginPage,
 });
 
 function LoginPage() {
-  const language = getLocale();
-  const t = TEXT[language];
   const navigate = useNavigate();
   const loginFn = useServerFn(loginUser);
 
@@ -44,7 +29,7 @@ function LoginPage() {
     try {
       const data = await loginFn({ data: { email, password } });
 
-      setSuccess(t.success);
+      setSuccess(m.login_success());
       setEmail("");
       setPassword("");
 
@@ -56,7 +41,7 @@ function LoginPage() {
         });
       }
     } catch (err: unknown) {
-      const errorMessage = err instanceof Error ? err.message : t.error;
+      const errorMessage = err instanceof Error ? err.message : m.login_error();
       setError(errorMessage);
       console.error("login error caught:", err);
     } finally {
@@ -66,11 +51,13 @@ function LoginPage() {
 
   return (
     <div className="mx-auto mt-20 max-w-md rounded-2xl border border-slate-200/60 bg-white p-8 shadow-sm ring-1 ring-slate-200/50">
-      <h1 className="mb-6 text-2xl font-semibold tracking-tight text-slate-900">{t.login}</h1>
+      <h1 className="mb-6 text-2xl font-semibold tracking-tight text-slate-900">
+        {m.login_title()}
+      </h1>
       <form onSubmit={handlelogin} className="flex flex-col gap-4">
         <input
           type="email"
-          placeholder="Email"
+          placeholder={m.account_email()}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -78,7 +65,7 @@ function LoginPage() {
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder={m.account_password()}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -89,7 +76,7 @@ function LoginPage() {
           disabled={isLoading}
           className="relative overflow-hidden rounded-xl bg-blue-600 px-4 py-3 font-semibold text-white shadow-sm ring-1 ring-slate-900/10 transition-transform before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/25 hover:brightness-110 active:scale-95 active:brightness-90 disabled:cursor-not-allowed disabled:opacity-50 disabled:brightness-100 disabled:active:scale-100"
         >
-          {isLoading ? "Loading..." : t.login}
+          {isLoading ? m.login_loading() : m.login_title()}
         </button>
       </form>
 

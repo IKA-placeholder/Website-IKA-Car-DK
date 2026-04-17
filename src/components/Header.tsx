@@ -1,26 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 
+import { m } from "@/paraglide/messages";
 import { getLocale, setLocale } from "@/paraglide/runtime";
-
-const TEXT = {
-  da: {
-    login: "Log ind",
-    signup: "Opret konto",
-    profile: "Profil",
-    logout: "Log ud",
-  },
-  en: {
-    login: "Log in",
-    signup: "Sign up",
-    profile: "Profile",
-    logout: "Log out",
-  },
-};
 
 export default function Header() {
   const language = getLocale();
-  const t = TEXT[language];
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -44,7 +29,7 @@ export default function Header() {
             className="rounded-lg px-4 py-2 text-slate-600 transition-colors hover:bg-slate-100"
             onClick={() => setLocale(language === "da" ? "en" : "da")}
           >
-            {language === "da" ? "English" : "Dansk"}
+            {language === "da" ? m.lang_en() : m.lang_da()}
           </button>
           {isLoggedIn && (
             <div className="relative">
@@ -56,7 +41,7 @@ export default function Header() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 font-medium text-white">
                   U
                 </div>
-                <span>User</span>
+                <span>{m.header_user()}</span>
               </button>
               {showDropdown && (
                 <div className="absolute right-0 z-40 mt-2 w-48 overflow-hidden rounded-xl border border-slate-200/60 bg-white shadow-sm ring-1 ring-slate-200/50">
@@ -64,14 +49,14 @@ export default function Header() {
                     type="button"
                     className="w-full px-4 py-2 text-left text-slate-600 transition-colors hover:bg-slate-50"
                   >
-                    {t.profile}
+                    {m.header_profile()}
                   </button>
                   <button
                     type="button"
                     className="w-full px-4 py-2 text-left text-slate-600 transition-colors hover:bg-slate-50"
                     onClick={() => setIsLoggedIn(false)}
                   >
-                    {t.logout}
+                    {m.header_logout()}
                   </button>
                 </div>
               )}

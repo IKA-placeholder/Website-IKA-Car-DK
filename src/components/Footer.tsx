@@ -1,34 +1,6 @@
-import { getLocale } from "@/paraglide/runtime";
-
-const TEXT = {
-  da: {
-    forDealers: "Til bilforhandlere",
-    dealersDesc:
-      "Vi tilbyder at implementere vores prisvurderingswidget på din hjemmeside, så dine kunder hurtigt kan få et prisoverblik. Derudover har vi et sniping-værktøj, der giver notifikationer om underprisede biler fra danske marketplaces.",
-    dealersCta: "Kontakt os",
-    api: "API",
-    apiDesc:
-      "Er du udvikler? Du kan få adgang til vores API, som indeholder endpoints til både statistik og ML indenfor brugte biler.",
-    apiCta: "Kontakt os",
-    copyright: "© 2025 Autoværdi. Alle rettigheder forbeholdes.",
-  },
-  en: {
-    forDealers: "For Car Dealers",
-    dealersDesc:
-      "We offer implementation of our price valuation widget on your website, so your customers can quickly get a price overview. Additionally, we have a sniping tool that provides notifications for underpriced cars from Danish marketplaces.",
-    dealersCta: "Contact us",
-    api: "API",
-    apiDesc:
-      "Are you a developer? You can get access to our API, which includes endpoints for statistics and ML within used cars.",
-    apiCta: "Contact us",
-    copyright: "© 2025 Autoværdi. All rights reserved.",
-  },
-};
+import { m } from "@/paraglide/messages";
 
 export default function Footer() {
-  const language = getLocale();
-  const t = TEXT[language];
-
   const handleContactClick = () => {
     window.location.href = "mailto:jens.bech.lauritsen@gmail.com";
   };
@@ -56,15 +28,15 @@ export default function Footer() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-slate-900">{t.forDealers}</h3>
+              <h3 className="text-lg font-semibold text-slate-900">{m.footer_for_dealers()}</h3>
             </div>
-            <p className="leading-relaxed text-slate-600">{t.dealersDesc}</p>
+            <p className="leading-relaxed text-slate-600">{m.footer_dealers_desc()}</p>
             <button
               type="button"
               onClick={handleContactClick}
               className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-slate-800 hover:shadow-md"
             >
-              {t.dealersCta}
+              {m.footer_dealers_cta()}
               <svg
                 className="h-4 w-4"
                 fill="none"
@@ -99,15 +71,15 @@ export default function Footer() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-slate-900">{t.api}</h3>
+              <h3 className="text-lg font-semibold text-slate-900">{m.footer_api()}</h3>
             </div>
-            <p className="leading-relaxed text-slate-600">{t.apiDesc}</p>
+            <p className="leading-relaxed text-slate-600">{m.footer_api_desc()}</p>
             <button
               type="button"
               onClick={handleContactClick}
               className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition-all hover:bg-slate-800 hover:shadow-md"
             >
-              {t.apiCta}
+              {m.footer_api_cta()}
               <svg
                 className="h-4 w-4"
                 fill="none"
@@ -149,7 +121,7 @@ export default function Footer() {
             </a>
           </div>
 
-          <p className="text-sm text-slate-500">{t.copyright}</p>
+          <p className="text-sm text-slate-500">{m.footer_copyright()}</p>
         </div>
       </div>
     </footer>
