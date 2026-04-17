@@ -3,7 +3,6 @@ import { Fragment } from "react";
 
 import BackgroundCars from "@/components/BackgroundCars";
 import DenmarkSilhouette from "@/components/DenmarkSilhouette";
-import FloatingCTA from "@/components/FloatingCTA";
 import LicensePlateSearch from "@/components/LicensePlateSearch";
 import { m } from "@/paraglide/messages";
 import { getLocale } from "@/paraglide/runtime";
@@ -447,8 +446,6 @@ function Home() {
             </div>
           </div>
         </section>
-
-        <FloatingCTA />
 
         {/* FAQ Section */}
         <section
