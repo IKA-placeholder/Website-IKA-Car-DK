@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { getLocale } from "@/paraglide/runtime";
 
 import appCss from "../styles.css?url";
@@ -180,14 +181,16 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   const lang = getLocale();
 
   return (
-    <html lang={lang}>
+    <html lang={lang} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
-        <Header />
-        <main className="pt-20">{children}</main>
-        <Footer />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Header />
+          <main className="pt-20">{children}</main>
+          <Footer />
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>
