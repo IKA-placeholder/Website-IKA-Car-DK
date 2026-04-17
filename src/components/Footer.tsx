@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { motion, useInView, useReducedMotion } from "motion/react";
+import { useRef } from "react";
 import type * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -7,30 +9,75 @@ import { Separator } from "@/components/ui/separator";
 import { m } from "@/paraglide/messages";
 import { getLocale } from "@/paraglide/runtime";
 
-// Animation constants based on design principles
-const EASE_OUT_QUART = "cubic-bezier(0.165, 0.84, 0.44, 1)";
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const slideUpVariants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut" as const,
+    },
+  },
+};
+
+const scaleXVariants = {
+  hidden: { scaleX: 0 },
+  visible: {
+    scaleX: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut" as const,
+      delay: 0.2,
+    },
+  },
+};
+
+const fadeInVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut" as const,
+      delay: 0.3,
+    },
+  },
+};
 
 export default function Footer() {
   const locale = getLocale();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const shouldReduceMotion = useReducedMotion();
 
   return (
-    <footer className="border-border/60 bg-background/95 border-t px-6 py-12 backdrop-blur-md md:py-16">
+    <footer
+      ref={ref}
+      className="border-border/60 bg-background/95 border-t px-6 py-12 backdrop-blur-md md:py-16"
+    >
       <div className="mx-auto max-w-6xl">
         {/* Main Footer Content - Three Zone Layout with staggered entrance */}
-        <div
+        <motion.div
           className="grid gap-12 lg:grid-cols-12 lg:gap-8"
-          style={{
-            animation: `footerFadeIn 400ms ${EASE_OUT_QUART} forwards`,
-          }}
+          initial={shouldReduceMotion ? "visible" : "hidden"}
+          animate={isInView ? "visible" : "hidden"}
+          variants={containerVariants}
         >
           {/* Zone 1: Brand + Newsletter (Left, 4 cols) */}
-          <div
-            className="space-y-6 lg:col-span-4"
-            style={{
-              animation: `slideUpFade 500ms ${EASE_OUT_QUART} 50ms forwards`,
-              opacity: 0,
-            }}
-          >
+          <motion.div className="space-y-6 lg:col-span-4" variants={slideUpVariants}>
             {/* Brand */}
             <div className="space-y-3">
               <Link to="/{-$locale}" params={{ locale }} className="group inline-block select-none">
@@ -73,16 +120,10 @@ export default function Footer() {
                 </Button>
               </form>
             </div>
-          </div>
+          </motion.div>
 
           {/* Zone 2: Navigation (Center, 5 cols) */}
-          <div
-            className="grid grid-cols-3 gap-6 lg:col-span-5"
-            style={{
-              animation: `slideUpFade 500ms ${EASE_OUT_QUART} 100ms forwards`,
-              opacity: 0,
-            }}
-          >
+          <motion.div className="grid grid-cols-3 gap-6 lg:col-span-5" variants={slideUpVariants}>
             {/* Product */}
             <div className="space-y-3">
               <h4 className="text-foreground text-sm font-semibold">{m.footer_nav_product()}</h4>
@@ -157,16 +198,10 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-          </div>
+          </motion.div>
 
           {/* Zone 3: CTAs (Right, 3 cols) */}
-          <div
-            className="space-y-4 lg:col-span-3"
-            style={{
-              animation: `slideUpFade 500ms ${EASE_OUT_QUART} 150ms forwards`,
-              opacity: 0,
-            }}
-          >
+          <motion.div className="space-y-4 lg:col-span-3" variants={slideUpVariants}>
             {/* For Dealers CTA */}
             <div className="group border-border bg-muted/40 hover:border-primary/30 hover:bg-muted/60 relative overflow-hidden rounded-xl border p-4 transition-all duration-200 ease-out hover:shadow-sm">
               <div className="flex items-start gap-3">
@@ -230,25 +265,25 @@ export default function Footer() {
                 <ArrowRightIcon className="h-3.5 w-3.5 transition-transform duration-200 ease-out group-hover:translate-x-0.5" />
               </Button>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Divider with subtle animation */}
-        <Separator
-          className="my-10 origin-left"
-          style={{
-            animation: `scaleX 600ms ${EASE_OUT_QUART} 200ms forwards`,
-            transform: "scaleX(0)",
-          }}
-        />
+        <motion.div
+          initial={shouldReduceMotion ? "visible" : "hidden"}
+          animate={isInView ? "visible" : "hidden"}
+          variants={scaleXVariants}
+          style={{ originX: 0 }}
+        >
+          <Separator className="my-10" />
+        </motion.div>
 
         {/* Bottom Bar */}
-        <div
+        <motion.div
           className="flex flex-col items-center justify-between gap-6 md:flex-row"
-          style={{
-            animation: `fadeIn 400ms ${EASE_OUT_QUART} 300ms forwards`,
-            opacity: 0,
-          }}
+          initial={shouldReduceMotion ? "visible" : "hidden"}
+          animate={isInView ? "visible" : "hidden"}
+          variants={fadeInVariants}
         >
           {/* Copyright */}
           <p className="text-muted-foreground text-sm">{m.footer_copyright()}</p>
@@ -271,72 +306,8 @@ export default function Footer() {
               icon={<InstagramIcon className="h-4 w-4" />}
             />
           </div>
-        </div>
+        </motion.div>
       </div>
-
-      {/* Animation keyframes */}
-      <style>{`
-        @keyframes footerFadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        @keyframes slideUpFade {
-          from {
-            opacity: 0;
-            transform: translateY(12px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes scaleX {
-          from {
-            transform: scaleX(0);
-          }
-          to {
-            transform: scaleX(1);
-          }
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          *,
-          *::before,
-          *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
-        }
-
-        /* Disable hover animations on touch devices */
-        @media (hover: none) and (pointer: coarse) {
-          .group:hover .group-hover\\:translate-x-0,
-          .group:hover .group-hover\\:opacity-100,
-          .group:hover .group-hover\\:w-full,
-          .group:hover .group-hover\\:scale-110,
-          .group:hover .group-hover\\:translate-x-0\\.5 {
-            transform: none;
-            opacity: inherit;
-            width: inherit;
-          }
-        }
-      `}</style>
     </footer>
   );
 }
