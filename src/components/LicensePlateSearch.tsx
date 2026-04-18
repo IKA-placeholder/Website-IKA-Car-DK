@@ -1,6 +1,5 @@
 "use client";
 
-import { useLiveQuery } from "@tanstack/react-db";
 import { useForm } from "@tanstack/react-form-start";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -14,7 +13,6 @@ import { m } from "@/paraglide/messages";
 import { getLocale } from "@/paraglide/runtime";
 import { plateSearch, predictPlate } from "@/server/api";
 
-import { Input } from "./ui/input";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import {
   NumberField,
@@ -58,8 +56,6 @@ export default function LicensePlateSearch() {
 
   const predictPlateFn = useServerFn(predictPlate);
   const searchPlateFn = useServerFn(plateSearch);
-
-  const { data: searches } = useLiveQuery((q) => q.from({ search: searchCollection }));
 
   const selectedCar = searchCollection.get(selectedPlate);
 
