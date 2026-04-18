@@ -59,12 +59,12 @@ function Step({
 }) {
   return (
     <div className="relative flex gap-6 pb-12 last:pb-0">
-      <div className="absolute top-16 bottom-0 left-8 w-0.5 bg-slate-200 last:hidden dark:bg-slate-800" />
-      <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg dark:from-blue-300 dark:to-blue-200 dark:text-black">
+      <div className="bg-border absolute top-16 bottom-0 left-8 w-0.5 last:hidden" />
+      <div className="bg-primary text-primary-foreground relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl shadow-lg">
         <span className="text-2xl font-bold">{number}</span>
       </div>
       <div className="flex-1 pt-2">
-        <h2 className="mb-3 text-2xl font-bold text-slate-900 dark:text-slate-100">{title}</h2>
+        <h2 className="text-foreground mb-3 text-2xl font-bold">{title}</h2>
         {children}
       </div>
     </div>
@@ -74,7 +74,7 @@ function Step({
 // Calculation box
 function CalculationBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="my-4 rounded-xl bg-slate-900 p-4 font-mono text-sm text-white dark:bg-slate-100 dark:text-black">
+    <div className="bg-card border-border text-card-foreground my-4 rounded-xl border p-4 font-mono text-sm">
       {children}
     </div>
   );
@@ -84,9 +84,9 @@ function BilVurderingGuide() {
   const language = getLocale();
 
   const sites = [
-    { name: m.blog_diy_site1_name(), desc: m.blog_diy_site1_desc(), color: "blue" },
-    { name: m.blog_diy_site2_name(), desc: m.blog_diy_site2_desc(), color: "green" },
-    { name: m.blog_diy_site3_name(), desc: m.blog_diy_site3_desc(), color: "amber" },
+    { name: m.blog_diy_site1_name(), desc: m.blog_diy_site1_desc(), theme: "info" as const },
+    { name: m.blog_diy_site2_name(), desc: m.blog_diy_site2_desc(), theme: "success" as const },
+    { name: m.blog_diy_site3_name(), desc: m.blog_diy_site3_desc(), theme: "warning" as const },
   ];
 
   const compareItems = [
@@ -105,11 +105,35 @@ function BilVurderingGuide() {
   ];
 
   const conditions = [
-    { label: m.blog_diy_condition1(), value: m.blog_diy_condition1_val(), color: "green" },
-    { label: m.blog_diy_condition2(), value: m.blog_diy_condition2_val(), color: "slate" },
-    { label: m.blog_diy_condition3(), value: m.blog_diy_condition3_val(), color: "amber" },
-    { label: m.blog_diy_condition4(), value: m.blog_diy_condition4_val(), color: "red" },
+    {
+      label: m.blog_diy_condition1(),
+      value: m.blog_diy_condition1_val(),
+      theme: "success" as const,
+    },
+    { label: m.blog_diy_condition2(), value: m.blog_diy_condition2_val(), theme: "muted" as const },
+    {
+      label: m.blog_diy_condition3(),
+      value: m.blog_diy_condition3_val(),
+      theme: "warning" as const,
+    },
+    {
+      label: m.blog_diy_condition4(),
+      value: m.blog_diy_condition4_val(),
+      theme: "destructive" as const,
+    },
   ];
+
+  const themeStyles = {
+    info: { bg: "bg-info/10", text: "text-info", border: "border-info/20" },
+    success: { bg: "bg-success/10", text: "text-success", border: "border-success/20" },
+    warning: { bg: "bg-warning/10", text: "text-warning", border: "border-warning/20" },
+    destructive: {
+      bg: "bg-destructive/10",
+      text: "text-destructive",
+      border: "border-destructive/20",
+    },
+    muted: { bg: "bg-muted", text: "text-muted-foreground", border: "border-border" },
+  };
 
   return (
     <>
@@ -127,10 +151,10 @@ function BilVurderingGuide() {
         schema={articleSchema}
         language={language}
       >
-        <div className="my-8 rounded-2xl border-2 border-amber-200 bg-amber-50 p-6 dark:border-amber-800 dark:bg-amber-950">
+        <div className="border-warning/30 bg-warning/10 my-8 rounded-2xl border p-6">
           <div className="flex items-start gap-3">
             <svg
-              className="h-6 w-6 shrink-0 text-amber-600 dark:text-amber-300"
+              className="text-warning h-6 w-6 shrink-0"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={2}
@@ -143,41 +167,45 @@ function BilVurderingGuide() {
               />
             </svg>
             <div>
-              <h4 className="font-semibold text-amber-900 dark:text-amber-100">
-                {m.blog_diy_why_title()}
-              </h4>
-              <p className="text-amber-800 dark:text-amber-300">{m.blog_diy_why_desc()}</p>
+              <h4 className="text-foreground font-semibold">{m.blog_diy_why_title()}</h4>
+              <p className="text-muted-foreground">{m.blog_diy_why_desc()}</p>
             </div>
           </div>
         </div>
 
         <Step number={1} title={m.blog_diy_step1_title()}>
-          <p className="mb-4 text-slate-600">{m.blog_diy_step1_desc()}</p>
+          <p className="text-muted-foreground mb-4">{m.blog_diy_step1_desc()}</p>
 
           <div className="grid gap-3 sm:grid-cols-3">
             {sites.map((site) => (
-              <div key={site.name} className={`rounded-xl bg-${site.color}-50 p-4 text-center`}>
-                <p className="font-semibold text-slate-900">{site.name}</p>
-                <p className="text-sm text-slate-600">{site.desc}</p>
+              <div
+                key={site.name}
+                className={`rounded-xl border ${themeStyles[site.theme].border} ${themeStyles[site.theme].bg} p-4 text-center`}
+              >
+                <p className="text-foreground font-semibold">{site.name}</p>
+                <p className="text-muted-foreground text-sm">{site.desc}</p>
               </div>
             ))}
           </div>
 
-          <div className="mt-4 rounded-xl bg-blue-50 p-4">
-            <p className="text-blue-900">
+          <div className="border-info/20 bg-info/10 mt-4 rounded-xl border p-4">
+            <p className="text-info">
               <strong>{m.blog_diy_tip()}</strong> {m.blog_diy_tip_text()}
             </p>
           </div>
         </Step>
 
         <Step number={2} title={m.blog_diy_step2_title()}>
-          <p className="mb-4 text-slate-600">{m.blog_diy_step2_desc()}</p>
+          <p className="text-muted-foreground mb-4">{m.blog_diy_step2_desc()}</p>
 
           <div className="space-y-2">
             {compareItems.map((item, i) => (
-              <div key={i} className="flex items-center gap-3 rounded-lg bg-slate-50 p-3">
+              <div
+                key={i}
+                className="border-border bg-muted flex items-center gap-3 rounded-lg border p-3"
+              >
                 <svg
-                  className="h-5 w-5 text-green-500"
+                  className="text-success h-5 w-5"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={2}
@@ -189,45 +217,49 @@ function BilVurderingGuide() {
                     d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span className="text-slate-700">{item}</span>
+                <span className="text-foreground">{item}</span>
               </div>
             ))}
           </div>
         </Step>
 
         <Step number={3} title={m.blog_diy_step3_title()}>
-          <p className="mb-4 text-slate-600">{m.blog_diy_step3_desc()}</p>
+          <p className="text-muted-foreground mb-4">{m.blog_diy_step3_desc()}</p>
 
           <CalculationBox>
-            <p className="text-slate-400">{m.blog_diy_base_price_label()}</p>
-            <p>{m.blog_diy_base_price_formula()}</p>
-            <p className="mt-2 text-slate-400">{m.blog_diy_base_price_example()}</p>
+            <p className="text-muted-foreground">{m.blog_diy_base_price_label()}</p>
+            <p className="text-foreground">{m.blog_diy_base_price_formula()}</p>
+            <p className="text-muted-foreground mt-2">{m.blog_diy_base_price_example()}</p>
           </CalculationBox>
         </Step>
 
         <Step number={4} title={m.blog_diy_step4_title()}>
-          <p className="mb-4 text-slate-600">{m.blog_diy_step4_desc()}</p>
+          <p className="text-muted-foreground mb-4">{m.blog_diy_step4_desc()}</p>
 
-          <div className="overflow-hidden rounded-xl border border-slate-200">
+          <div className="border-border overflow-hidden rounded-xl border">
             <table className="w-full text-left">
-              <thead className="bg-slate-50">
+              <thead className="bg-muted">
                 <tr>
-                  <th className="px-4 py-3 font-semibold">{m.blog_diy_km_table_header1()}</th>
-                  <th className="px-4 py-3 font-semibold">{m.blog_diy_km_table_header2()}</th>
+                  <th className="text-foreground px-4 py-3 font-semibold">
+                    {m.blog_diy_km_table_header1()}
+                  </th>
+                  <th className="text-foreground px-4 py-3 font-semibold">
+                    {m.blog_diy_km_table_header2()}
+                  </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-border divide-y">
                 <tr>
-                  <td className="px-4 py-3">{m.blog_diy_km_10k()}</td>
-                  <td className="px-4 py-3 text-red-600">{m.blog_diy_km_adj1()}</td>
+                  <td className="text-foreground px-4 py-3">{m.blog_diy_km_10k()}</td>
+                  <td className="text-destructive px-4 py-3">{m.blog_diy_km_adj1()}</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3">{m.blog_diy_km_20k()}</td>
-                  <td className="px-4 py-3 text-red-600">{m.blog_diy_km_adj2()}</td>
+                  <td className="text-foreground px-4 py-3">{m.blog_diy_km_20k()}</td>
+                  <td className="text-destructive px-4 py-3">{m.blog_diy_km_adj2()}</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3">{m.blog_diy_km_30k()}</td>
-                  <td className="px-4 py-3 text-red-600">{m.blog_diy_km_adj3()}</td>
+                  <td className="text-foreground px-4 py-3">{m.blog_diy_km_30k()}</td>
+                  <td className="text-destructive px-4 py-3">{m.blog_diy_km_adj3()}</td>
                 </tr>
               </tbody>
             </table>
@@ -235,13 +267,16 @@ function BilVurderingGuide() {
         </Step>
 
         <Step number={5} title={m.blog_diy_step5_title()}>
-          <p className="mb-4 text-slate-600">{m.blog_diy_step5_desc()}</p>
+          <p className="text-muted-foreground mb-4">{m.blog_diy_step5_desc()}</p>
 
           <div className="grid gap-3 sm:grid-cols-2">
             {features.map((feature) => (
-              <div key={feature.item} className="flex justify-between rounded-lg bg-green-50 p-3">
-                <span className="text-slate-700">{feature.item}</span>
-                <span className="font-medium text-green-700">
+              <div
+                key={feature.item}
+                className="border-success/20 bg-success/10 flex justify-between rounded-lg border p-3"
+              >
+                <span className="text-foreground">{feature.item}</span>
+                <span className="text-success font-medium">
                   {feature.value} {m.blog_diy_currency()}
                 </span>
               </div>
@@ -250,43 +285,45 @@ function BilVurderingGuide() {
         </Step>
 
         <Step number={6} title={m.blog_diy_step6_title()}>
-          <p className="mb-4 text-slate-600">{m.blog_diy_step6_desc()}</p>
+          <p className="text-muted-foreground mb-4">{m.blog_diy_step6_desc()}</p>
 
           <div className="space-y-2">
             {conditions.map((condition) => (
               <div
                 key={condition.label}
-                className={`flex items-center justify-between rounded-lg bg-${condition.color}-50 p-3`}
+                className={`flex items-center justify-between rounded-lg border ${themeStyles[condition.theme].border} ${themeStyles[condition.theme].bg} p-3`}
               >
-                <span className="text-slate-700">{condition.label}</span>
-                <span className={`font-medium text-${condition.color}-700`}>{condition.value}</span>
+                <span className="text-foreground">{condition.label}</span>
+                <span className={`font-medium ${themeStyles[condition.theme].text}`}>
+                  {condition.value}
+                </span>
               </div>
             ))}
           </div>
         </Step>
 
-        <div className="my-8 rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 p-8 text-white">
+        <div className="bg-primary text-primary-foreground my-8 rounded-2xl p-8">
           <h3 className="mb-4 text-xl font-bold">{m.blog_diy_formula_title()}</h3>
           <CalculationBox>
-            <p>{m.blog_diy_formula_line1()}</p>
-            <p className="text-red-400">{m.blog_diy_formula_line2()}</p>
-            <p className="text-green-400">{m.blog_diy_formula_line3()}</p>
-            <p className="text-green-400">{m.blog_diy_formula_line4()}</p>
-            <p className="text-amber-400">{m.blog_diy_formula_line5()}</p>
+            <p className="text-foreground">{m.blog_diy_formula_line1()}</p>
+            <p className="text-destructive">{m.blog_diy_formula_line2()}</p>
+            <p className="text-success">{m.blog_diy_formula_line3()}</p>
+            <p className="text-success">{m.blog_diy_formula_line4()}</p>
+            <p className="text-warning">{m.blog_diy_formula_line5()}</p>
           </CalculationBox>
-          <p className="mt-4 text-blue-100">{m.blog_diy_formula_note()}</p>
+          <p className="text-primary-foreground/80 mt-4">{m.blog_diy_formula_note()}</p>
         </div>
 
-        <div className="mt-8 rounded-2xl bg-green-500 p-6 text-center text-white">
+        <div className="bg-success/40 text-foreground mt-8 rounded-2xl p-6 text-center">
           <p className="mb-2 text-lg">{m.blog_diy_cta_title()}</p>
-          <p className="mb-4 text-green-100">{m.blog_diy_cta_desc()}</p>
+          <p className="text-foreground/70 mb-4">{m.blog_diy_cta_desc()}</p>
           <Link
             to="/{-$locale}"
             params={(prev) => ({
               ...prev,
               locale: prev.locale === "da" ? undefined : "en",
             })}
-            className="inline-flex items-center rounded-lg bg-white px-6 py-3 font-bold text-green-600 transition-transform hover:scale-105"
+            className="bg-background text-foreground inline-flex items-center rounded-lg px-6 py-3 font-bold transition-transform hover:scale-105"
           >
             {m.blog_diy_cta_button()}
           </Link>
@@ -294,7 +331,7 @@ function BilVurderingGuide() {
 
         {/* Related articles */}
         <div className="mt-12">
-          <h3 className="mb-6 text-xl font-bold text-slate-900">{m.blog_related_title()}</h3>
+          <h3 className="text-foreground mb-6 text-xl font-bold">{m.blog_related_title()}</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <Link
               to="/{-$locale}/blog/hvad-er-min-bil-vaerd"
@@ -302,9 +339,9 @@ function BilVurderingGuide() {
                 ...prev,
                 locale: prev.locale === "da" ? undefined : "en",
               })}
-              className="group flex items-center gap-4 rounded-xl border border-slate-200 p-4 transition-colors hover:border-blue-300 hover:bg-blue-50/50"
+              className="group border-border bg-card hover:border-info/50 hover:bg-info/5 flex items-center gap-4 rounded-xl border p-4 transition-colors"
             >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
+              <div className="bg-info/10 text-info flex h-12 w-12 shrink-0 items-center justify-center rounded-lg">
                 <svg
                   className="h-6 w-6"
                   fill="none"
@@ -320,10 +357,10 @@ function BilVurderingGuide() {
                 </svg>
               </div>
               <div>
-                <h4 className="font-semibold text-slate-900 group-hover:text-blue-600">
+                <h4 className="text-foreground group-hover:text-info font-semibold">
                   {m.blog_post_worth_title()}
                 </h4>
-                <p className="text-sm text-slate-600">{m.blog_post_worth_desc()}</p>
+                <p className="text-muted-foreground text-sm">{m.blog_post_worth_desc()}</p>
               </div>
             </Link>
             <Link
@@ -332,9 +369,9 @@ function BilVurderingGuide() {
                 ...prev,
                 locale: prev.locale === "da" ? undefined : "en",
               })}
-              className="group flex items-center gap-4 rounded-xl border border-slate-200 p-4 transition-colors hover:border-blue-300 hover:bg-blue-50/50"
+              className="group border-border bg-card hover:border-success/50 hover:bg-success/5 flex items-center gap-4 rounded-xl border p-4 transition-colors"
             >
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-600">
+              <div className="bg-success/10 text-success flex h-12 w-12 shrink-0 items-center justify-center rounded-lg">
                 <svg
                   className="h-6 w-6"
                   fill="none"
@@ -350,10 +387,10 @@ function BilVurderingGuide() {
                 </svg>
               </div>
               <div>
-                <h4 className="font-semibold text-slate-900 group-hover:text-blue-600">
+                <h4 className="text-foreground group-hover:text-success font-semibold">
                   {m.blog_post_price_title()}
                 </h4>
-                <p className="text-sm text-slate-600">{m.blog_post_price_desc()}</p>
+                <p className="text-muted-foreground text-sm">{m.blog_post_price_desc()}</p>
               </div>
             </Link>
           </div>
