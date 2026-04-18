@@ -8,20 +8,11 @@ export const Route = createFileRoute("/{-$locale}/blog/")({
   head: () => ({
     meta: [
       {
-        title: "Blog om bilvurdering | Tips og guides | Autoværdi",
+        title: m.blog_title(),
       },
       {
         name: "description",
-        content:
-          "Læs vores guides og artikler om bilvurdering. Lær hvad din bil er værd og hvordan du får den bedste pris.",
-      },
-      {
-        property: "og:title",
-        content: "Blog om bilvurdering | Tips og guides",
-      },
-      {
-        property: "og:description",
-        content: "Guides og artikler om bilvurdering. Lær hvad din bil er værd.",
+        content: m.blog_subtitle(),
       },
     ],
     links: [
@@ -38,84 +29,65 @@ const blogPosts = [
     route: "/{-$locale}/blog/hvad-er-min-bil-vaerd" as const,
     title: m.blog_post1_title,
     excerpt: m.blog_post1_desc,
-    readTime: "5 min",
+    readTime: m.blog_worth_read_time(),
   },
   {
     route: "/{-$locale}/blog/bil-vurdering-guide" as const,
     title: m.blog_post2_title,
     excerpt: m.blog_post2_desc,
-    readTime: "4 min",
+    readTime: m.read_time(),
   },
   {
     route: "/{-$locale}/blog/saelg-bil-hoejeste-pris" as const,
     title: m.blog_post3_title,
     excerpt: m.blog_post3_desc,
-    readTime: "6 min",
+    readTime: m.blog_sell_read_time(),
   },
 ];
 
 function BlogIndex() {
-  const language = getLocale();
-
-  const getDate = () => {
-    if (language === "da") return "9. april 2026";
-    return "April 9, 2026";
-  };
+  const locale = getLocale();
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
       <HeadContent />
 
-      <nav className="mb-8 text-sm text-slate-500">
-        <Link
-          to="/{-$locale}"
-          params={(prev) => ({
-            ...prev,
-            locale: prev.locale === "da" ? undefined : "en",
-          })}
-          className="hover:text-blue-600"
-        >
+      <nav className="text-muted-foreground mb-8 text-sm">
+        <Link to="/{-$locale}" params={{ locale }} className="hover:text-primary transition-colors">
           {m.breadcrumb_home()}
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-slate-900">Blog</span>
+        <span className="text-foreground">{m.breadcrumb_blog()}</span>
       </nav>
 
-      <h1 className="mb-4 text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
+      <h1 className="text-foreground mb-4 text-4xl font-bold tracking-tight md:text-5xl">
         {m.blog_title()}
       </h1>
 
-      <p className="mb-12 text-lg text-slate-600">{m.blog_subtitle()}</p>
+      <p className="text-muted-foreground mb-12 text-lg">{m.blog_subtitle()}</p>
 
       <div className="grid gap-8">
         {blogPosts.map((post) => (
           <article
             key={post.route}
-            className="group rounded-2xl border border-slate-200 bg-white p-6 transition-shadow hover:shadow-lg"
+            className="group border-border bg-card rounded-2xl border p-6 transition-shadow hover:shadow-lg"
           >
-            <Link
-              to={post.route}
-              params={(prev) => ({
-                ...prev,
-                locale: prev.locale === "da" ? undefined : "en",
-              })}
-              className="block"
-            >
-              <div className="mb-3 flex items-center gap-4 text-sm text-slate-500">
-                <span>{getDate()}</span>
+            <Link to={post.route} params={{ locale }} className="block">
+              <div className="text-muted-foreground mb-3 flex items-center gap-4 text-sm">
+                <span>{m.blog_index_date()}</span>
                 <span>•</span>
                 <span>
                   {post.readTime} {m.blog_read_time()}
                 </span>
               </div>
 
-              <h2 className="mb-3 text-2xl font-semibold text-slate-900 transition-colors group-hover:text-blue-600">
+              <h2 className="text-foreground group-hover:text-info mb-3 text-2xl font-semibold transition-colors">
                 {post.title()}
               </h2>
 
-              <p className="mb-4 text-slate-600">{post.excerpt()}</p>
+              <p className="text-muted-foreground mb-4">{post.excerpt()}</p>
 
-              <span className="inline-flex items-center font-medium text-blue-600">
+              <span className="text-info inline-flex items-center font-medium">
                 {m.blog_read_more()}
                 <svg
                   className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -137,16 +109,13 @@ function BlogIndex() {
       </div>
 
       {/* CTA Section */}
-      <div className="mt-12 rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 p-8 text-white">
+      <div className="bg-primary text-primary-foreground mt-12 rounded-2xl p-8">
         <h2 className="mb-4 text-2xl font-bold">{m.blog_cta_title()}</h2>
-        <p className="mb-6 text-blue-100">{m.blog_cta_desc()}</p>
+        <p className="text-primary-foreground/70 mb-6">{m.blog_cta_desc()}</p>
         <Link
           to="/{-$locale}"
-          params={(prev) => ({
-            ...prev,
-            locale: prev.locale === "da" ? undefined : "en",
-          })}
-          className="inline-flex items-center rounded-xl bg-white px-6 py-3 font-semibold text-blue-600 transition-colors hover:bg-blue-50"
+          params={{ locale }}
+          className="bg-background text-foreground hover:bg-muted hover:text-muted-foreground inline-flex items-center rounded-xl px-6 py-3 font-semibold transition-colors"
         >
           {m.blog_cta_button()}
           <svg
