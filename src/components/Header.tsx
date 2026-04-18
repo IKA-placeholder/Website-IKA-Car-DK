@@ -66,7 +66,11 @@ export default function Header() {
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
           {/* Logo */}
-          <Link to="/{-$locale}" params={{ locale }} className="group inline-block select-none">
+          <Link
+            to="/{-$locale}"
+            params={(prev) => ({ ...prev, locale: prev.locale === "da" ? undefined : "en" })}
+            className="group inline-block select-none"
+          >
             <span className="text-foreground group-hover:text-primary relative text-2xl font-black tracking-tighter transition-colors duration-200 ease-out">
               Autoværdi
               <span
@@ -103,7 +107,7 @@ export default function Header() {
               onClick={handleLanguageToggle}
               aria-label={m.lang_switch()}
             >
-              <Globe className="h-4 w-4 transition-transform duration-200 ease-out group-hover:rotate-[15deg]" />
+              <Globe className="h-4 w-4 transition-transform duration-200 ease-out group-hover:rotate-15" />
               <span className="text-sm font-medium">{locale === "da" ? "EN" : "DA"}</span>
             </Button>
 
@@ -316,12 +320,12 @@ function HamburgerIcon({ isOpen }: { isOpen: boolean }) {
         }`}
       />
       <span
-        className={`absolute top-[0.4375rem] left-0 h-0.5 w-4 bg-current transition-all duration-300 ease-in-out ${
+        className={`absolute top-1.75 left-0 h-0.5 w-4 bg-current transition-all duration-300 ease-in-out ${
           isOpen ? "scale-x-0 opacity-0" : "scale-x-100 opacity-100"
         }`}
       />
       <span
-        className={`absolute top-[0.875rem] left-0 h-0.5 w-4 transform bg-current transition-all duration-300 ease-in-out ${
+        className={`absolute top-3.5 left-0 h-0.5 w-4 transform bg-current transition-all duration-300 ease-in-out ${
           isOpen ? "top-2 -rotate-45" : ""
         }`}
       />

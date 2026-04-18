@@ -681,7 +681,7 @@ function Home() {
               <motion.div key={i} variants={shouldReduceMotion ? undefined : cardVariants}>
                 <Link
                   to={post.to}
-                  params={{ locale }}
+                  params={(prev) => ({ ...prev, locale: prev.locale === "da" ? undefined : "en" })}
                   className="group border-border bg-muted/30 hover:border-primary/30 hover:bg-muted/50 block rounded-2xl border p-6 transition-all duration-200 hover:shadow-md"
                 >
                   <motion.div

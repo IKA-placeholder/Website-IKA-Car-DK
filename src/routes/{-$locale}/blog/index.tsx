@@ -1,7 +1,6 @@
 import { createFileRoute, HeadContent, Link } from "@tanstack/react-router";
 
 import { m } from "@/paraglide/messages";
-import { getLocale } from "@/paraglide/runtime";
 
 export const Route = createFileRoute("/{-$locale}/blog/")({
   component: BlogIndex,
@@ -46,14 +45,16 @@ const blogPosts = [
 ];
 
 function BlogIndex() {
-  const locale = getLocale();
-
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
       <HeadContent />
 
       <nav className="text-muted-foreground mb-8 text-sm">
-        <Link to="/{-$locale}" params={{ locale }} className="hover:text-primary transition-colors">
+        <Link
+          to="/{-$locale}"
+          params={(prev) => ({ ...prev, locale: prev.locale === "da" ? undefined : "en" })}
+          className="hover:text-primary transition-colors"
+        >
           {m.breadcrumb_home()}
         </Link>
         <span className="mx-2">/</span>
@@ -72,7 +73,11 @@ function BlogIndex() {
             key={post.route}
             className="group border-border bg-card rounded-2xl border p-6 transition-shadow hover:shadow-lg"
           >
-            <Link to={post.route} params={{ locale }} className="block">
+            <Link
+              to={post.route}
+              params={(prev) => ({ ...prev, locale: prev.locale === "da" ? undefined : "en" })}
+              className="block"
+            >
               <div className="text-muted-foreground mb-3 flex items-center gap-4 text-sm">
                 <span>{m.blog_index_date()}</span>
                 <span>•</span>
@@ -114,7 +119,7 @@ function BlogIndex() {
         <p className="text-primary-foreground/70 mb-6">{m.blog_cta_desc()}</p>
         <Link
           to="/{-$locale}"
-          params={{ locale }}
+          params={(prev) => ({ ...prev, locale: prev.locale === "da" ? undefined : "en" })}
           className="bg-background text-foreground hover:bg-muted hover:text-muted-foreground inline-flex items-center rounded-xl px-6 py-3 font-semibold transition-colors"
         >
           {m.blog_cta_button()}

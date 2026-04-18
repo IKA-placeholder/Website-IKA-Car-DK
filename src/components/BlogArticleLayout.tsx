@@ -99,7 +99,14 @@ export function BlogArticleLayout({
                     </svg>
                   )}
                   {crumb.to ? (
-                    <Link to={crumb.to} className="hover:text-primary transition-colors">
+                    <Link
+                      to={crumb.to}
+                      params={(prev) => ({
+                        ...prev,
+                        locale: prev.locale === "da" ? undefined : "en",
+                      })}
+                      className="hover:text-primary transition-colors"
+                    >
                       {crumb.label}
                     </Link>
                   ) : (
@@ -273,7 +280,10 @@ export function BlogArticleLayout({
               </p>
               <Link
                 to="/{-$locale}"
-                params={(prev) => ({ locale: prev.locale === "da" ? undefined : "en" })}
+                params={(prev) => ({
+                  ...prev,
+                  locale: prev.locale === "da" ? undefined : "en",
+                })}
                 className="group text-primary hover:text-primary/80 mt-4 inline-flex items-center font-medium"
               >
                 {language === "da" ? "Få en gratis vurdering" : "Get a free valuation"}
@@ -308,7 +318,10 @@ export function BlogArticleLayout({
           >
             <Link
               to="/{-$locale}/blog"
-              params={(prev) => ({ locale: prev.locale === "da" ? undefined : "en" })}
+              params={(prev) => ({
+                ...prev,
+                locale: prev.locale === "da" ? undefined : "en",
+              })}
               className="group text-muted-foreground hover:text-primary inline-flex items-center transition-colors"
             >
               <motion.svg

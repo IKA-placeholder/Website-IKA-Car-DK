@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { m } from "@/paraglide/messages";
-import { getLocale } from "@/paraglide/runtime";
 
 // Animation variants
 const containerVariants = {
@@ -58,7 +57,6 @@ const fadeInVariants = {
 };
 
 export default function Footer() {
-  const locale = getLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const shouldReduceMotion = useReducedMotion();
@@ -80,7 +78,11 @@ export default function Footer() {
           <motion.div className="space-y-6 lg:col-span-4" variants={slideUpVariants}>
             {/* Brand */}
             <div className="space-y-3">
-              <Link to="/{-$locale}" params={{ locale }} className="group inline-block select-none">
+              <Link
+                to="/{-$locale}"
+                params={(prev) => ({ ...prev, locale: prev.locale === "da" ? undefined : "en" })}
+                className="group inline-block select-none"
+              >
                 <span className="text-foreground group-hover:text-primary relative text-2xl font-black tracking-tighter transition-colors duration-200 ease-out">
                   Autoværdi
                   <span
@@ -131,7 +133,10 @@ export default function Footer() {
                 <li>
                   <Link
                     to="/{-$locale}"
-                    params={{ locale }}
+                    params={(prev) => ({
+                      ...prev,
+                      locale: prev.locale === "da" ? undefined : "en",
+                    })}
                     className="group text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors duration-200 ease-out"
                   >
                     {m.footer_link_valuation()}
@@ -141,7 +146,10 @@ export default function Footer() {
                 <li>
                   <Link
                     to="/{-$locale}/blog"
-                    params={{ locale }}
+                    params={(prev) => ({
+                      ...prev,
+                      locale: prev.locale === "da" ? undefined : "en",
+                    })}
                     className="group text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors duration-200 ease-out"
                   >
                     {m.footer_link_blog()}
@@ -151,7 +159,10 @@ export default function Footer() {
                 <li>
                   <Link
                     to="/{-$locale}/blog/bil-vurdering-guide"
-                    params={{ locale }}
+                    params={(prev) => ({
+                      ...prev,
+                      locale: prev.locale === "da" ? undefined : "en",
+                    })}
                     className="group text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors duration-200 ease-out"
                   >
                     {m.footer_link_guide()}
