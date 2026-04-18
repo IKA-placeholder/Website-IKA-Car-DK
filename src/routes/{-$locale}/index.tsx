@@ -204,87 +204,28 @@ function StepIcon({ index }: { index: number }) {
 // SEO metadata for this route
 const SITE_URL = "https://www.xn--autovrdi-n0a.dk";
 
-// Enhanced FAQ structured data for SEO - targets primary keyword
-const faqStructuredData = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "Hvad er min bil værd?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Din bils værdi afhænger af mange faktorer: mærke, model, årgang, kilometerstand, udstyr og stand. Med Autoværdi kan du få en gratis vurdering ved at indtaste din nummerplade. Vi analyserer markedsværdien baseret på faktiske salgspriser fra Danmark.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Hvordan finder jeg ud af hvad min bil er værd?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Den nemmeste måde at finde ud af hvad din bil er værd, er at bruge en online bilvurderingstjeneste som Autoværdi. Indtast blot din nummerplade, og du får straks en vurdering baseret på aktuelle markedsdata.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Hvor meget er min brugte bil værd?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Værdien af en brugt bil varierer meget afhængigt af alder, stand og udstyr. En bil taber typisk 15-20% i værdi det første år og herefter 10-15% årligt. Brug Autoværdis gratis værktøj til at få en præcis vurdering af netop din bil.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Hvordan fungerer bilvurdering på Autoværdi?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Det er simpelt: indtast din nummerplade, så finder vi din bil i databasen og beregner en realistisk markedsværdi baseret på årgang, model og aktuelle markedspriser.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Er bilvurderingen gratis?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Ja, vores online bilvurdering er helt gratis. Du kan få et øjeblikkeligt prisoverslag ved at indtaste din nummerplade.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Hvor præcis er vurderingen?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Vores vurdering er baseret på machine learning modeller, som er trænet på aktuelle markedsdata fra danske bilmarkeder. Den giver et realistisk estimat af din bils værdi.",
-      },
-    },
-  ],
-};
-
 export const Route = createFileRoute("/{-$locale}/")({
   component: Home,
   head: () => ({
     meta: [
       {
-        title: "Hvad er min bil værd? | Gratis bilvurdering → Autoværdi",
+        title: m.seo_meta_title(),
       },
       {
         name: "description",
-        content:
-          'Vil du vide "hvad er min bil værd"? Få en gratis og øjeblikkelig bilvurdering. Indtast nummerplade og få realistisk pris baseret på markedsværdi. Prøv nu!',
+        content: m.seo_meta_desc(),
       },
       {
         name: "keywords",
-        content:
-          "hvad er min bil værd, bilvurdering, bil værdi, vurdering af bil, pris på bil, brugt bil værdi, nummerplade",
+        content: m.seo_meta_keywords(),
       },
       {
         property: "og:title",
-        content: "Hvad er min bil værd? | Gratis bilvurdering",
+        content: m.seo_og_title(),
       },
       {
         property: "og:description",
-        content:
-          "Få en øjeblikkelig og gratis vurdering af din bils værdi. Indtast dit nummerpladenummer og få et realistisk prisoverslag.",
+        content: m.seo_og_desc(),
       },
       {
         property: "og:url",
@@ -296,23 +237,17 @@ export const Route = createFileRoute("/{-$locale}/")({
       },
       {
         name: "twitter:title",
-        content: "Hvad er min bil værd? | Gratis bilvurdering",
+        content: m.seo_twitter_title(),
       },
       {
         name: "twitter:description",
-        content: "Få en øjeblikkelig og gratis vurdering af din bils værdi.",
+        content: m.seo_twitter_desc(),
       },
     ],
     links: [
       {
         rel: "canonical",
         href: SITE_URL,
-      },
-    ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(faqStructuredData),
       },
     ],
   }),
@@ -325,43 +260,12 @@ function Home() {
   // Split title into words for stagger animation
   const titleWords = m.heroTitle().split(" ");
 
-  // FAQ texts
-  const faqTexts: Record<string, { faqTitle: string; questions: { q: string; a: string }[] }> = {
-    da: {
-      faqTitle: "Ofte stillede spørgsmål",
-      questions: [
-        {
-          q: "Hvad er min bil værd?",
-          a: "Din bils værdi afhænger af mange faktorer: mærke, model, årgang, kilometerstand, udstyr og stand. Med Autoværdi kan du få en gratis vurdering ved at indtaste din nummerplade. Vi analyserer markedsværdien baseret på faktiske salgspriser fra Danmark.",
-        },
-        {
-          q: "Hvordan finder jeg ud af hvad min bil er værd?",
-          a: "Den nemmeste måde at finde ud af hvad din bil er værd, er at bruge en online bilvurderingstjeneste som Autoværdi. Indtast blot din nummerplade, og du får straks en vurdering baseret på aktuelle markedsdata.",
-        },
-        {
-          q: "Hvor meget er min brugte bil værd?",
-          a: "Værdien af en brugt bil varierer meget afhængigt af alder, stand og udstyr. En bil taber typisk 15-20% i værdi det første år og herefter 10-15% årligt. Brug Autoværdis gratis værktøj til at få en præcis vurdering af netop din bil.",
-        },
-      ],
-    },
-    en: {
-      faqTitle: "Frequently Asked Questions",
-      questions: [
-        {
-          q: "How does car valuation work on Autoværdi?",
-          a: "It is simple: enter your license plate, we find your car in the database and calculate a realistic market value based on year, model and current market prices.",
-        },
-        {
-          q: "Is the car valuation free?",
-          a: "Yes, our online car valuation is completely free. You can get an instant price estimate by entering your license plate.",
-        },
-        {
-          q: "How accurate is the valuation?",
-          a: "Our valuation is based on advanced algorithms and current market data from Danish car markets. It provides a realistic estimate of your car's value.",
-        },
-      ],
-    },
-  };
+  // FAQ texts from translations
+  const faqQuestions = [
+    { q: m.seo_car_worth_q1(), a: m.seo_car_worth_a1() },
+    { q: m.seo_car_worth_q2(), a: m.seo_car_worth_a2() },
+    { q: m.seo_car_worth_q3(), a: m.seo_car_worth_a3() },
+  ];
 
   const steps = [
     {
@@ -378,23 +282,8 @@ function Home() {
     },
   ];
 
-  const currentFaq = faqTexts[locale];
-
-  // SEO content checkmarks
-  const seoFeatures = [
-    locale === "da"
-      ? "Helt gratis bilvurdering uden skjulte gebyrer"
-      : "Completely free car valuation with no hidden fees",
-    locale === "da"
-      ? "Resultat på få sekunder baseret på markedsværdi"
-      : "Results in seconds based on market value",
-    locale === "da"
-      ? "Databaseret på reelle salgspriser fra danske bilmarkeder"
-      : "Data based on real sales prices from Danish car markets",
-    locale === "da"
-      ? "Modeller der tager højde for årgang, model og stand"
-      : "Advanced algorithms that account for year, model, and condition",
-  ];
+  // SEO content checkmarks from translations
+  const seoFeatures = [m.seo_free(), m.seo_fast(), m.seo_data(), m.seo_advanced()];
 
   return (
     <main className="from-background to-muted/30 text-foreground relative min-h-screen overflow-x-hidden bg-linear-to-b pt-16 pb-24">
@@ -491,11 +380,7 @@ function Home() {
             <h2 className="text-foreground text-3xl font-semibold tracking-tight md:text-4xl">
               {m.howTitle()}
             </h2>
-            <p className="text-muted-foreground mx-auto mt-3 max-w-lg">
-              {locale === "da"
-                ? "Tre enkle trin fra nummerplade til vurdering."
-                : "Three simple steps from plate to valuation."}
-            </p>
+            <p className="text-muted-foreground mx-auto mt-3 max-w-lg">{m.steps_subtitle()}</p>
           </motion.div>
 
           <div className="flex flex-col gap-14 md:flex-row md:items-start md:justify-center md:gap-0">
@@ -581,28 +466,18 @@ function Home() {
             id="seo-heading"
             className="seo-content-item text-foreground mb-6 text-2xl font-semibold tracking-tight md:text-3xl"
           >
-            {locale === "da" ? "Hvad er min bil værd?" : "What is my car worth?"}
+            {m.seo_car_worth_title()}
           </h2>
           <div className="seo-content-item prose prose-slate max-w-none">
-            <p className="text-muted-foreground mb-4 leading-relaxed">
-              {locale === "da"
-                ? 'Når du spørger "hvad er min bil værd?", er svaret ikke altid lige til. Bilens værdi afhænger af flere faktorer: mærke, model, årgang, kilometerstand, udstyrsniveau og ikke mindst bilens generelle stand. Hos Autoværdi gør vi det nemt at få svar på netop det spørgsmål. Vores avancerede modeller analyserer aktuelle markedsværdier fra danske bilforhandlere og privat salg, så du får et realistisk bud på din bils værdi.'
-                : "When you ask \"what is my car worth?\", the answer is not always straightforward. The value of your car depends on several factors: make, model, year, mileage, equipment level, and not least the car's overall condition. At Autoværdi, we make it easy to get an answer to exactly that question. Our advanced algorithm analyzes current market values from Danish car dealers and private sales, so you get a realistic estimate of your car's value."}
-            </p>
+            <p className="text-muted-foreground mb-4 leading-relaxed">{m.seo_car_worth_p1()}</p>
             <h3 className="seo-content-item text-foreground mt-8 mb-4 text-xl font-semibold">
-              {locale === "da"
-                ? "Sådan finder du ud af hvad din bil er værd"
-                : "How to find out what your car is worth"}
+              {m.seo_how_to_title()}
             </h3>
             <p className="seo-content-item text-muted-foreground mb-4 leading-relaxed">
-              {locale === "da"
-                ? "Det tager kun 10 sekunder at få en gratis vurdering. Indtast din nummerplade i feltet ovenfor, og vores system finder automatisk alle oplysninger om din bil. Herefter beregner vi en præcis vurdering baseret på tusindvis af sammenlignelige bilsalg i Danmark."
-                : "It only takes 10 seconds to get a free valuation. Enter your license plate in the field above, and our system automatically finds all information about your car. Then we calculate an accurate valuation based on thousands of comparable car sales in Denmark."}
+              {m.seo_how_to_p1()}
             </p>
             <h3 className="seo-content-item text-foreground mt-8 mb-4 text-xl font-semibold">
-              {locale === "da"
-                ? "Hvorfor vælge Autoværdi til din bilvurdering?"
-                : "Why choose Autoværdi for your car valuation?"}
+              {m.seo_why_title()}
             </h3>
             <motion.ul
               className="seo-content-item text-muted-foreground space-y-2"
@@ -669,7 +544,7 @@ function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, ease: EASE_OUT_QUART }}
           >
-            {currentFaq.faqTitle}
+            {m.faq_title()}
           </motion.h2>
 
           <motion.div
@@ -681,7 +556,7 @@ function Home() {
             }
           >
             <Accordion className="space-y-4">
-              {currentFaq.questions.map((faq, index) => (
+              {faqQuestions.map((faq: { q: string; a: string }, index: number) => (
                 <motion.div
                   key={index}
                   variants={
@@ -730,16 +605,14 @@ function Home() {
             className="text-foreground mb-4 text-center text-2xl font-semibold tracking-tight md:text-3xl"
             variants={shouldReduceMotion ? undefined : fadeUpVariants}
           >
-            {locale === "da" ? "Lær mere om bilvurdering" : "Learn more about car valuation"}
+            {m.seo_learn_title()}
           </motion.h2>
 
           <motion.p
             className="text-muted-foreground mx-auto mb-8 max-w-2xl text-center"
             variants={shouldReduceMotion ? undefined : fadeUpVariants}
           >
-            {locale === "da"
-              ? "Læs vores guides og artikler for at blive klogere på bilvurdering og salg af brugte biler."
-              : "Read our guides and articles to learn more about car valuation and selling used cars."}
+            {m.seo_learn_desc()}
           </motion.p>
 
           <div className="grid gap-6 md:grid-cols-3">
@@ -761,11 +634,8 @@ function Home() {
                     />
                   </svg>
                 ),
-                title: locale === "da" ? "Hvad er min bil værd?" : "What is my car worth?",
-                description:
-                  locale === "da"
-                    ? "Komplet guide til bilvurdering og faktorer der påvirker prisen."
-                    : "Complete guide to car valuation and factors affecting price.",
+                title: m.blog_post1_title(),
+                description: m.blog_post1_desc(),
               },
               {
                 to: "/{-$locale}/blog/bil-vurdering-guide",
@@ -784,11 +654,8 @@ function Home() {
                     />
                   </svg>
                 ),
-                title: locale === "da" ? "Sådan vurderer du selv" : "How to value your car",
-                description:
-                  locale === "da"
-                    ? "Lær hvordan du selv kan vurdere din bil ved at analysere markedet."
-                    : "Learn how to value your car by analyzing the market.",
+                title: m.blog_post2_title(),
+                description: m.blog_post2_desc(),
               },
               {
                 to: "/{-$locale}/blog/saelg-bil-hoejeste-pris",
@@ -807,11 +674,8 @@ function Home() {
                     />
                   </svg>
                 ),
-                title: locale === "da" ? "Få højeste pris" : "Get the best price",
-                description:
-                  locale === "da"
-                    ? "Tips til at maksimere salgsprisen på din bil."
-                    : "Tips for maximizing your car sale price.",
+                title: m.blog_post3_title(),
+                description: m.blog_post3_desc(),
               },
             ].map((post, i) => (
               <motion.div key={i} variants={shouldReduceMotion ? undefined : cardVariants}>
@@ -845,7 +709,7 @@ function Home() {
               params={{ locale }}
               className="group text-primary hover:text-primary/80 inline-flex items-center font-medium transition-colors"
             >
-              {locale === "da" ? "Se alle artikler" : "See all articles"}
+              {m.seo_see_all()}
               <motion.svg
                 className="ml-2 h-4 w-4"
                 fill="none"
