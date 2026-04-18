@@ -123,11 +123,11 @@ export default function LicensePlateSearch() {
         <div className="flex flex-col space-y-3">
           <label
             htmlFor="plateNumber"
-            className="flex items-center text-base font-medium text-slate-900 dark:text-slate-200"
+            className="text-foreground flex items-center text-base font-medium"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mr-2 h-5 w-5 text-blue-600"
+              className="text-info mr-2 h-5 w-5"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden
@@ -146,7 +146,7 @@ export default function LicensePlateSearch() {
             value={plateNumber}
             onChange={(e) => setPlateNumber(e.target.value.toUpperCase())}
             placeholder={m.search_placeholder()}
-            className="min-w-0 flex-1 rounded-xl border border-slate-200/80 bg-white px-5 py-5 font-mono text-lg tracking-wide text-slate-900 shadow-sm ring-1 ring-slate-200/40 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 focus:outline-none dark:border-slate-800/80 dark:bg-black dark:text-slate-200"
+            className="border-border bg-background text-foreground ring-border/50 placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-w-0 flex-1 rounded-xl border px-5 py-5 font-mono text-lg tracking-wide shadow-sm ring-1 transition-all focus:ring-2 focus:ring-offset-2 focus:outline-none"
             required
             pattern="[A-Z0-9 ]{2,8}"
             title={m.search_label()}
@@ -157,11 +157,11 @@ export default function LicensePlateSearch() {
         <div className="flex flex-col space-y-3">
           <label
             htmlFor="kilometers"
-            className="flex items-center text-base font-medium text-slate-900 dark:text-slate-200"
+            className="text-foreground flex items-center text-base font-medium"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="mr-2 h-5 w-5 text-blue-600"
+              className="text-info mr-2 h-5 w-5"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden
@@ -172,7 +172,7 @@ export default function LicensePlateSearch() {
                 clipRule="evenodd"
               />
             </svg>
-            {m.search_km_label()} <span className="ml-1 text-red-500">*</span>
+            {m.search_km_label()} <span className="text-destructive ml-1">*</span>
           </label>
           <input
             type="text"
@@ -180,20 +180,20 @@ export default function LicensePlateSearch() {
             value={kilometers}
             onChange={(e) => setKilometers(e.target.value)}
             placeholder={m.search_km_placeholder()}
-            className="min-w-0 flex-1 rounded-xl border border-slate-200/80 bg-white px-5 py-4 text-lg text-slate-900 shadow-sm ring-1 ring-slate-200/40 transition-all placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 focus:outline-none dark:bg-black dark:text-slate-200"
+            className="border-border bg-background text-foreground ring-border/50 placeholder:text-muted-foreground focus:border-primary focus:ring-primary/20 min-w-0 flex-1 rounded-xl border px-5 py-4 text-lg shadow-sm ring-1 transition-all focus:ring-2 focus:ring-offset-2 focus:outline-none"
             pattern="[0-9.,]*"
             inputMode="numeric"
             title={m.search_km_label()}
             required
           />
-          <p className="text-sm text-slate-500">{m.search_km_helper()}</p>
+          <p className="text-muted-foreground text-sm">{m.search_km_helper()}</p>
         </div>
 
         {/* Search button */}
         <button
           type="submit"
           disabled={loading || !plateNumber || !kilometers}
-          className="relative w-full overflow-hidden rounded-xl bg-blue-600 px-8 py-5 text-lg font-semibold text-white shadow-sm ring-1 ring-slate-900/10 transition-transform before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/25 hover:brightness-110 active:scale-95 active:brightness-90 disabled:cursor-not-allowed disabled:opacity-50 disabled:brightness-100 disabled:active:scale-100"
+          className="bg-primary text-primary-foreground ring-foreground/10 relative w-full overflow-hidden rounded-xl px-8 py-5 text-lg font-semibold shadow-sm ring-1 transition-transform before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/25 hover:brightness-110 active:scale-95 active:brightness-90 disabled:cursor-not-allowed disabled:opacity-50 disabled:brightness-100 disabled:active:scale-100"
         >
           {loading ? (
             <span className="flex items-center justify-center gap-2">
@@ -237,7 +237,7 @@ export default function LicensePlateSearch() {
       </form>
 
       {error && (
-        <div className="animate-fade-in mt-5 rounded-xl border border-red-100 bg-red-50/90 p-4 text-red-800 shadow-sm ring-1 ring-red-200/40">
+        <div className="animate-fade-in border-destructive/20 bg-destructive/10 text-destructive ring-destructive/10 mt-5 rounded-xl border p-4 shadow-sm ring-1">
           <div className="flex items-center gap-2 text-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -260,12 +260,12 @@ export default function LicensePlateSearch() {
       {carData && (
         <>
           <div
-            className={`mt-8 rounded-2xl border border-slate-200/60 bg-white p-5 shadow-sm ring-1 ring-slate-200/50 transition-all duration-500 md:p-6 ${animateCard ? "animate-fade-in premium-card" : "opacity-0"}`}
+            className={`border-border bg-card ring-border/50 mt-8 rounded-2xl border p-5 shadow-sm ring-1 transition-all duration-500 md:p-6 ${animateCard ? "animate-fade-in premium-card" : "opacity-0"}`}
           >
-            <h2 className="mb-6 flex items-center gap-2 text-lg font-semibold text-slate-900">
+            <h2 className="text-foreground mb-6 flex items-center gap-2 text-lg font-semibold">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-blue-600"
+                className="text-info h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -284,30 +284,30 @@ export default function LicensePlateSearch() {
             <div
               className={`grid grid-cols-1 gap-3 ${rawData?.kilometers ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}
             >
-              <div className="premium-card rounded-xl border border-slate-200/50 bg-slate-50/50 p-4 ring-1 ring-slate-200/40">
-                <span className="mb-2 inline-block rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-widest text-slate-600 uppercase">
+              <div className="premium-card border-border bg-muted ring-border/50 rounded-xl border p-4 ring-1">
+                <span className="bg-muted-foreground/10 text-muted-foreground mb-2 inline-block rounded px-2 py-0.5 text-[10px] font-semibold tracking-widest uppercase">
                   {m.search_make()}
                 </span>
-                <p className="text-lg font-semibold text-slate-900">{carData.make}</p>
+                <p className="text-foreground text-lg font-semibold">{carData.make}</p>
               </div>
-              <div className="premium-card rounded-xl border border-slate-200/50 bg-slate-50/50 p-4 ring-1 ring-slate-200/40">
-                <span className="mb-2 inline-block rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-widest text-slate-600 uppercase">
+              <div className="premium-card border-border bg-muted ring-border/50 rounded-xl border p-4 ring-1">
+                <span className="bg-muted-foreground/10 text-muted-foreground mb-2 inline-block rounded px-2 py-0.5 text-[10px] font-semibold tracking-widest uppercase">
                   {m.search_model()}
                 </span>
-                <p className="text-lg font-semibold text-slate-900">{carData.model}</p>
+                <p className="text-foreground text-lg font-semibold">{carData.model}</p>
               </div>
-              <div className="premium-card rounded-xl border border-slate-200/50 bg-slate-50/50 p-4 ring-1 ring-slate-200/40">
-                <span className="mb-2 inline-block rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-widest text-slate-600 uppercase">
+              <div className="premium-card border-border bg-muted ring-border/50 rounded-xl border p-4 ring-1">
+                <span className="bg-muted-foreground/10 text-muted-foreground mb-2 inline-block rounded px-2 py-0.5 text-[10px] font-semibold tracking-widest uppercase">
                   {m.search_year()}
                 </span>
-                <p className="text-lg font-semibold text-slate-900">{carData.year}</p>
+                <p className="text-foreground text-lg font-semibold">{carData.year}</p>
               </div>
               {rawData?.kilometers && (
-                <div className="premium-card rounded-xl border border-slate-200/50 bg-slate-50/50 p-4 ring-1 ring-slate-200/40">
-                  <span className="mb-2 inline-block rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold tracking-widest text-slate-600 uppercase">
+                <div className="premium-card border-border bg-muted ring-border/50 rounded-xl border p-4 ring-1">
+                  <span className="bg-muted-foreground/10 text-muted-foreground mb-2 inline-block rounded px-2 py-0.5 text-[10px] font-semibold tracking-widest uppercase">
                     {m.search_kilometers()}
                   </span>
-                  <p className="text-lg font-semibold text-slate-900">
+                  <p className="text-foreground text-lg font-semibold">
                     {rawData.kilometers.toLocaleString(language === "da" ? "da-DK" : "en-GB")} km
                   </p>
                 </div>
@@ -315,39 +315,39 @@ export default function LicensePlateSearch() {
             </div>
 
             <div
-              className={`mt-6 rounded-2xl border-2 border-blue-100 bg-linear-to-br from-white to-blue-50/50 p-8 shadow-lg ring-1 shadow-blue-900/5 ring-blue-50 ${animateCard ? "animate-value-hero-pulse" : ""}`}
+              className={`border-info/20 bg-info/5 ring-info/10 mt-6 rounded-2xl border-2 p-8 shadow-lg ring-1 ${animateCard ? "animate-value-hero-pulse" : ""}`}
             >
               <div className="mb-3 flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
+                <div className="bg-info/10 flex h-8 w-8 items-center justify-center rounded-full">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 text-blue-600"
+                    className="text-info h-4 w-4"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
                     <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
                   </svg>
                 </div>
-                <span className="text-xs font-bold tracking-widest text-blue-600 uppercase">
+                <span className="text-info text-xs font-bold tracking-widest uppercase">
                   {m.search_value_range()}
                 </span>
               </div>
 
               <div className="flex items-center gap-3 whitespace-nowrap">
-                <span className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                <span className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
                   {carData.minPrice.toLocaleString(language === "da" ? "da-DK" : "en-GB")}
                 </span>
-                <span className="text-xl font-light text-slate-400">-</span>
-                <span className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+                <span className="text-muted-foreground text-xl font-light">-</span>
+                <span className="text-foreground text-3xl font-bold tracking-tight sm:text-4xl">
                   {carData.maxPrice.toLocaleString(language === "da" ? "da-DK" : "en-GB")}
                 </span>
-                <span className="text-xl font-semibold text-blue-600">kr.</span>
+                <span className="text-info text-xl font-semibold">kr.</span>
               </div>
 
-              <div className="mt-4 flex items-center gap-2 text-sm text-slate-500">
+              <div className="text-muted-foreground mt-4 flex items-center gap-2 text-sm">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 text-green-500"
+                  className="text-success h-4 w-4"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -365,10 +365,10 @@ export default function LicensePlateSearch() {
               </div>
             </div>
 
-            <div className="mt-4 flex items-start gap-2 rounded-lg border border-amber-200/60 bg-amber-50/80 p-3 text-xs text-amber-800">
+            <div className="border-warning/20 bg-warning/10 text-warning mt-4 flex items-start gap-2 rounded-lg border p-3 text-xs">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 shrink-0 text-amber-600"
+                className="text-warning h-4 w-4 shrink-0"
                 viewBox="0 0 20 20"
                 fill="currentColor"
                 aria-hidden
@@ -387,7 +387,7 @@ export default function LicensePlateSearch() {
             <button
               type="button"
               onClick={toggleLogin}
-              className="text-xs text-slate-400 underline transition-colors hover:text-slate-600"
+              className="text-muted-foreground hover:text-foreground text-xs underline transition-colors"
             ></button>
           </div>
         </>
