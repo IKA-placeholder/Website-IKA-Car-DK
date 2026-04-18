@@ -274,7 +274,7 @@ Whenever you add an animation, also add a media query to disable it:
 ### Framer Motion Implementation
 
 ```jsx
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "motion/react";
 
 function Component() {
   const shouldReduceMotion = useReducedMotion();
