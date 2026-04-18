@@ -433,12 +433,12 @@ function Home() {
             ) : (
               <>
                 {titleWords.map((word, i) => (
-                  <>
-                    <motion.span key={i} className="inline-block" variants={wordVariants}>
+                  <Fragment key={i}>
+                    <motion.span className="inline-block" variants={wordVariants}>
                       {word}
                     </motion.span>
                     {i < titleWords.length - 1 && " "}
-                  </>
+                  </Fragment>
                 ))}
               </>
             )}
