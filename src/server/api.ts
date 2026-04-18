@@ -16,6 +16,31 @@ export type PredictApiResponse = {
   kilometers?: number;
 };
 
+export const plateSearch = createServerFn({ method: "POST" })
+  .inputValidator((data: { plate: string }) => data)
+  .handler(async ({ data }) => {
+    const headers = getRequestHeaders();
+    const ip = getClientIP(headers);
+    const rateLimitResult = checkRateLimit(ip);
+
+    if (!rateLimitResult.allowed) {
+      throw new Error(rateLimitResult.message);
+    }
+
+    const formattedPlate = data.plate.replace(/\s+/g, "");
+
+    let url = `https://www.tjekbil.dk/api/v3/dmr/regnrquery/${formattedPlate}?amount=1`;
+    const res = await fetch(url, { headers });
+    if (!res.ok) {
+      throw new Error("Kunne ikke hente data fra tjekbil.dk");
+    }
+    const d = await res.json();
+    if (d.length === 0) {
+      return { success: "false" };
+    }
+    return { success: "true" };
+  });
+
 // Frontend server function acting as proxy to FastAPI
 export const predictPlate = createServerFn({ method: "POST" })
   .inputValidator((data: { plate: string; kilometers?: number }) => data)
