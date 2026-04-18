@@ -6,14 +6,16 @@ import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import * as v from "valibot";
 
 import { searchCollection, type CarData } from "@/collections/search.collection";
 import AdvancedValuation from "@/components/AdvancedValuation";
 import { m } from "@/paraglide/messages";
 import { getLocale } from "@/paraglide/runtime";
-import { predictPlate } from "@/server/api";
+import { plateSearch, predictPlate } from "@/server/api";
 
 import { Input } from "./ui/input";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import {
   NumberField,
   NumberFieldDecrement,
@@ -42,6 +44,11 @@ function mapPredictToCarData(data: {
   };
 }
 
+const plateSchema = v.object({
+  plate: v.pipe(v.string(), v.minLength(2, m.plate_min_length())),
+  kilometers: v.pipe(v.number(), v.minValue(1000, m.kilometers_min())),
+});
+
 export default function LicensePlateSearch() {
   const language = getLocale();
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -50,6 +57,7 @@ export default function LicensePlateSearch() {
   const [selectedPlate, setSelectedPlate] = useState("");
 
   const predictPlateFn = useServerFn(predictPlate);
+  const searchPlateFn = useServerFn(plateSearch);
 
   const { data: searches } = useLiveQuery((q) => q.from({ search: searchCollection }));
 
@@ -58,9 +66,12 @@ export default function LicensePlateSearch() {
   const form = useForm({
     defaultValues: {
       plate: "",
-      kilometers: 0,
+      kilometers: 1000,
     },
     onSubmit: ({ value }) => mutateAsync(value),
+    validators: {
+      onChange: plateSchema,
+    },
   });
 
   const { mutateAsync } = useMutation({
@@ -74,11 +85,19 @@ export default function LicensePlateSearch() {
           data: mapPredictToCarData(data),
           timestamp: new Date().getDate(),
         });
-        setSelectedPlate(variables.plate);
+      } else if (data && variables.plate) {
+        searchCollection.update(variables.plate, (draft) => {
+          draft.data = mapPredictToCarData(data);
+          draft.kilometers = variables.kilometers;
+          draft.success = true;
+          draft.timestamp = new Date().getDate();
+          draft.error = undefined;
+        });
       }
+      setSelectedPlate(variables.plate);
     },
     onError: (error, variables) => {
-      if (error && variables.plate) {
+      if (error && variables.plate && !searchCollection.get(variables.plate)) {
         searchCollection.insert({
           plate: variables.plate,
           kilometers: variables.kilometers,
@@ -87,6 +106,14 @@ export default function LicensePlateSearch() {
           error: error,
         });
         setSelectedPlate(variables.plate);
+      } else if (error && variables.plate) {
+        searchCollection.update(variables.plate, (draft) => {
+          draft.success = false;
+          draft.kilometers = variables.kilometers;
+          draft.error = error;
+          draft.data = undefined;
+          draft.timestamp = new Date().getDate();
+        });
       }
     },
   });
@@ -115,7 +142,16 @@ export default function LicensePlateSearch() {
         className="space-y-6"
       >
         {/* License plate input */}
-        <form.Field name="plate">
+        <form.Field
+          name="plate"
+          validators={{
+            onChangeAsync: async ({ value }) => {
+              const result = await searchPlateFn({ data: { plate: value } });
+              return result.success === "true" ? undefined : new Error(m.invalid_plate());
+            },
+          }}
+          asyncDebounceMs={1000}
+        >
           {({ handleChange, state }) => (
             <div className="flex flex-col space-y-3">
               <label
@@ -135,21 +171,30 @@ export default function LicensePlateSearch() {
                     clipRule="evenodd"
                   />
                 </svg>
-                {m.search_label()}
+                {m.search_label()} <span className="text-destructive ml-1">*</span>
               </label>
-              <Input
-                type="text"
-                size="lg"
-                id="plateNumber"
-                className="h-14 py-2"
-                inputClassName="text-center text-lg"
-                value={state.value}
-                onChange={(e) => handleChange(e.target.value.replace(/\s+/g, "").toUpperCase())}
-                placeholder={m.search_placeholder()}
-                required
-                pattern="[A-Z0-9 ]{2,8}"
-                title={m.search_label()}
-              />
+              <InputGroup className="h-14 py-2">
+                <InputGroupInput
+                  type="text"
+                  size="lg"
+                  id="plateNumber"
+                  inputClassName="text-center text-lg"
+                  value={state.value}
+                  onChange={(e) => handleChange(e.target.value.replace(/\s+/g, "").toUpperCase())}
+                  placeholder={m.search_placeholder()}
+                  required
+                  pattern="[A-Z0-9 ]{2,8}"
+                  title={m.search_label()}
+                />
+                <InputGroupAddon align="inline-end">
+                  <span className="text-muted-foreground text-sm">km</span>
+                </InputGroupAddon>
+              </InputGroup>
+              {state.meta.errors && (
+                <p className="text-destructive text-xs">
+                  {state.meta.errors.map((e) => e.message).join(", ")}
+                </p>
+              )}
             </div>
           )}
         </form.Field>
@@ -182,8 +227,14 @@ export default function LicensePlateSearch() {
                 value={state.value}
                 onValueChange={(value) => handleChange(value ?? 0)}
                 step={1000}
+                min={1000}
                 smallStep={100}
                 largeStep={10000}
+                format={{
+                  maximumFractionDigits: 0,
+                  style: "unit",
+                  unit: "kilometer",
+                }}
               >
                 <NumberFieldGroup>
                   <NumberFieldDecrement />
@@ -192,6 +243,11 @@ export default function LicensePlateSearch() {
                 </NumberFieldGroup>
               </NumberField>
               <p className="text-muted-foreground text-sm">{m.search_km_helper()}</p>
+              {state.meta.errors && (
+                <p className="text-destructive text-xs">
+                  {state.meta.errors.map((e) => e.message).join(", ")}
+                </p>
+              )}
             </div>
           )}
         </form.Field>
@@ -258,24 +314,32 @@ export default function LicensePlateSearch() {
       </form>
 
       {selectedCar?.error && (
-        <div className="animate-fade-in border-destructive/20 bg-destructive/10 text-destructive ring-destructive/10 mt-5 rounded-xl border p-4 shadow-sm ring-1">
-          <div className="flex items-center gap-2 text-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 shrink-0"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                clipRule="evenodd"
-              />
-            </svg>
-            {selectedCar.error.message}
-          </div>
-        </div>
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            layoutId="car-error"
+            className="animate-fade-in border-destructive/20 bg-destructive/10 text-destructive ring-destructive/10 mt-5 rounded-xl border p-4 shadow-sm ring-1"
+          >
+            <div className="flex items-center gap-2 text-sm">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 shrink-0"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              {selectedCar.error.message}
+            </div>
+          </motion.div>
+        </AnimatePresence>
       )}
 
       {selectedCar?.data && (
