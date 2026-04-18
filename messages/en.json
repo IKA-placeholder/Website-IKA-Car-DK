@@ -419,5 +419,8 @@
   "blog_sell_check8": "Viewing prepared",
   "blog_sell_check9": "Bottom price set",
   "blog_sell_check10": "Contract ready",
-  "blog_index_date": "April 9, 2026"
+  "blog_index_date": "April 9, 2026",
+  "invalid_plate": "Invalid plate number",
+  "plate_min_length": "Enter at least 2 characters",
+  "kilometers_min": "Enter at least 1000 kilometers"
 }
