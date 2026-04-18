@@ -2,6 +2,7 @@ import { createFileRoute, HeadContent } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 
 import { BlogArticleLayout } from "@/components/BlogArticleLayout";
+import { m } from "@/paraglide/messages";
 import { getLocale } from "@/paraglide/runtime";
 
 export const Route = createFileRoute("/{-$locale}/blog/bil-vurdering-guide")({
@@ -9,24 +10,11 @@ export const Route = createFileRoute("/{-$locale}/blog/bil-vurdering-guide")({
   head: () => ({
     meta: [
       {
-        title: "Sådan vurderer du din bil selv | Guide | Autoværdi",
+        title: m.blog_diy_title(),
       },
       {
         name: "description",
-        content:
-          "Lær hvordan du selv kan vurdere din bils værdi. Få tips til at analysere markedet og vurdere din bil korrekt.",
-      },
-      {
-        name: "keywords",
-        content: "bil vurdering, vurdere bil selv, bilvurdering guide, bil pris vurdering",
-      },
-      {
-        property: "og:title",
-        content: "Sådan vurderer du din bil selv | Guide",
-      },
-      {
-        property: "og:description",
-        content: "Lær hvordan du selv kan vurdere din bils værdi.",
+        content: m.blog_diy_excerpt(),
       },
     ],
     links: [
@@ -41,9 +29,8 @@ export const Route = createFileRoute("/{-$locale}/blog/bil-vurdering-guide")({
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
-  headline: "Sådan vurderer du din bil selv",
-  description:
-    "Lær hvordan du selv kan vurdere din bils værdi ved at analysere markedet og tage højde for vigtige faktorer.",
+  headline: m.blog_diy_title(),
+  description: m.blog_diy_excerpt(),
   author: {
     "@type": "Organization",
     name: "Autoværdi",
@@ -72,12 +59,12 @@ function Step({
 }) {
   return (
     <div className="relative flex gap-6 pb-12 last:pb-0">
-      <div className="absolute top-16 bottom-0 left-8 w-0.5 bg-slate-200 last:hidden" />
-      <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg">
+      <div className="absolute top-16 bottom-0 left-8 w-0.5 bg-slate-200 last:hidden dark:bg-slate-800" />
+      <div className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 text-white shadow-lg dark:from-blue-300 dark:to-blue-200 dark:text-black">
         <span className="text-2xl font-bold">{number}</span>
       </div>
       <div className="flex-1 pt-2">
-        <h2 className="mb-3 text-2xl font-bold text-slate-900">{title}</h2>
+        <h2 className="mb-3 text-2xl font-bold text-slate-900 dark:text-slate-100">{title}</h2>
         {children}
       </div>
     </div>
@@ -87,245 +74,63 @@ function Step({
 // Calculation box
 function CalculationBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="my-4 rounded-xl bg-slate-900 p-4 font-mono text-sm text-white">{children}</div>
+    <div className="my-4 rounded-xl bg-slate-900 p-4 font-mono text-sm text-white dark:bg-slate-100 dark:text-black">
+      {children}
+    </div>
   );
 }
 
 function BilVurderingGuide() {
   const language = getLocale();
 
-  if (language === "en") {
-    return (
-      <>
-        <HeadContent />
-        <BlogArticleLayout
-          title="How to Value Your Car Yourself"
-          excerpt="Step-by-step guide to valuing your car like a professional. Learn market analysis and price adjustments."
-          date="2026-04-09"
-          readTime="4 min"
-          breadcrumbs={[
-            { label: "Home", to: "/" },
-            { label: "Blog", to: "/blog" },
-            { label: "DIY Valuation" },
-          ]}
-          schema={articleSchema}
-          language={language}
-        >
-          <div className="my-8 rounded-2xl border-2 border-amber-200 bg-amber-50 p-6">
-            <div className="flex items-start gap-3">
-              <svg
-                className="h-6 w-6 shrink-0 text-amber-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
-                />
-              </svg>
-              <div>
-                <h4 className="font-semibold text-amber-900">Why do it yourself?</h4>
-                <p className="text-amber-800">
-                  Understanding your car's value helps you negotiate better and avoid accepting low
-                  offers.
-                </p>
-              </div>
-            </div>
-          </div>
+  const sites = [
+    { name: m.blog_diy_site1_name(), desc: m.blog_diy_site1_desc(), color: "blue" },
+    { name: m.blog_diy_site2_name(), desc: m.blog_diy_site2_desc(), color: "green" },
+    { name: m.blog_diy_site3_name(), desc: m.blog_diy_site3_desc(), color: "amber" },
+  ];
 
-          <Step number={1} title="Find Similar Cars">
-            <p className="mb-4 text-slate-600">Search for cars like yours on these platforms:</p>
+  const compareItems = [
+    m.blog_diy_compare1(),
+    m.blog_diy_compare2(),
+    m.blog_diy_compare3(),
+    m.blog_diy_compare4(),
+    m.blog_diy_compare5(),
+  ];
 
-            <div className="grid gap-3 sm:grid-cols-3">
-              {[
-                { name: "bilbasen.dk", desc: "Largest selection", color: "blue" },
-                { name: "dba.dk", desc: "Private sales", color: "green" },
-                { name: "guloggratis.dk", desc: "Local deals", color: "amber" },
-              ].map((site) => (
-                <div key={site.name} className={`rounded-xl bg-${site.color}-50 p-4 text-center`}>
-                  <p className="font-semibold text-slate-900">{site.name}</p>
-                  <p className="text-sm text-slate-600">{site.desc}</p>
-                </div>
-              ))}
-            </div>
+  const features = [
+    { item: m.blog_diy_feature1(), value: m.blog_diy_feature1_val() },
+    { item: m.blog_diy_feature2(), value: m.blog_diy_feature2_val() },
+    { item: m.blog_diy_feature3(), value: m.blog_diy_feature3_val() },
+    { item: m.blog_diy_feature4(), value: m.blog_diy_feature4_val() },
+  ];
 
-            <div className="mt-4 rounded-xl bg-blue-50 p-4">
-              <p className="text-blue-900">
-                <strong>Tip:</strong> Look at 5-10 similar cars to get a good price range.
-              </p>
-            </div>
-          </Step>
+  const conditions = [
+    { label: m.blog_diy_condition1(), value: m.blog_diy_condition1_val(), color: "green" },
+    { label: m.blog_diy_condition2(), value: m.blog_diy_condition2_val(), color: "slate" },
+    { label: m.blog_diy_condition3(), value: m.blog_diy_condition3_val(), color: "amber" },
+    { label: m.blog_diy_condition4(), value: m.blog_diy_condition4_val(), color: "red" },
+  ];
 
-          <Step number={2} title="What to Compare">
-            <p className="mb-4 text-slate-600">Make sure you're comparing apples to apples:</p>
-
-            <div className="space-y-2">
-              {[
-                "Same year and model generation",
-                "Similar mileage (±10,000 km)",
-                "Same fuel type (petrol/diesel/electric)",
-                "Similar equipment level",
-                "Comparable condition",
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 rounded-lg bg-slate-50 p-3">
-                  <svg
-                    className="h-5 w-5 text-green-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <span className="text-slate-700">{item}</span>
-                </div>
-              ))}
-            </div>
-          </Step>
-
-          <Step number={3} title="Calculate the Base Price">
-            <p className="mb-4 text-slate-600">Take the average of the prices you found:</p>
-
-            <CalculationBox>
-              <p className="text-slate-400">Base Price =</p>
-              <p>(Price 1 + Price 2 + Price 3 + ... + Price N) ÷ N</p>
-              <p className="mt-2 text-slate-400">
-                Example: (180k + 185k + 175k + 182k + 178k) ÷ 5 = 180,000 kr.
-              </p>
-            </CalculationBox>
-          </Step>
-
-          <Step number={4} title="Adjust for Mileage">
-            <p className="mb-4 text-slate-600">Higher mileage means lower value:</p>
-
-            <div className="overflow-hidden rounded-xl border border-slate-200">
-              <table className="w-full text-left">
-                <thead className="bg-slate-50">
-                  <tr>
-                    <th className="px-4 py-3 font-semibold">Above average km</th>
-                    <th className="px-4 py-3 font-semibold">Adjust price by</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200">
-                  <tr>
-                    <td className="px-4 py-3">10,000 km</td>
-                    <td className="px-4 py-3 text-red-600">-1% to -2%</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3">20,000 km</td>
-                    <td className="px-4 py-3 text-red-600">-3% to -5%</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3">30,000+ km</td>
-                    <td className="px-4 py-3 text-red-600">-5% to -10%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </Step>
-
-          <Step number={5} title="Add Equipment Value">
-            <p className="mb-4 text-slate-600">Extra features add to the value:</p>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                { item: "Navigation", value: "+3,000-8,000" },
-                { item: "Leather seats", value: "+5,000-15,000" },
-                { item: "Parking sensors", value: "+2,000-5,000" },
-                { item: "Sunroof", value: "+5,000-10,000" },
-              ].map((feature) => (
-                <div key={feature.item} className="flex justify-between rounded-lg bg-green-50 p-3">
-                  <span className="text-slate-700">{feature.item}</span>
-                  <span className="font-medium text-green-700">{feature.value} kr.</span>
-                </div>
-              ))}
-            </div>
-          </Step>
-
-          <Step number={6} title="Adjust for Condition">
-            <p className="mb-4 text-slate-600">Your car's condition affects price:</p>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between rounded-lg bg-green-50 p-3">
-                <span className="text-slate-700">Like new condition</span>
-                <span className="font-medium text-green-700">+5% to +15%</span>
-              </div>
-              <div className="flex items-center justify-between rounded-lg bg-slate-50 p-3">
-                <span className="text-slate-700">Normal wear</span>
-                <span className="font-medium text-slate-600">0% (base)</span>
-              </div>
-              <div className="flex items-center justify-between rounded-lg bg-amber-50 p-3">
-                <span className="text-slate-700">Minor issues</span>
-                <span className="font-medium text-amber-700">-5% to -15%</span>
-              </div>
-              <div className="flex items-center justify-between rounded-lg bg-red-50 p-3">
-                <span className="text-slate-700">Major damage</span>
-                <span className="font-medium text-red-700">-15% to -30%</span>
-              </div>
-            </div>
-          </Step>
-
-          <div className="my-8 rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 p-8 text-white">
-            <h3 className="mb-4 text-xl font-bold">Final Formula</h3>
-            <CalculationBox>
-              <p>Your Price = Base Price</p>
-              <p className="text-red-400">- Mileage penalty</p>
-              <p className="text-green-400">+ Equipment bonus</p>
-              <p className="text-green-400">+ Condition bonus</p>
-              <p className="text-amber-400">+ 5-10% for negotiation</p>
-            </CalculationBox>
-            <p className="mt-4 text-blue-100">
-              Always add 5-10% to your minimum price so you have room to negotiate.
-            </p>
-          </div>
-
-          <div className="mt-8 rounded-2xl bg-green-500 p-6 text-center text-white">
-            <p className="mb-2 text-lg">Want an instant valuation?</p>
-            <p className="mb-4 text-green-100">Get market-based price in 10 seconds</p>
-            <Link
-              to="/{-$locale}"
-              params={(prev) => ({
-                ...prev,
-                locale: prev.locale === "da" ? undefined : "en",
-              })}
-              className="inline-flex items-center rounded-lg bg-white px-6 py-3 font-bold text-green-600 transition-transform hover:scale-105"
-            >
-              Get Free Valuation
-            </Link>
-          </div>
-        </BlogArticleLayout>
-      </>
-    );
-  }
-
-  // Danish version
   return (
     <>
       <HeadContent />
       <BlogArticleLayout
-        title="Sådan vurderer du din bil selv"
-        excerpt="Trin-for-trin guide til at vurdere din bil som en professionel. Lær markedsanalyse og prisjusteringer."
+        title={m.blog_diy_title()}
+        excerpt={m.blog_diy_excerpt()}
         date="2026-04-09"
-        readTime="4 min"
+        readTime={m.read_time()}
         breadcrumbs={[
-          { label: "Forside", to: "/" },
-          { label: "Blog", to: "/blog" },
-          { label: "Selvvurdering" },
+          { label: m.breadcrumb_home(), to: "/" },
+          { label: m.breadcrumb_blog(), to: "/blog" },
+          { label: m.blog_diy_breadcrumb() },
         ]}
         schema={articleSchema}
         language={language}
       >
-        <div className="my-8 rounded-2xl border-2 border-amber-200 bg-amber-50 p-6">
+        <div className="my-8 rounded-2xl border-2 border-amber-200 bg-amber-50 p-6 dark:border-amber-800 dark:bg-amber-950">
           <div className="flex items-start gap-3">
             <svg
-              className="h-6 w-6 shrink-0 text-amber-600"
+              className="h-6 w-6 shrink-0 text-amber-600 dark:text-amber-300"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={2}
@@ -338,24 +143,19 @@ function BilVurderingGuide() {
               />
             </svg>
             <div>
-              <h4 className="font-semibold text-amber-900">Hvorfor gøre det selv?</h4>
-              <p className="text-amber-800">
-                At forstå din bils værdi hjælper dig med at forhandle bedre og undgå at acceptere
-                for lave bud.
-              </p>
+              <h4 className="font-semibold text-amber-900 dark:text-amber-100">
+                {m.blog_diy_why_title()}
+              </h4>
+              <p className="text-amber-800 dark:text-amber-300">{m.blog_diy_why_desc()}</p>
             </div>
           </div>
         </div>
 
-        <Step number={1} title="Find lignende biler">
-          <p className="mb-4 text-slate-600">Søg efter biler som din på disse platforme:</p>
+        <Step number={1} title={m.blog_diy_step1_title()}>
+          <p className="mb-4 text-slate-600">{m.blog_diy_step1_desc()}</p>
 
           <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              { name: "bilbasen.dk", desc: "Størst udvalg", color: "blue" },
-              { name: "dba.dk", desc: "Privat salg", color: "green" },
-              { name: "guloggratis.dk", desc: "Lokale handler", color: "amber" },
-            ].map((site) => (
+            {sites.map((site) => (
               <div key={site.name} className={`rounded-xl bg-${site.color}-50 p-4 text-center`}>
                 <p className="font-semibold text-slate-900">{site.name}</p>
                 <p className="text-sm text-slate-600">{site.desc}</p>
@@ -365,22 +165,16 @@ function BilVurderingGuide() {
 
           <div className="mt-4 rounded-xl bg-blue-50 p-4">
             <p className="text-blue-900">
-              <strong>Tip:</strong> Kig på 5-10 lignende biler for at få et godt prisspænd.
+              <strong>{m.blog_diy_tip()}</strong> {m.blog_diy_tip_text()}
             </p>
           </div>
         </Step>
 
-        <Step number={2} title="Hvad skal du sammenligne">
-          <p className="mb-4 text-slate-600">Sørg for at sammenligne æbler med æbler:</p>
+        <Step number={2} title={m.blog_diy_step2_title()}>
+          <p className="mb-4 text-slate-600">{m.blog_diy_step2_desc()}</p>
 
           <div className="space-y-2">
-            {[
-              "Samme årgang og modelgeneration",
-              "Lignende km-stand (±10.000 km)",
-              "Samme brændstoftype (benzin/diesel/el)",
-              "Lignende udstyrsniveau",
-              "Sammenlignelig stand",
-            ].map((item, i) => (
+            {compareItems.map((item, i) => (
               <div key={i} className="flex items-center gap-3 rounded-lg bg-slate-50 p-3">
                 <svg
                   className="h-5 w-5 text-green-500"
@@ -401,105 +195,91 @@ function BilVurderingGuide() {
           </div>
         </Step>
 
-        <Step number={3} title="Beregn basisprisen">
-          <p className="mb-4 text-slate-600">Tag gennemsnittet af de priser du har fundet:</p>
+        <Step number={3} title={m.blog_diy_step3_title()}>
+          <p className="mb-4 text-slate-600">{m.blog_diy_step3_desc()}</p>
 
           <CalculationBox>
-            <p className="text-slate-400">Basispris =</p>
-            <p>(Pris 1 + Pris 2 + Pris 3 + ... + Pris N) ÷ N</p>
-            <p className="mt-2 text-slate-400">
-              Eksempel: (180k + 185k + 175k + 182k + 178k) ÷ 5 = 180.000 kr.
-            </p>
+            <p className="text-slate-400">{m.blog_diy_base_price_label()}</p>
+            <p>{m.blog_diy_base_price_formula()}</p>
+            <p className="mt-2 text-slate-400">{m.blog_diy_base_price_example()}</p>
           </CalculationBox>
         </Step>
 
-        <Step number={4} title="Juster for kilometer">
-          <p className="mb-4 text-slate-600">Højere km-stand betyder lavere værdi:</p>
+        <Step number={4} title={m.blog_diy_step4_title()}>
+          <p className="mb-4 text-slate-600">{m.blog_diy_step4_desc()}</p>
 
           <div className="overflow-hidden rounded-xl border border-slate-200">
             <table className="w-full text-left">
               <thead className="bg-slate-50">
                 <tr>
-                  <th className="px-4 py-3 font-semibold">Over gennemsnit</th>
-                  <th className="px-4 py-3 font-semibold">Juster pris med</th>
+                  <th className="px-4 py-3 font-semibold">{m.blog_diy_km_table_header1()}</th>
+                  <th className="px-4 py-3 font-semibold">{m.blog_diy_km_table_header2()}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
                 <tr>
-                  <td className="px-4 py-3">10.000 km</td>
-                  <td className="px-4 py-3 text-red-600">-1% til -2%</td>
+                  <td className="px-4 py-3">{m.blog_diy_km_10k()}</td>
+                  <td className="px-4 py-3 text-red-600">{m.blog_diy_km_adj1()}</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3">20.000 km</td>
-                  <td className="px-4 py-3 text-red-600">-3% til -5%</td>
+                  <td className="px-4 py-3">{m.blog_diy_km_20k()}</td>
+                  <td className="px-4 py-3 text-red-600">{m.blog_diy_km_adj2()}</td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-3">30.000+ km</td>
-                  <td className="px-4 py-3 text-red-600">-5% til -10%</td>
+                  <td className="px-4 py-3">{m.blog_diy_km_30k()}</td>
+                  <td className="px-4 py-3 text-red-600">{m.blog_diy_km_adj3()}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </Step>
 
-        <Step number={5} title="Læg udstyr til">
-          <p className="mb-4 text-slate-600">Ekstraudstyr giver mere værdi:</p>
+        <Step number={5} title={m.blog_diy_step5_title()}>
+          <p className="mb-4 text-slate-600">{m.blog_diy_step5_desc()}</p>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            {[
-              { item: "Navigation", value: "+3.000-8.000" },
-              { item: "Lædersæder", value: "+5.000-15.000" },
-              { item: "Parkeringsensor", value: "+2.000-5.000" },
-              { item: "Soltag", value: "+5.000-10.000" },
-            ].map((feature) => (
+            {features.map((feature) => (
               <div key={feature.item} className="flex justify-between rounded-lg bg-green-50 p-3">
                 <span className="text-slate-700">{feature.item}</span>
-                <span className="font-medium text-green-700">{feature.value} kr.</span>
+                <span className="font-medium text-green-700">
+                  {feature.value} {m.blog_diy_currency()}
+                </span>
               </div>
             ))}
           </div>
         </Step>
 
-        <Step number={6} title="Juster for stand">
-          <p className="mb-4 text-slate-600">Din bils stand påvirker prisen:</p>
+        <Step number={6} title={m.blog_diy_step6_title()}>
+          <p className="mb-4 text-slate-600">{m.blog_diy_step6_desc()}</p>
 
           <div className="space-y-2">
-            <div className="flex items-center justify-between rounded-lg bg-green-50 p-3">
-              <span className="text-slate-700">Som ny stand</span>
-              <span className="font-medium text-green-700">+5% til +15%</span>
-            </div>
-            <div className="flex items-center justify-between rounded-lg bg-slate-50 p-3">
-              <span className="text-slate-700">Normal slitage</span>
-              <span className="font-medium text-slate-600">0% (basis)</span>
-            </div>
-            <div className="flex items-center justify-between rounded-lg bg-amber-50 p-3">
-              <span className="text-slate-700">Mindre problemer</span>
-              <span className="font-medium text-amber-700">-5% til -15%</span>
-            </div>
-            <div className="flex items-center justify-between rounded-lg bg-red-50 p-3">
-              <span className="text-slate-700">Store skader</span>
-              <span className="font-medium text-red-700">-15% til -30%</span>
-            </div>
+            {conditions.map((condition) => (
+              <div
+                key={condition.label}
+                className={`flex items-center justify-between rounded-lg bg-${condition.color}-50 p-3`}
+              >
+                <span className="text-slate-700">{condition.label}</span>
+                <span className={`font-medium text-${condition.color}-700`}>{condition.value}</span>
+              </div>
+            ))}
           </div>
         </Step>
 
         <div className="my-8 rounded-2xl bg-linear-to-br from-blue-600 to-blue-700 p-8 text-white">
-          <h3 className="mb-4 text-xl font-bold">Endelig formel</h3>
+          <h3 className="mb-4 text-xl font-bold">{m.blog_diy_formula_title()}</h3>
           <CalculationBox>
-            <p>Din pris = Basispris</p>
-            <p className="text-red-400">- Kilometer straf</p>
-            <p className="text-green-400">+ Udstyrsbonus</p>
-            <p className="text-green-400">+ Stand bonus</p>
-            <p className="text-amber-400">+ 5-10% til forhandling</p>
+            <p>{m.blog_diy_formula_line1()}</p>
+            <p className="text-red-400">{m.blog_diy_formula_line2()}</p>
+            <p className="text-green-400">{m.blog_diy_formula_line3()}</p>
+            <p className="text-green-400">{m.blog_diy_formula_line4()}</p>
+            <p className="text-amber-400">{m.blog_diy_formula_line5()}</p>
           </CalculationBox>
-          <p className="mt-4 text-blue-100">
-            Læg altid 5-10% oveni din minimumspris, så du har plads til at forhandle.
-          </p>
+          <p className="mt-4 text-blue-100">{m.blog_diy_formula_note()}</p>
         </div>
 
         <div className="mt-8 rounded-2xl bg-green-500 p-6 text-center text-white">
-          <p className="mb-2 text-lg">Vil du have en hurtig vurdering?</p>
-          <p className="mb-4 text-green-100">Få markedspris på 10 sekunder</p>
+          <p className="mb-2 text-lg">{m.blog_diy_cta_title()}</p>
+          <p className="mb-4 text-green-100">{m.blog_diy_cta_desc()}</p>
           <Link
             to="/{-$locale}"
             params={(prev) => ({
@@ -508,13 +288,13 @@ function BilVurderingGuide() {
             })}
             className="inline-flex items-center rounded-lg bg-white px-6 py-3 font-bold text-green-600 transition-transform hover:scale-105"
           >
-            Få gratis vurdering
+            {m.blog_diy_cta_button()}
           </Link>
         </div>
 
         {/* Related articles */}
         <div className="mt-12">
-          <h3 className="mb-6 text-xl font-bold text-slate-900">Læs også</h3>
+          <h3 className="mb-6 text-xl font-bold text-slate-900">{m.blog_related_title()}</h3>
           <div className="grid gap-4 sm:grid-cols-2">
             <Link
               to="/{-$locale}/blog/hvad-er-min-bil-vaerd"
@@ -541,9 +321,9 @@ function BilVurderingGuide() {
               </div>
               <div>
                 <h4 className="font-semibold text-slate-900 group-hover:text-blue-600">
-                  Hvad er min bil værd?
+                  {m.blog_post_worth_title()}
                 </h4>
-                <p className="text-sm text-slate-600">Komplet guide til bilværdi</p>
+                <p className="text-sm text-slate-600">{m.blog_post_worth_desc()}</p>
               </div>
             </Link>
             <Link
@@ -571,9 +351,9 @@ function BilVurderingGuide() {
               </div>
               <div>
                 <h4 className="font-semibold text-slate-900 group-hover:text-blue-600">
-                  Få højeste pris
+                  {m.blog_post_price_title()}
                 </h4>
-                <p className="text-sm text-slate-600">10 trin til bedre pris</p>
+                <p className="text-sm text-slate-600">{m.blog_post_price_desc()}</p>
               </div>
             </Link>
           </div>
