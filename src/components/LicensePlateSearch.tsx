@@ -187,7 +187,13 @@ export default function LicensePlateSearch() {
                   title={m.search_label()}
                 />
                 <InputGroupAddon align="inline-end">
-                  <span className="text-muted-foreground text-sm">km</span>
+                  <span className="text-muted-foreground text-sm">
+                    {state.meta.isValidating
+                      ? "⌛"
+                      : !state.meta.isDefaultValue && state.meta.isValid
+                        ? "✓"
+                        : "✗"}
+                  </span>
                 </InputGroupAddon>
               </InputGroup>
               {state.meta.errors && (
